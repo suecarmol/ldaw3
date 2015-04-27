@@ -30,17 +30,21 @@
     <section id="stats" class="container">
 
           <div id="st" class="container">
-            <h2>Stats</h2>
+            <h2>Unidades promedio entregadas por ruta</h2>
+            <h3>{{ $average_delivery_units }} unidades </h3>
           </div>
           <div id="st2" class="container" >
-           <h2>Stats</h2>
+           <h2>Promedio de peso por ruta</h2>
+           <h3>{{ $average_weight_per_route }} kilogramos</h3>
           </div>
           <div class="clear"></div>
           <div id="st3" class="container" >
-            <h2>Stats</h2>
+            <h2>Entregas fuera de ruta</h2>
+            <h3>{{ $deliveries_out_of_route }}</h3>
           </div>	
           <div id="st4" class="container" >
-           <h2>Stats</h2>
+           <h2>Capacidad promedio de los camiones</h2>
+           <h3>{{ $trucks_average_capacity }}</h3>
           </div>  
           <div class="clear"></div>
           <div id="st5" class="container" >
@@ -58,14 +62,14 @@
     <!-- Portfolio -->
     <section id="scenarios" class="scenarios">
         <div class="container">
-           <h1>Escenarios</h1>
+           <h1>Scenarios</h1>
         </div>
         <!-- /.container -->
     </section>
 
     <section id="suggestions" class="suggestions">
         <div class="container">
-           <h2>suggestions</h2>
+           <h2>Suggestions</h2>
         </div>
         <!-- /.container -->
     </section>

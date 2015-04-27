@@ -22,6 +22,71 @@ class DeliveriesController extends Controller {
 		->orderBy('clients.arrival_time')
 		->get();
 
+		$average_deliveries = \DB::collection('proyecto')
+		->select('clients.units_delivered')
+		->where('clients.units_delivered', '>', 0)
+		->get();
+
+		$average_delivery_units = $this->getAvgDeliveryUnits($average_deliveries);
+
+		$average_weight_delivered = \DB::collection('proyecto')
+		->select('clients.weight_delivered')
+		->where('clients.weight_delivered', '>', 0)
+		->get();
+
+		$average_weight_per_route = $this->getAvgWeight($average_weight_delivered);
+
+		$deliveries_out_of_route = \DB::collection('proyecto')
+		->where('clients.is_in_route', '=', 1)
+		->count();
+
+		$trucks_average_capacity = \DB::collection('proyecto')
+		->where('capacity', '>', 0)
+		->avg('capacity');
+
+		return view('deliveries.index')
+		->with('average_delivery_units', $average_delivery_units)
+		->with('average_weight_per_route', $average_weight_per_route)
+		->with('deliveries_out_of_route', $deliveries_out_of_route)
+		->with('trucks_average_capacity', $trucks_average_capacity);	
+	}
+
+	public function getAvgWeight($average_weight_delivered)
+	{
+		$weight_sum = 0;
+
+		for ($i=0; $i < sizeof($average_weight_delivered); $i++) { 
+			$temp_clients = $average_weight_delivered[$i]['clients'];
+			for ($j=0; $j < sizeof($temp_clients); $j++) { 
+				$weight_sum += $temp_clients[$j]['weight_delivered'];
+			}
+		}
+
+		$average_weight_per_route = round($weight_sum / count($average_weight_delivered), 2);
+
+		return $average_weight_per_route;
+	}
+
+	public function getAvgDeliveryUnits($average_deliveries)
+	{
+		$delivery_units_sum = 0;
+
+		for ($i=0; $i < sizeof($average_deliveries); $i++) { 
+			$temp_clients = $average_deliveries[$i]['clients'];
+			//var_dump($temp_clients);
+			for ($j=0; $j < sizeof($temp_clients); $j++) { 
+				$delivery_units_sum += $temp_clients[$j]['units_delivered'];
+			}
+		}
+
+
+		$average_delivery_units = round($delivery_units_sum / count($average_deliveries), 2);
+
+		return $average_delivery_units;
+	}
+
+	public function calculateBestRoute($deliveries)
+	{
 		$clients_matrix = array();
 		$distance_matrix = array();
 		$best_distances_matrix = array();
@@ -54,11 +119,10 @@ class DeliveriesController extends Controller {
 			}
 		}
 
-		//$best_distances_matrix = $this->floydWarshall($distance_matrix);
+		$best_distances_matrix = $this->floydWarshall($distance_matrix);
 
-		//var_dump($distance_matrix);
+		return $best_distances_matrix;
 
-		return view('deliveries.index');	
 	}
 
 	public function vincentyGreatCircleDistance($latitudeFrom, $longitudeFrom, $latitudeTo, $longitudeTo, $earthRadius = 6371000)
