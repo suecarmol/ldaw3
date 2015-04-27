@@ -13,13 +13,13 @@
 
     <!-- Bootstrap Core CSS -->
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
-
+     <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet">
     <!-- Custom CSS -->
     <link href="{{ asset('css/stylish-portfolio.css') }}" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/map_style.css') }}"/>
 
     <!-- Custom Fonts -->
-    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
     <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
 
 	<script src="http://maps.googleapis.com/maps/api/js"></script>
@@ -40,25 +40,25 @@
         <ul class="sidebar-nav">
             <a id="menu-close" href="#" class="btn btn-light btn-lg pull-right toggle"><i class="fa fa-times"></i></a>
             <li class="sidebar-brand">
-                <a href="#top">LDAW</a>
+                <a href="#top" onclick = $("#menu-close").click();>LDAW</a>
             </li>
             <li>
-                <a href="#top">Inicio</a>
+                <a href="#top" onclick = $("#menu-close").click();>Inicio</a>
             </li>
             <li>
-                <a href="#rutas">Rutas</a>
+                <a href="#rutas" onclick = $("#menu-close").click();>Rutas</a>
             </li>
             <li>
-                <a href="#stats">Stats</a>
+                <a href="#stats" onclick = $("#menu-close").click();>Stats</a>
             </li>
             <li>
-                <a href="#scenarios">Scenarios</a>
+                <a href="#scenarios" onclick = $("#menu-close").click();>Scenarios</a>
             </li>
             <li>
-                <a href="#suggestions">Suggestions</a>
+                <a href="#suggestions" onclick = $("#menu-close").click();>Suggestions</a>
             </li>
             <li>
-            	<a href="#newbusiness"> New Business</a>
+            	<a href="#newbusiness" onclick = $("#menu-close").click();> New Business</a>
             </li>
           
         </ul>

@@ -21,7 +21,8 @@
     </select>
     </div>
 
-     <div id="map-canvas"></div>
+    <!--
+     <div id="map-canvas"></div>-->
     </section>
 
 
@@ -76,7 +77,8 @@
 
      <!-- Portfolio -->
     <section id="newbusiness" class="newbusiness">
-        <div id="map-canvas-nb"></div>
+      <!--
+        <div id="map-canvas-nb"></div>-->
     <div id="map-legend"> 
       <div id="map_options_header"> Opciones del mapa </div>
        <div id="search_map_button" class="search_map_button"> 
