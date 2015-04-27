@@ -1,0 +1,67 @@
+/*canvas for new business*/
+#map-canvas-nb{
+  height: 100%;
+  width:100%;
+    margin: 0px;
+    padding: 0px;
+
+}
+.clear{
+	
+	clear:both;
+}
+
+#map-legend {
+   background: white;
+   padding: 10px;
+   width: 250px;
+   height: 350px;
+   margin-right: 25px;
+ }
+ 
+ #map_options_header{
+ 	font-size: 20px;
+ 	text-align: center;
+ 	width: auto;
+ 	height: 50px;
+ }
+ 
+ .clear_map_button{
+ 	width: 90px;
+ 	height: 40px;
+ 	background-color: #5C6983;
+ 	float: left;
+ 
+ }
+ 
+  .clear_map_button:hover{
+  	cursor: pointer;
+  	background-color: #89D7ED;
+  }
+  
+ .clear_map_text{
+  	font-size: 18px;
+  	padding-left: 25px;
+  	padding-top: 5px;
+  }
+  
+   .search_map_button{
+ 	width: 90px;
+ 	height: 40px;
+ 	background-color: #5C6983;
+ 	float: left;
+ 	margin-right: 20px;
+ 	margin-left: 30px;
+ 
+ }
+ 
+  .search_map_button:hover{
+  	cursor: pointer;
+  	background-color: #89D7ED;
+  }
+  
+ .search_map_text{
+  	font-size: 18px;
+  	padding-left: 15px;
+  	padding-top: 5px;
+  }
