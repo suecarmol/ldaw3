@@ -17,7 +17,7 @@ class DeliveriesController extends Controller {
 	public function index()
 	{
 		//
-		$deliveries = \DB::collection('Heineken')
+		$deliveries = \DB::collection('proyecto')
 		->where('clients.cost', '=', 'null')
 		->orderBy('clients.arrival_time')
 		->get();
@@ -44,6 +44,9 @@ class DeliveriesController extends Controller {
 		->where('capacity', '>', 0)
 		->avg('capacity');
 
+		//var_dump($deliveries);
+		//$x = $this->calculateBestRoute($deliveries);
+		//var_dump($x);
 		return view('deliveries.index')
 		->with('average_delivery_units', $average_delivery_units)
 		->with('average_weight_per_route', $average_weight_per_route)
@@ -87,6 +90,8 @@ class DeliveriesController extends Controller {
 
 	public function calculateBestRoute($deliveries)
 	{
+
+		//var_dump($deliveries);
 		$clients_matrix = array();
 		$distance_matrix = array();
 		$best_distances_matrix = array();
@@ -151,6 +156,8 @@ class DeliveriesController extends Controller {
 		for ($i=0; $i < sizeof($distance_matrix); $i++) { 
 			$floydWarshall_matrix [] = $distance_matrix[$i]; 
 		}
+
+		var_dump($floydWarshall_matrix);
 
 		for ($k=0; $k < sizeof($floydWarshall_matrix); $k++) { 
 			for ($i=0; $i < sizeof($floydWarshall_matrix); $i++) { 
