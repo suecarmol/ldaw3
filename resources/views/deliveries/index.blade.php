@@ -18,7 +18,7 @@
                   units[{{$i}}] = "{{$unidades[$i]}}";
             @endfor
 
-              d3.layout.cloud().size([300, 300])
+              d3.layout.cloud().size([1250, 720])
                   .words(clientes.map(function(d) {
                     //console.log(cont);
                     if(!aux){
@@ -39,11 +39,11 @@
                   .on("end", draw)
                   .start();
               function draw(words) {
-                d3.select("body").append("svg")
-                    .attr("width", 300)
-                    .attr("height", 300)
+                d3.select("#rutas").append("svg")
+                    .attr("width", 1250)
+                    .attr("height", 720)
                   .append("g")
-                    .attr("transform", "translate(150,150)")
+                    .attr("transform", "translate(565,275)")
                   .selectAll("text")
                     .data(words)
                   .enter().append("text")
@@ -69,7 +69,7 @@
 
         var diagonal = d3.svg.diagonal.radial().projection(function(d) { return [d.y, d.x / 180 * Math.PI]; });
 
-        var svg = d3.select("body").append("svg").attr("width", radius * 2).attr("height", radius * 2).append("g")
+        var svg = d3.select("#rutas").append("svg").attr("width", radius * 2).attr("height", radius * 2).append("g")
             .attr("transform", "translate(" + radius + "," + radius + ")");
 
         d3.json("js/camiones.json", function(error, root) {

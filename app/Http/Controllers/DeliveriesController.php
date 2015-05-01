@@ -16,7 +16,9 @@ class DeliveriesController extends Controller {
 	 */
 	public function index()
 	{
-		//
+		/********
+		**** STATS
+		********/
 		$deliveries = \DB::collection('proyecto')
 		->where('clients.cost', '=', 'null')
 		->orderBy('clients.arrival_time')
@@ -46,29 +48,33 @@ class DeliveriesController extends Controller {
 		->where('capacity', '>', 0)
 		->avg('capacity');
 
-		//var_dump($deliveries);
 		//$x = $this->calculateBestRoute($deliveries);
-		//var_dump($x);
+
+		/********
+		**** CHARTS
+		********/
+
 		//camiones 
 		//selecciona solamente los camiones
 		$trucks = \DB::collection('proyecto')
 		->select('truck_id')
 		->where('capacity', '>', 0)
 		->get();
-		$this->dendogram($trucks);
-		//var_dump($trucks);
 
 		$clientes = \DB::collection('proyecto')
 		->select('clients.name', 'clients.units_delivered')
-		->where('clients.weight_delivered', '>', 0)
+		->where('clients.units_delivered', '>', 0)
+		->orderBy('clients.units_delivered')
 		->get();
+		
 		//$this->dendogram($trucks);
 		$word = $this->word_cloud($clientes);
 		//var_dump($clientes);
 		//var_dump($trucks);
 		$nombres = array();
 		$unidades = array();
-		for($i=0; $i < sizeof($word); $i++){
+
+		for($i=0; $i < 15; $i++){
 			$nombres[$i] = $word[$i]['text'];
 			$unidades[$i] = $word[$i]['size'];
 		}
@@ -77,6 +83,13 @@ class DeliveriesController extends Controller {
 		//var_dump($unidades);
 		//var_dump($word[0]['text']);
 
+
+		/********
+		**** SUGGESTIONS
+		********/
+
+		$this->createSuggestions();
+
 		return view('deliveries.index')
 		->with('average_delivery_units', $average_delivery_units)
 		->with('average_weight_per_route', $average_weight_per_route)
@@ -84,6 +97,19 @@ class DeliveriesController extends Controller {
 		->with('trucks_average_capacity', $trucks_average_capacity)
 		->with('nombres', $nombres)
 		->with('unidades', $unidades);
+	}
+
+	public function createSuggestions()
+	{
+		$routes = Delivery::where('clients.arrival_time', 'regexp', '/^2014-06-26*./')->get();
+
+		for ($i=0; $i < sizeof($routes); $i++) { 
+			
+		}
+
+
+		//var_dump($routes);
+
 	}
 
 
@@ -95,13 +121,22 @@ class DeliveriesController extends Controller {
 			for($i=0; $i < sizeof($clientes); $i++){
 				$temp_clients = $clientes[$i]['clients'];
 				//var_dump($temp_clients);
-				for($j=0; $j < 50; $j++){
-					//var_dump($temp_clients[$j]['name']);
-					$word_cloud[] = array('text'=>$temp_clients[$j]['name'], 'size'=>$temp_clients[$j]['units_delivered']);
+				for($j=0; $j < 10; $j++){
+					//var_dump($temp_clients[$j]['units_delivered']);
+					$word_cloud[] = array(
+						'text'=>$temp_clients[$j]['name'], 
+						'size'=>$temp_clients[$j]['units_delivered']
+					);
 				}//cierre fora anidado para temp_clients			
 			}//cierre for 
 
-			//var_dump($word_cloud);
+			$units = array();
+			//ordering the array
+			foreach ($word_cloud as $key => $row) {
+				$units[$key] = $row['size'];
+			}
+			array_multisort($units, SORT_DESC, $word_cloud);
+
 			return $word_cloud;
 	}
 
@@ -137,7 +172,7 @@ class DeliveriesController extends Controller {
     					else {
     						$json .= " {\"name\": \"".$clientes[1]['clients'][$j]['name']."\", \"size\": 743},";	
 						}//cierre else						
-				}//cierre for de clientes]
+				}//cierre for de clientes
 
 				if(sizeof($trucks) -1 == $i){
 				//if(3-1 == $i){
@@ -156,7 +191,6 @@ class DeliveriesController extends Controller {
 			fclose($myfile);
 
 		return 0;
-
 
 	}//close dendogram
 

@@ -1,6 +1,6 @@
 (function() {
   function cloud() {
-    var size = [256, 256],
+    var size = [1250, 720],
         text = cloudText,
         font = cloudFont,
         fontSize = cloudFontSize,
