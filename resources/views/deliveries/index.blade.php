@@ -5,10 +5,65 @@
      
       <h1>Gr&aacute;ficas</h1>
 
+      <script>
+             var fill = d3.scale.category20();
+             var cont = 0;
+             var clientes = [];
+             var units = [];
+             var aux = false;
+            @for ($i = 0; $i < sizeof($nombres); $i++)
+                  clientes[{{$i}}] = "{{$nombres[$i]}}";
+            @endfor
+            @for ($i = 0; $i < sizeof($unidades); $i++)
+                  units[{{$i}}] = "{{$unidades[$i]}}";
+            @endfor
+
+              d3.layout.cloud().size([300, 300])
+                  .words(clientes.map(function(d) {
+                    //console.log(cont);
+                    if(!aux){
+                      aux = true;
+                      cont += 1;
+                      return {text: d, size: units[cont]};
+                    }
+                    else{
+                      cont += 1;
+                      return {text: d, size: units[cont]};
+                    }  
+                
+                  }))
+                  .padding(5)
+                  .rotate(function() { return ~~(Math.random() * 2) * 90; })
+                  .font("Impact")
+                  .fontSize(function(d) { return d.size; })
+                  .on("end", draw)
+                  .start();
+              function draw(words) {
+                d3.select("body").append("svg")
+                    .attr("width", 300)
+                    .attr("height", 300)
+                  .append("g")
+                    .attr("transform", "translate(150,150)")
+                  .selectAll("text")
+                    .data(words)
+                  .enter().append("text")
+                    .style("font-size", function(d) { return d.size + "px"; })
+                    .style("font-family", "Impact")
+                    .style("fill", function(d, i) { return fill(i); })
+                    .attr("text-anchor", "middle")
+                    .attr("transform", function(d) {
+                      return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+                    })
+                    .text(function(d) { return d.text; });
+              }
+      </script>
+
+
+<!--
         <script>
 
 
-        var radius = 960 / 2;
+        var radius = 2200 / 2;
 
         var cluster = d3.layout.cluster().size([360, radius - 120]);
 
@@ -17,7 +72,7 @@
         var svg = d3.select("body").append("svg").attr("width", radius * 2).attr("height", radius * 2).append("g")
             .attr("transform", "translate(" + radius + "," + radius + ")");
 
-        d3.json("js/flare.json", function(error, root) {
+        d3.json("js/camiones.json", function(error, root) {
           var nodes = cluster.nodes(root);
 
           var link = svg.selectAll("path.link")
@@ -43,7 +98,8 @@
         });
 
         d3.select(self.frameElement).style("height", radius * 2 + "px");
-        </script>
+        </script>-->
+        <!--
       <div id="charts_container" class="charts_container">
 
           <div id="charts_left_arrow_container" class="charts_left_arrow_container"> </div>
@@ -52,7 +108,7 @@
 
           <div id="charts_right_arrow_container" class="charts_right_arrow_container"> </div>
 
-      </div>   
+      </div>   -->
     <!--
      <div id="map-canvas"></div>-->
     </section>

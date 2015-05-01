@@ -22,6 +22,8 @@ class DeliveriesController extends Controller {
 		->orderBy('clients.arrival_time')
 		->get();
 
+		//var_dump($deliveries);
+
 		$average_deliveries = \DB::collection('proyecto')
 		->select('clients.units_delivered')
 		->where('clients.units_delivered', '>', 0)
@@ -47,12 +49,116 @@ class DeliveriesController extends Controller {
 		//var_dump($deliveries);
 		//$x = $this->calculateBestRoute($deliveries);
 		//var_dump($x);
+		//camiones 
+		//selecciona solamente los camiones
+		$trucks = \DB::collection('proyecto')
+		->select('truck_id')
+		->where('capacity', '>', 0)
+		->get();
+		$this->dendogram($trucks);
+		//var_dump($trucks);
+
+		$clientes = \DB::collection('proyecto')
+		->select('clients.name', 'clients.units_delivered')
+		->where('clients.weight_delivered', '>', 0)
+		->get();
+		//$this->dendogram($trucks);
+		$word = $this->word_cloud($clientes);
+		//var_dump($clientes);
+		//var_dump($trucks);
+		$nombres = array();
+		$unidades = array();
+		for($i=0; $i < sizeof($word); $i++){
+			$nombres[$i] = $word[$i]['text'];
+			$unidades[$i] = $word[$i]['size'];
+		}
+
+		//var_dump($nombres);
+		//var_dump($unidades);
+		//var_dump($word[0]['text']);
+
 		return view('deliveries.index')
 		->with('average_delivery_units', $average_delivery_units)
 		->with('average_weight_per_route', $average_weight_per_route)
 		->with('deliveries_out_of_route', $deliveries_out_of_route)
-		->with('trucks_average_capacity', $trucks_average_capacity);	
+		->with('trucks_average_capacity', $trucks_average_capacity)
+		->with('nombres', $nombres)
+		->with('unidades', $unidades);
 	}
+
+
+	public function word_cloud($clientes){
+			//var_dump($clientes);	
+
+			$word_cloud = array();
+
+			for($i=0; $i < sizeof($clientes); $i++){
+				$temp_clients = $clientes[$i]['clients'];
+				//var_dump($temp_clients);
+				for($j=0; $j < 50; $j++){
+					//var_dump($temp_clients[$j]['name']);
+					$word_cloud[] = array('text'=>$temp_clients[$j]['name'], 'size'=>$temp_clients[$j]['units_delivered']);
+				}//cierre fora anidado para temp_clients			
+			}//cierre for 
+
+			//var_dump($word_cloud);
+			return $word_cloud;
+	}
+
+	public function dendogram($trucks){
+
+			//recorre los camiones
+			$json = "{ \"name\": \"camiones\",
+ 						\"children\": [";
+
+			for ($i=0; $i < sizeof($trucks); $i++) { 
+ 			 //for ($i=0; $i < 3; $i++) { 
+				//var_dump($trucks[$i]['truck_id']);
+				//obtiene los clientes por camion
+				$clientes = \DB::collection('proyecto')
+					->select('clients.name')
+					->where('truck_id', '=', $trucks[$i]['truck_id'])
+					//->where('clients.weight_delivered', '>', 0)
+					->get();
+
+				//var_dump($clientes);
+				$json .= " { \"name\":  \"".$trucks[$i]['truck_id']."\",
+ 									 \"children\": [ ";	
+				//recorre los clientes
+				//for ($j=0; $j < sizeof($clientes[1]['clients']); $j++){
+ 				  for ($j=0; $j < 10; $j++){
+					//var_dump($clientes[1]['clients'][$j]['name']);
+						//$aux = sizeof($clientes[1]['clients']);
+						//if(sizeof($clientes[1]['clients'])-1 == $j) {
+ 				  		  if(10-1 == $j) {
+						//if(3-1 == $j) {
+							$json .= " {\"name\": \"".$clientes[1]['clients'][$j]['name']."\", \"size\": 743}";
+    					}//cierre if
+    					else {
+    						$json .= " {\"name\": \"".$clientes[1]['clients'][$j]['name']."\", \"size\": 743},";	
+						}//cierre else						
+				}//cierre for de clientes]
+
+				if(sizeof($trucks) -1 == $i){
+				//if(3-1 == $i){
+					$json .= "] }";
+				}
+				else{
+					$json .= "] },";
+				}
+				//var_dump($clientes);
+			}
+
+			$json .= " ] }";
+			//ar_dump($json);
+			$myfile = fopen("js/camiones.json", "w") or die("Unable to open file!");
+			fwrite($myfile, $json);
+			fclose($myfile);
+
+		return 0;
+
+
+	}//close dendogram
 
 	public function getAvgWeight($average_weight_delivered)
 	{

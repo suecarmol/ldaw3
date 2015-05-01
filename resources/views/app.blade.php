@@ -19,6 +19,7 @@
     <link href="{{ asset('css/charts.css') }}" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/map_style.css') }}"/>
     <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="{{ asset('js/d3.layout.cloud.js') }}"> </script>
     <!-- Custom Fonts -->
 
     <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
