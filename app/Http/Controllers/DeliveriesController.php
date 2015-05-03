@@ -84,6 +84,21 @@ class DeliveriesController extends Controller {
 		//var_dump($word[0]['text']);
 
 
+
+		//bubble chart
+
+			//funcion para el bubble chart
+		$bubble_clientes = \DB::collection('proyecto')
+		->select('clients.name', 'clients.units_delivered')
+		->where('clients.units_delivered', '>', 0)
+		->orderBy('clients.units_delivered')
+		->get();
+
+		$bubble = $this->bubble_chart($bubble_clientes);
+
+		//var_dump($bubble[1]['size']);
+
+
 		/********
 		**** SUGGESTIONS
 		********/
@@ -96,6 +111,7 @@ class DeliveriesController extends Controller {
 		->with('deliveries_out_of_route', $deliveries_out_of_route)
 		->with('trucks_average_capacity', $trucks_average_capacity)
 		->with('nombres', $nombres)
+		->with('bubble', $bubble)
 		->with('unidades', $unidades);
 	}
 
@@ -112,7 +128,39 @@ class DeliveriesController extends Controller {
 
 	}
 
+	
+	public function bubble_chart($bubble_clientes){
 
+		//var_dump($clientes);	
+
+			$bubble = array();
+
+			var_dump(sizeof($bubble_clientes));
+
+			//for($i=0; $i < sizeof($bubble_clientes); $i++){
+			for($i=0; $i < 5; $i++){
+				$temp_clients = $bubble_clientes[$i]['clients'];
+				//var_dump($temp_clients);
+				for($j=0; $j < 2; $j++){
+					//var_dump($temp_clients[$j]['units_delivered']);
+					$bubble[] = array(
+						'text'=>$temp_clients[$j]['name'], 
+						'size'=>$temp_clients[$j]['units_delivered']
+					);
+				}//cierre fora anidado para temp_clients			
+			}//cierre for 
+
+			$units = array();
+			//ordering the array
+			foreach ($bubble as $key => $row) {
+				$units[$key] = $row['size'];
+			}
+			array_multisort($units, SORT_DESC, $bubble);
+
+			return $bubble;
+
+
+	}
 	public function word_cloud($clientes){
 			//var_dump($clientes);	
 

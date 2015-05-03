@@ -19,6 +19,16 @@
     <link href="{{ asset('css/charts.css') }}" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/map_style.css') }}"/>
     <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="{{ asset('js/jquery.js') }}"></script>
+    <script src="http://phuonghuynh.github.io/js/bower_components/d3/d3.min.js"></script>
+    <script src="http://phuonghuynh.github.io/js/bower_components/d3-transform/src/d3-transform.js"></script>
+    <script src="http://phuonghuynh.github.io/js/bower_components/cafej/src/extarray.js"></script>
+    <script src="http://phuonghuynh.github.io/js/bower_components/cafej/src/misc.js"></script>
+    <script src="http://phuonghuynh.github.io/js/bower_components/cafej/src/micro-observer.js"></script>
+    <script src="http://phuonghuynh.github.io/js/bower_components/microplugin/src/microplugin.js"></script>
+    <script src="http://phuonghuynh.github.io/js/bower_components/bubble-chart/src/bubble-chart.js"></script>
+    <script src="http://phuonghuynh.github.io/js/bower_components/bubble-chart/src/plugins/central-click/central-click.js"></script>
+    <script src="http://phuonghuynh.github.io/js/bower_components/bubble-chart/src/plugins/lines/lines.js"></script>
     <script src="{{ asset('js/d3.layout.cloud.js') }}"> </script>
     <!-- Custom Fonts -->
 
@@ -110,8 +120,6 @@
         </div>
     </footer>
 
-    <!-- jQuery -->
-    <script src="{{ asset('js/jquery.js') }}"></script>
 
     <!-- Bootstrap Core JavaScript -->
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
@@ -119,7 +127,6 @@
     <!-- Script que permite la aparición del menu -->
     <script src="{{ asset('js/menu.js') }}"> </script>
     <script src="{{ asset('js/maps.js') }}"> </script>
-    <script src="{{ asset('js/charts.js') }}"> </script>
     <script src="{{ asset('js/init_map_bk.js') }}"> </script>
 
 </body>
