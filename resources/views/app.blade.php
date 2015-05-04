@@ -16,7 +16,7 @@
      <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet">
     <!-- Custom CSS -->
     <link href="{{ asset('css/stylish-portfolio.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/charts.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/inception.css') }}" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/map_style.css') }}"/>
     <script src="http://d3js.org/d3.v3.min.js"></script>
     <script src="{{ asset('js/jquery.js') }}"></script>
@@ -41,7 +41,6 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-
 </head>
 
 <body>

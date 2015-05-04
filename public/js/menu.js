@@ -26,3 +26,14 @@
             }
         });
     });
+
+
+
+    
+//script para las tabs
+$(document).ready(function(){ 
+    $("#tabgraficas a").click(function(e){
+        e.preventDefault();
+        $(this).tab('show');
+    });
+});

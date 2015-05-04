@@ -5,231 +5,52 @@
      
       <h1>Gr&aacute;ficas</h1>
 
-    <!--  <script>
-             var fill = d3.scale.category20();
-             var cont = 0;
-             var clientes = [];
-             var units = [];
-             var aux = false;
-            @for ($i = 0; $i < sizeof($nombres); $i++)
-                  clientes[{{$i}}] = "{{$nombres[$i]}}";
-            @endfor
-            @for ($i = 0; $i < sizeof($unidades); $i++)
-                  units[{{$i}}] = "{{$unidades[$i]}}";
-            @endfor
 
-              d3.layout.cloud().size([1250, 720])
-                  .words(clientes.map(function(d) {
-                    //console.log(cont);
-                    if(!aux){
-                      aux = true;
-                      cont += 1;
-                      return {text: d, size: units[cont]};
-                    }
-                    else{
-                      cont += 1;
-                      return {text: d, size: units[cont]};
-                    }  
+        <!--tab-->
+        <div class="tab-graficas" id="navv">
+          <ul class="nav nav-tabs" role="tablist" id="tabgraficas">
+                <li class="active"><a href="#dendogram">Dendogram</a></li>
+                <li><a href="#word_cloud">Word Cloud</a></li>
+                <li><a href="#bubble_chart">Bubble Chart</a></li>
+                <li><a href="#inception">Inception</a></li>
+            </ul>
+
+
+
+
+            <div class="tab-content">
+
+                  <div class="container theme-showcase tab-pane fade in active" role="main" id="dendogram">
+
+                          <h2>dendogram</h2>
+                          
+                        
+                  </div> <!-- /container-->
+
+
+                  <!--container del word_cloud-->
+                   <div role="main" class="container theme-showcase tab-pane fade" id="word_cloud">
+                        <h2>word</h2>
+                        
+                  </div><!-- /container-->
+
+
+                   <!--container de las bubble_chart-->
+                   <div role="main" class="container theme-showcase tab-pane fade bubbleChart" id="bubble_chart">
+                            <h2>bubble</h2>
+                  </div><!-- /container-->
+
+                   <!--container de las bubble_chart-->
+                   <div role="main" class="container theme-showcase tab-pane fade" id="inception">
+                      <h2>inception</h2>
                 
-                  }))
-                  .padding(5)
-                  .rotate(function() { return ~~(Math.random() * 2) * 90; })
-                  .font("Impact")
-                  .fontSize(function(d) { return d.size; })
-                  .on("end", draw)
-                  .start();
-              function draw(words) {
-                d3.select("#rutas").append("svg")
-                    .attr("width", 1250)
-                    .attr("height", 720)
-                  .append("g")
-                    .attr("transform", "translate(565,275)")
-                  .selectAll("text")
-                    .data(words)
-                  .enter().append("text")
-                    .style("font-size", function(d) { return d.size + "px"; })
-                    .style("font-family", "Impact")
-                    .style("fill", function(d, i) { return fill(i); })
-                    .attr("text-anchor", "middle")
-                    .attr("transform", function(d) {
-                      return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
-                    })
-                    .text(function(d) { return d.text; });
-              }
-      </script>-->
+                  </div><!-- /container-->
 
-
-
-      <!--Dendogram-->
-
-      <!--
-        <script>
-
-
-        var radius = 2200 / 2;
-
-        var cluster = d3.layout.cluster().size([360, radius - 120]);
-
-        var diagonal = d3.svg.diagonal.radial().projection(function(d) { return [d.y, d.x / 180 * Math.PI]; });
-
-        var svg = d3.select("#rutas").append("svg").attr("width", radius * 2).attr("height", radius * 2).append("g")
-            .attr("transform", "translate(" + radius + "," + radius + ")");
-
-        d3.json("js/camiones.json", function(error, root) {
-          var nodes = cluster.nodes(root);
-
-          var link = svg.selectAll("path.link")
-              .data(cluster.links(nodes))
-            .enter().append("path")
-              .attr("class", "link")
-              .attr("d", diagonal);
-
-          var node = svg.selectAll("g.node")
-              .data(nodes)
-            .enter().append("g")
-              .attr("class", "node")
-              .attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")"; })
-
-          node.append("circle")
-              .attr("r", 4.5);
-
-          node.append("text")
-              .attr("dy", ".31em")
-              .attr("text-anchor", function(d) { return d.x < 180 ? "start" : "end"; })
-              .attr("transform", function(d) { return d.x < 180 ? "translate(8)" : "rotate(180)translate(-8)"; })
-              .text(function(d) { return d.name; });
-        });
-
-        d3.select(self.frameElement).style("height", radius * 2 + "px");
-        </script>-->
-        <!--Dendogram-->
-
-
-        <script>
-
-$(document).ready(function () {
-
-
-  var obj = {};
-  var clientes = [];
-  var text = 'text';
-  var size = 'size';
-
-
-   @for ($i = 0; $i < sizeof($bubble); $i++)
-                  obj = {text: '{{$bubble[$i]['text']}}', count: '{{$bubble[$i]['size']}}'};
-                  clientes.push(obj);
-  @endfor
-
-  console.log(clientes);
-  //console.log(clientes);s
- 
-
-  var bubbleChart = new d3.svg.BubbleChart({
-    supportResponsive: true,
-    //container: => use @default
-    size: 600,
-    //viewBoxSize: => use @default
-    innerRadius: 600 / 3.5,
-    //outerRadius: => use @default
-    radiusMin: 50,
-    //radiusMax: use @default
-    //intersectDelta: use @default
-    //intersectInc: use @default
-    //circleColor: use @default
-    //en items va el arreglo de objetos json
-    data: {
-      items: clientes,
-      eval: function (item) {return item.count;},
-      classed: function (item) {return item.text.split(" ").join("");}
-    },
-    plugins: [
-      {
-        name: "central-click",
-        options: {
-          text: "(See more detail)",
-          style: {
-            "font-size": "12px",
-            "font-style": "italic",
-            "font-family": "Source Sans Pro, sans-serif",
-            //"font-weight": "700",
-            "text-anchor": "middle",
-            "fill": "white"
-          },
-          attr: {dy: "65px"},
-          centralClick: function() {
-            alert("Here is more details!!");
-          }
-        }
-      },
-      {
-        name: "lines",
-        options: {
-          format: [
-            {// Line #0
-              textField: "count",
-              classed: {count: true},
-              style: {
-                "font-size": "28px",
-                "font-family": "Source Sans Pro, sans-serif",
-                "text-anchor": "middle",
-                fill: "white"
-              },
-              attr: {
-                dy: "0px",
-                x: function (d) {return d.cx;},
-                y: function (d) {return d.cy;}
-              }
-            },
-            {// Line #1
-              textField: "text",
-              classed: {text: true},
-              style: {
-                "font-size": "14px",
-                "font-family": "Source Sans Pro, sans-serif",
-                "text-anchor": "middle",
-                fill: "white"
-              },
-              attr: {
-                dy: "20px",
-                x: function (d) {return d.cx;},
-                y: function (d) {return d.cy;}
-              }
-            }
-          ],
-          centralFormat: [
-            {// Line #0
-              style: {"font-size": "50px"},
-              attr: {}
-            },
-            {// Line #1
-              style: {"font-size": "30px"},
-              attr: {dy: "40px"}
-            }
-          ]
-        }
-      }]
-  });
-});
-
-        </script>
+            </div><!--tab-content-->
+        </div><!--cierre-->
 
         <!--bubble chart-->
-          <div class="bubbleChart">
-          </div>
-        <!--bubble chart-->
-        <!--
-      <div id="charts_container" class="charts_container">
-
-          <div id="charts_left_arrow_container" class="charts_left_arrow_container"> </div>
-
-          <div id="chart_container" class="chart_container"> </div>
-
-          <div id="charts_right_arrow_container" class="charts_right_arrow_container"> </div>
-
-      </div>   -->
-    <!--
-     <div id="map-canvas"></div>-->
+                            
     </section>
 
 
@@ -299,4 +120,282 @@ $(document).ready(function () {
         <!-- /.container -->
     </section>
 
+    <!--Scripts De las gráficas Staticas-->
+        <!--bubble chart-->
+    <script>
+        $(document).ready(function () {
+          var obj = {};
+          var clientes = [];
+          var text = 'text';
+          var size = 'size';
+           @for ($i = 0; $i < sizeof($bubble); $i++)
+                          obj = {text: '{{$bubble[$i]['text']}}', count: '{{$bubble[$i]['size']}}'};
+                          clientes.push(obj);
+          @endfor
+          //console.log(clientes);
+          //console.log(clientes);s
+          var bubbleChart = new d3.svg.BubbleChart({
+            supportResponsive: true,
+            //container: => use @default
+            size: 600,
+            //viewBoxSize: => use @default
+            innerRadius: 600 / 3.5,
+            //outerRadius: => use @default
+            radiusMin: 50,
+            //radiusMax: use @default
+            //intersectDelta: use @default
+            //intersectInc: use @default
+            //circleColor: use @default
+            //en items va el arreglo de objetos json
+            data: {
+              items: clientes,
+              eval: function (item) {return item.count;},
+              classed: function (item) {return item.text.split(" ").join("");}
+            },
+            plugins: [
+              {
+                name: "central-click",
+                options: {
+                  text: "(See more detail)",
+                  style: {
+                    "font-size": "12px",
+                    "font-style": "italic",
+                    "font-family": "Source Sans Pro, sans-serif",
+                    //"font-weight": "700",
+                    "text-anchor": "middle",
+                    "fill": "white"
+                  },
+                  attr: {dy: "65px"},
+                  centralClick: function() {
+                    alert("Here is more details!!");
+                  }
+                }
+              },
+              {
+                name: "lines",
+                options: {
+                  format: [
+                    {// Line #0
+                      textField: "count",
+                      classed: {count: true},
+                      style: {
+                        "font-size": "28px",
+                        "font-family": "Source Sans Pro, sans-serif",
+                        "text-anchor": "middle",
+                        fill: "white"
+                      },
+                      attr: {
+                        dy: "0px",
+                        x: function (d) {return d.cx;},
+                        y: function (d) {return d.cy;}
+                      }
+                    },
+                    {// Line #1
+                      textField: "text",
+                      classed: {text: true},
+                      style: {
+                        "font-size": "14px",
+                        "font-family": "Source Sans Pro, sans-serif",
+                        "text-anchor": "middle",
+                        fill: "white"
+                      },
+                      attr: {
+                        dy: "20px",
+                        x: function (d) {return d.cx;},
+                        y: function (d) {return d.cy;}
+                      }
+                    }
+                  ],
+                  centralFormat: [
+                    {// Line #0
+                      style: {"font-size": "50px"},
+                      attr: {}
+                    },
+                    {// Line #1
+                      style: {"font-size": "30px"},
+                      attr: {dy: "40px"}
+                    }
+                  ]
+                }
+              }]
+          });
+        });
+    </script>
+    <!--bubble chart -->
+     <!--Dendogram-->
+    <script>
+          var radius = 2200 / 2;
+
+          var cluster = d3.layout.cluster().size([360, radius - 120]);
+
+          var diagonal = d3.svg.diagonal.radial().projection(function(d) { return [d.y, d.x / 180 * Math.PI]; });
+
+          var svg = d3.select("#dendogram").append("svg").attr("width", radius * 2).attr("height", radius * 2).append("g")
+              .attr("transform", "translate(" + radius + "," + radius + ")");
+
+          d3.json("js/camiones.json", function(error, root) {
+            var nodes = cluster.nodes(root);
+
+            var link = svg.selectAll("path.link")
+                .data(cluster.links(nodes))
+              .enter().append("path")
+                .attr("class", "link")
+                .attr("d", diagonal);
+
+            var node = svg.selectAll("g.node")
+                .data(nodes)
+              .enter().append("g")
+                .attr("class", "node")
+                .attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")"; })
+
+            node.append("circle")
+                .attr("r", 4.5);
+
+            node.append("text")
+                .attr("dy", ".31em")
+                .attr("text-anchor", function(d) { return d.x < 180 ? "start" : "end"; })
+                .attr("transform", function(d) { return d.x < 180 ? "translate(8)" : "rotate(180)translate(-8)"; })
+                .text(function(d) { return d.name; });
+          });
+
+          d3.select(self.frameElement).style("height", radius * 2 + "px");
+    </script>
+    <!--Dendogram--> 
+  
+    <!--word_cloud-->
+    <script>
+               var fill = d3.scale.category20();
+               var cont = 0;
+               var clientes = [];
+               var units = [];
+               var aux = false;
+              @for ($i = 0; $i < sizeof($nombres); $i++)
+                    clientes[{{$i}}] = "{{$nombres[$i]}}";
+              @endfor
+              @for ($i = 0; $i < sizeof($unidades); $i++)
+                    units[{{$i}}] = "{{$unidades[$i]}}";
+              @endfor
+
+            d3.layout.cloud().size([1250, 720])
+                .words(clientes.map(function(d) {
+                  //console.log(cont);
+                  if(!aux){
+                    aux = true;
+                    cont += 1;
+                    return {text: d, size: units[cont]};
+                  }
+                  else{
+                    cont += 1;
+                    return {text: d, size: units[cont]};
+                  }  
+              
+                }))
+                .padding(5)
+                .rotate(function() { return ~~(Math.random() * 2) * 90; })
+                .font("Impact")
+                .fontSize(function(d) { return d.size; })
+                .on("end", draw)
+                .start();
+            function draw(words) {
+              d3.select("#word_cloud").append("svg")
+                  .attr("width", 1250)
+                  .attr("height", 720)
+                .append("g")
+                  .attr("transform", "translate(565,275)")
+                .selectAll("text")
+                  .data(words)
+                .enter().append("text")
+                  .style("font-size", function(d) { return d.size + "px"; })
+                  .style("font-family", "Impact")
+                  .style("fill", function(d, i) { return fill(i); })
+                  .attr("text-anchor", "middle")
+                  .attr("transform", function(d) {
+                    return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+                  })
+                  .text(function(d) { return d.text; });
+            }
+    </script>
+    <!--word_cloud-->
+ 
+ 
+       <!--inception-->
+    <script>
+        var margin = 20,
+            diameter = 960;
+
+        var color = d3.scale.linear()
+            .domain([-1, 5])
+            .range(["hsl(152,80%,80%)", "hsl(228,30%,40%)"])
+            .interpolate(d3.interpolateHcl);
+
+        var pack = d3.layout.pack()
+            .padding(2)
+            .size([diameter - margin, diameter - margin])
+            .value(function(d) { return d.size; })
+
+        var svg = d3.select("#inception").append("svg")
+            .attr("width", diameter)
+            .attr("height", diameter)
+          .append("g")
+            .attr("transform", "translate(" + diameter / 2 + "," + diameter / 2 + ")");
+
+        d3.json("js/inception.json", function(error, root) {
+          if (error) return console.error(error);
+
+          var focus = root,
+              nodes = pack.nodes(root),
+              view;
+
+          var circle = svg.selectAll("circle")
+              .data(nodes)
+            .enter().append("circle")
+              .attr("class", function(d) { return d.parent ? d.children ? "node" : "node node--leaf" : "node node--root"; })
+              .style("fill", function(d) { return d.children ? color(d.depth) : null; })
+              .on("click", function(d) { if (focus !== d) zoom(d), d3.event.stopPropagation(); });
+
+          var text = svg.selectAll("text")
+              .data(nodes)
+            .enter().append("text")
+              .attr("class", "label")
+              .style("fill-opacity", function(d) { return d.parent === root ? 1 : 0; })
+              .style("display", function(d) { return d.parent === root ? null : "none"; })
+              .text(function(d) { return d.name; });
+
+          var node = svg.selectAll("circle,text");
+
+          d3.select("#inception")
+              .style("background", color(-1))
+              .on("click", function() { zoom(root); });
+
+          zoomTo([root.x, root.y, root.r * 2 + margin]);
+
+          function zoom(d) {
+            var focus0 = focus; focus = d;
+
+            var transition = d3.transition()
+                .duration(d3.event.altKey ? 7500 : 750)
+                .tween("zoom", function(d) {
+                  var i = d3.interpolateZoom(view, [focus.x, focus.y, focus.r * 2 + margin]);
+                  return function(t) { zoomTo(i(t)); };
+                });
+
+            transition.selectAll("text")
+              .filter(function(d) { return d.parent === focus || this.style.display === "inline"; })
+                .style("fill-opacity", function(d) { return d.parent === focus ? 1 : 0; })
+                .each("start", function(d) { if (d.parent === focus) this.style.display = "inline"; })
+                .each("end", function(d) { if (d.parent !== focus) this.style.display = "none"; });
+          }
+
+          function zoomTo(v) {
+            var k = diameter / v[2]; view = v;
+            node.attr("transform", function(d) { return "translate(" + (d.x - v[0]) * k + "," + (d.y - v[1]) * k + ")"; });
+            circle.attr("r", function(d) { return d.r * k; });
+          }
+        });
+
+        d3.select(self.frameElement).style("height", diameter + "px");
+
+    </script>
+    <!--cierre inception-->
+    
 	@stop	
