@@ -17,6 +17,8 @@ Route::get('home', 'HomeController@index');
 
 Route::get('deliveries', 'DeliveriesController@index');
 
+Route::get('deliveries_2', 'Deliveries2Controller@index');
+
 Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
