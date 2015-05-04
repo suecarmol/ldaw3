@@ -12,14 +12,14 @@
     <title>Proyecto LDAW</title>
 
     <!-- Bootstrap Core CSS -->
+    <script src="{{ asset('js/jquery.js') }}"></script>
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/inception.css') }}"/>
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
-     <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet">
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet">
     <!-- Custom CSS -->
     <link href="{{ asset('css/stylish-portfolio.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/inception.css') }}" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/map_style.css') }}"/>
-    <script src="http://d3js.org/d3.v3.min.js"></script>
-    <script src="{{ asset('js/jquery.js') }}"></script>
     <script src="http://phuonghuynh.github.io/js/bower_components/d3/d3.min.js"></script>
     <script src="http://phuonghuynh.github.io/js/bower_components/d3-transform/src/d3-transform.js"></script>
     <script src="http://phuonghuynh.github.io/js/bower_components/cafej/src/extarray.js"></script>
@@ -35,6 +35,7 @@
     <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
 
 	<script src="http://maps.googleapis.com/maps/api/js"></script>
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
