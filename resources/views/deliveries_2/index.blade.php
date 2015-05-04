@@ -167,7 +167,8 @@
                     <th style="border: 1px solid black;">Cliente</th>
                     <th style="border: 1px solid black;" colspan="5">Ruta 1</th>
                     <th style="border: 1px solid black;" colspan="5">Ruta 2</th>
-                    <th style="border: 1px solid black;" colspan="12">Fecha</th>
+                    <th style="border: 1px solid black;" colspan="12">Fecha 1</th>
+                    <th style="border: 1px solid black;" colspan="12">Fecha 2</th>
                     <th style="border: 1px solid black;" >Cami&oacute;n a Compartir</th>
                   </tr>
                 </thead>
@@ -177,7 +178,8 @@
                       <td style="border: 1px solid black;"> {{ $suggestions[$i]['client_name'] }} </td>
                       <td style="border: 1px solid black;" colspan="5"> {{ $suggestions[$i]['route_name_1'] }} </td>
                       <td style="border: 1px solid black;" colspan="5"> {{ $suggestions[$i]['route_name_2'] }} </td>
-                      <td style="border: 1px solid black;" colspan="12"> {{ $suggestions[$i]['date'] }} </td>
+                      <td style="border: 1px solid black;" colspan="12"> {{ $suggestions[$i]['date_1'] }} </td>
+                      <td style="border: 1px solid black;" colspan="12"> {{ $suggestions[$i]['date_2'] }} </td>
                       <td style="border: 1px solid black;"> {{ $suggestions[$i]['chosen_truck'] }} </td>
                     </tr>
                   @endfor

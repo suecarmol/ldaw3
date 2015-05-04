@@ -122,11 +122,12 @@ class Deliveries2Controller extends Controller {
 					//var_dump($temp_clients);
 					for ($j=0; $j < sizeof($temp_clients); $j++) { 
 						for ($k=0; $k < sizeof($temp_clients); $k++) {
-							//var_dump(substr($temp_clients[$j]['arrival_time'], 0, 13) . '==' . $date);
+							//var_dump($temp_clients[$j]['arrival_time']. '||||' . $temp_clients[$k]['arrival_time']);
 							if($temp_clients[$j]['name'] == $temp_clients[$k]['name'] && substr($temp_clients[$j]['arrival_time'], 0, 13) == $date && substr($temp_clients[$k]['arrival_time'], 0, 13) == $date)
 							{
 								//var_dump('hay una coincidencia: ' . 'cliente_1: ' . $temp_clients[$j]['name'] . ' cliente_2: ' . $temp_clients[$k]['name']);
-								
+								//var_dump($temp_clients[$j]['arrival_time'] . '||||' . $temp_clients[$k]['arrival_time']);
+
 								$total_weight_delivered = $temp_clients[$j]['weight_delivered'] + $temp_clients[$k]['weight_delivered'];
 
 								$truck1 = \DB::collection('proyecto')
@@ -171,7 +172,8 @@ class Deliveries2Controller extends Controller {
 									'route_name_2' => $routes[$ii]['route_id'],
 									'chosen_truck' => $chosen_truck,
 									'client_name' => $temp_clients[$j]['name'],
-									'date' => date('d/m/Y H:i:s', strtotime($temp_clients[$k]['arrival_time']))
+									'date_1' => date('d/m/Y H:00', strtotime($temp_clients[$j]['arrival_time'])),
+									'date_2' => date('d/m/Y H:00', strtotime($temp_clients[$k]['arrival_time']))
 								);
 							}
 						}
@@ -179,8 +181,6 @@ class Deliveries2Controller extends Controller {
 				} //end if	
 			} // end for ii
 		} //end for i
-
-		//var_dump($suggestions);
 
 		return $suggestions;
 

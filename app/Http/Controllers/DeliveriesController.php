@@ -112,7 +112,7 @@ class DeliveriesController extends Controller {
 		**** SUGGESTIONS
 		********/
 
-		$this->createSuggestions();
+		$suggestions = $this->createSuggestions();
 
 		return view('deliveries.index')
 		->with('average_delivery_units', $average_delivery_units)
@@ -121,19 +121,92 @@ class DeliveriesController extends Controller {
 		->with('trucks_average_capacity', $trucks_average_capacity)
 		->with('nombres', $nombres)
 		->with('bubble', $bubble)
-		->with('unidades', $unidades);
+		->with('unidades', $unidades)
+		->with('suggestions', $suggestions);
 	}
 
 	public function createSuggestions()
 	{
-		$routes = Delivery::where('clients.arrival_time', 'regexp', '/^2014-06-26*./')->get();
 
-		for ($i=0; $i < sizeof($routes); $i++) { 
-			
-		}
+		$date = '2014-05-12 08';
+		//not using this right now
+		$hour = '';
+		$routes = Delivery::where('clients.arrival_time', 'regexp', '/^'.$date.'*./')->get();
 
+		$suggestions = array();
 
 		//var_dump($routes);
+
+		for ($i=0; $i < sizeof($routes); $i++) { 
+			for($ii = 0; $ii < sizeof($routes); $ii++) { 
+				//var_dump($routes[$i]['route_id'] . '!=' . $routes[$ii]['route_id']);
+				if($routes[$i]['route_id'] != $routes[$ii]['route_id'])
+				{
+					$temp_clients = $routes[$ii]['clients'];
+					//var_dump($temp_clients);
+					for ($j=0; $j < sizeof($temp_clients); $j++) { 
+						for ($k=0; $k < sizeof($temp_clients); $k++) {
+							//var_dump($temp_clients[$j]['arrival_time']. '||||' . $temp_clients[$k]['arrival_time']);
+							if($temp_clients[$j]['name'] == $temp_clients[$k]['name'] && substr($temp_clients[$j]['arrival_time'], 0, 13) == $date && substr($temp_clients[$k]['arrival_time'], 0, 13) == $date)
+							{
+								//var_dump('hay una coincidencia: ' . 'cliente_1: ' . $temp_clients[$j]['name'] . ' cliente_2: ' . $temp_clients[$k]['name']);
+								//var_dump($temp_clients[$j]['arrival_time'] . '||||' . $temp_clients[$k]['arrival_time']);
+
+								$total_weight_delivered = $temp_clients[$j]['weight_delivered'] + $temp_clients[$k]['weight_delivered'];
+
+								$truck1 = \DB::collection('proyecto')
+								->select('truck_id', 'capacity', 'average_grade')
+								->where('truck_id', '=', $routes[$i]['truck_id'])
+								->where('capacity', '>', $total_weight_delivered)
+								->get();
+
+								$truck2 = \DB::collection('proyecto')
+								->select('truck_id', 'capacity', 'average_grade')
+								->where('truck_id', '=', $routes[$ii]['truck_id'])
+								->where('capacity', '>', $total_weight_delivered)
+								->get();
+
+								//var_dump($total_weight_delivered);
+								//var_dump($truck1);
+								//var_dump($truck2);
+
+								//choose between the two trucks based on average grade
+								if($truck1[0]['average_grade'] > $truck2[0]['average_grade']){
+									$chosen_truck = $truck1[0]['truck_id'];
+								}
+								elseif($truck2[0]['average_grade'] > $truck1[0]['average_grade']){
+									$chosen_truck = $truck2[0]['truck_id'];
+								}
+								else{
+									//if the average grades are the same
+									$random_selection = mt_rand(1, 2);
+
+									if ($random_selection == 1) {
+										$chosen_truck = $truck1[0]['truck_id'];
+									}
+									else{
+										$chosen_truck = $truck2[0]['truck_id'];
+									}
+								}
+
+								//var_dump($temp_clients[$k]['arrival_time']);
+
+								$suggestions [] = array(
+									'route_name_1' => $routes[$i]['route_id'],
+									'route_name_2' => $routes[$ii]['route_id'],
+									'chosen_truck' => $chosen_truck,
+									'client_name' => $temp_clients[$j]['name'],
+									'date_1' => date('d/m/Y H:00', strtotime($temp_clients[$j]['arrival_time'])),
+									'date_2' => date('d/m/Y H:00', strtotime($temp_clients[$k]['arrival_time']))
+								);
+							}
+						}
+					}
+				} //end if	
+			} // end for ii
+		} //end for i
+
+		return $suggestions;
 
 	}
 
