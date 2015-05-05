@@ -55,18 +55,23 @@ class Deliveries2Controller extends Controller {
 
 		//camiones 
 		//selecciona solamente los camiones
+		//primer documento de la grafica del dendogram
 		$trucks = \DB::collection('proyecto')
 		->select('truck_id')
 		->where('capacity', '>', 0)
 		->get();
+
+		//$this->dendogram($trucks);
+		//$this->dendogram_2($trucks);
+		//$this->dendogram_3($trucks);
+
 
 		$clientes = \DB::collection('proyecto')
 		->select('clients.name', 'clients.units_delivered')
 		->where('clients.units_delivered', '>', 0)
 		->orderBy('clients.units_delivered')
 		->get();
-		
-		//$this->dendogram($trucks);
+	
 		$word = $this->word_cloud($clientes);
 		//var_dump($clientes);
 		//var_dump($trucks);
@@ -113,7 +118,7 @@ class Deliveries2Controller extends Controller {
 
 		$suggestions = $this->createSuggestions();
 
-		return view('deliveries.index')
+		return view('deliveries_2.index')
 		->with('average_delivery_units', $average_delivery_units)
 		->with('average_weight_per_route', $average_weight_per_route)
 		->with('deliveries_out_of_route', $deliveries_out_of_route)
@@ -283,7 +288,6 @@ class Deliveries2Controller extends Controller {
 
 		return 0;
 
-
 	}//Cierre inception
 	
 	public function bubble_chart($bubble_clientes){
@@ -341,6 +345,7 @@ class Deliveries2Controller extends Controller {
 			return $word_cloud;
 	}
 
+	//Dedogram por peso entregado
 	public function dendogram($trucks){
 
 			//recorre los camiones
@@ -352,11 +357,24 @@ class Deliveries2Controller extends Controller {
 				//var_dump($trucks[$i]['truck_id']);
 				//obtiene los clientes por camion
 				$clientes = \DB::collection('proyecto')
-					->select('clients.name')
+					->select('clients.name', 'clients.weight_delivered')
 					->where('truck_id', '=', $trucks[$i]['truck_id'])
-					//->where('clients.weight_delivered', '>', 0)
+					->where('clients.weight_delivered', '>', 0)
+					->orderBy('clients.weight_delivered')
 					->get();
 
+				//var_dump($clientes);
+				$peso = array();
+				$aux = 0;
+				foreach ($clientes as $key => $row) {
+					//var_dump($row);
+					$peso[$aux] = $row['clients'][$aux]['weight_delivered'];
+					$aux++;
+				}
+
+				array_multisort($peso, SORT_DESC, $clientes);
+
+				
 				//var_dump($clientes);
 				$json .= " { \"name\":  \"".$trucks[$i]['truck_id']."\",
  									 \"children\": [ ";	
@@ -368,10 +386,10 @@ class Deliveries2Controller extends Controller {
 						//if(sizeof($clientes[1]['clients'])-1 == $j) {
  				  		  if(10-1 == $j) {
 						//if(3-1 == $j) {
-							$json .= " {\"name\": \"".$clientes[1]['clients'][$j]['name']."\", \"size\": 743}";
+							$json .= " {\"name\": \"".$clientes[0]['clients'][$j]['name']."\", \"size\": 743}";
     					}//cierre if
     					else {
-    						$json .= " {\"name\": \"".$clientes[1]['clients'][$j]['name']."\", \"size\": 743},";	
+    						$json .= " {\"name\": \"".$clientes[0]['clients'][$j]['name']."\", \"size\": 743},";	
 						}//cierre else						
 				}//cierre for de clientes
 
@@ -388,6 +406,143 @@ class Deliveries2Controller extends Controller {
 			$json .= " ] }";
 			//ar_dump($json);
 			$myfile = fopen("js/camiones.json", "w") or die("Unable to open file!");
+			fwrite($myfile, $json);
+			fclose($myfile);
+
+		return 0;
+
+	}//close dendogram
+
+
+	//dendogram por unidades entregadas
+	public function dendogram_2($trucks){
+
+			//recorre los camiones
+			$json = "{ \"name\": \"camiones\",
+ 						\"children\": [";
+
+			for ($i=0; $i < sizeof($trucks); $i++) { 
+ 			 //for ($i=0; $i < 3; $i++) { 
+				//var_dump($trucks[$i]['truck_id']);
+				//obtiene los clientes por camion
+				$clientes = \DB::collection('proyecto')
+					->select('clients.name', 'clients.units_delivered')
+					->where('truck_id', '=', $trucks[$i]['truck_id'])
+					->where('clients.units_delivered', '>', 0)
+					->orderBy('clients.units_delivered')
+					->get();
+					//var_dump($clientes);
+
+					$peso = array();
+				$aux = 0;
+				foreach ($clientes as $key => $row) {
+					//var_dump($row);
+					$peso[$aux] = $row['clients'][$aux]['units_delivered'];
+					$aux++;
+				}
+
+				array_multisort($peso, SORT_DESC, $clientes);
+
+				//var_dump($clientes);
+
+				//var_dump($clientes);
+				$json .= " { \"name\":  \"".$trucks[$i]['truck_id']."\",
+ 									 \"children\": [ ";	
+				//recorre los clientes
+				//for ($j=0; $j < sizeof($clientes[1]['clients']); $j++){
+ 				  for ($j=0; $j < 10; $j++){
+					//var_dump($clientes[1]['clients'][$j]['name']);
+						//$aux = sizeof($clientes[1]['clients']);
+						//if(sizeof($clientes[1]['clients'])-1 == $j) {
+ 				  		  if(10-1 == $j) {
+						//if(3-1 == $j) {
+							$json .= " {\"name\": \"".$clientes[0]['clients'][$j]['name']."\", \"size\": 743}";
+    					}//cierre if
+    					else {
+    						$json .= " {\"name\": \"".$clientes[0]['clients'][$j]['name']."\", \"size\": 743},";	
+						}//cierre else						
+				}//cierre for de clientes
+
+				if(sizeof($trucks) -1 == $i){
+				//if(3-1 == $i){
+					$json .= "] }";
+				}
+				else{
+					$json .= "] },";
+				}
+				//var_dump($clientes);
+			}
+
+			$json .= " ] }";
+			//ar_dump($json);
+			$myfile = fopen("js/camiones2.json", "w") or die("Unable to open file!");
+			fwrite($myfile, $json);
+			fclose($myfile);
+
+		return 0;
+
+	}//close dendogram
+
+	public function dendogram_3($trucks){
+
+			//recorre los camiones
+			$json = "{ \"name\": \"camiones\",
+ 						\"children\": [";
+
+			for ($i=0; $i < sizeof($trucks); $i++) { 
+ 			 //for ($i=0; $i < 3; $i++) { 
+				//var_dump($trucks[$i]['truck_id']);
+				//obtiene los clientes por camion
+				$clientes = \DB::collection('proyecto')
+					->select('clients.name', 'clients.service_time')
+					->where('truck_id', '=', $trucks[$i]['truck_id'])
+					->where('clients.service_time', '>', 0)
+					->orderBy('clients.service_time')
+					->get();
+
+				$peso = array();
+				$aux = 0;
+				foreach ($clientes as $key => $row) {
+					//var_dump($row);
+					$peso[$aux] = $row['clients'][$aux]['service_time'];
+					$aux++;
+				}
+
+				array_multisort($peso, SORT_DESC, $clientes);
+
+				//var_dump($clientes);
+
+				//var_dump($clientes);
+				$json .= " { \"name\":  \"".$trucks[$i]['truck_id']."\",
+ 									 \"children\": [ ";	
+				//recorre los clientes
+				//for ($j=0; $j < sizeof($clientes[1]['clients']); $j++){
+ 				  for ($j=0; $j < 10; $j++){
+					//var_dump($clientes[1]['clients'][$j]['name']);
+						//$aux = sizeof($clientes[1]['clients']);
+						//if(sizeof($clientes[1]['clients'])-1 == $j) {
+ 				  		  if(10-1 == $j) {
+						//if(3-1 == $j) {
+							$json .= " {\"name\": \"".$clientes[0]['clients'][$j]['name']."\", \"size\": 743}";
+    					}//cierre if
+    					else {
+    						$json .= " {\"name\": \"".$clientes[0]['clients'][$j]['name']."\", \"size\": 743},";	
+						}//cierre else						
+				}//cierre for de clientes
+
+				if(sizeof($trucks) -1 == $i){
+				//if(3-1 == $i){
+					$json .= "] }";
+				}
+				else{
+					$json .= "] },";
+				}
+				//var_dump($clientes);
+			}
+
+			$json .= " ] }";
+			//ar_dump($json);
+			$myfile = fopen("js/camiones3.json", "w") or die("Unable to open file!");
 			fwrite($myfile, $json);
 			fclose($myfile);
 

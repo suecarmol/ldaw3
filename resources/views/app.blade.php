@@ -130,6 +130,7 @@
     <!-- Script que permite la aparición del menu -->
     <script src="{{ asset('js/menu.js') }}"> </script>
     <script src="{{ asset('js/maps.js') }}"> </script>
+    <script src="{{ asset('js/charts_dinamicas.js') }}"> </script>
     <script src="{{ asset('js/init_map_bk.js') }}"> </script>
 
 </body>

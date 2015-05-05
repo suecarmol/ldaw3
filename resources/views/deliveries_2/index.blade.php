@@ -20,10 +20,20 @@
 
             <div class="tab-content">
 
-                  <div class="container theme-showcase tab-pane fade in active" role="main" id="dendogram">
+                  <div class="container theme-showcase tab-pane fade in active" role="main">
 
-                          <h2>dendogram</h2>
-                          
+                          <h2>10 clientes con más unidades entregadas por camion</h2>
+
+                          <select class="form-control" id="opcion_dendo">
+                            <option value="1">Unidades Entregadas</option>
+                            <option value="2">Peso Entregado</option>
+                            <option value="3">Tiempo de Servicio</option>
+                          </select>
+                          <br>
+                          <button type="button" class="btn btn-success" id="boton_dendo">Graficar!</button>
+                          <div id="dendogram">
+
+                          </div>
                         
                   </div> <!-- /container-->
 
@@ -258,7 +268,7 @@
     
    <!--Nuevo dendogram-->
 
-      <script>
+      <script id="dendogram_script">
 
                 var margin = {top: 20, right: 120, bottom: 20, left: 120},
                     width = 960 - margin.right - margin.left,
