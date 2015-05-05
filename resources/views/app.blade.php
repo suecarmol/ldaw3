@@ -15,6 +15,8 @@
     <script src="{{ asset('js/jquery.js') }}"></script>
     <link rel="stylesheet" type="text/css" href="{{ asset('css/inception.css') }}"/>
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/datepicker3.css') }}" rel="stylesheet">
     <script src="http://d3js.org/d3.v3.min.js"></script>
     <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet">
     <!-- Custom CSS -->
@@ -123,7 +125,8 @@
 
     <!-- Bootstrap Core JavaScript -->
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
-
+    <script src="{{ asset('js/bootstrap.js') }}"></script>
+    <script src="{{ asset('js/bootstrap-datepicker.js') }}"></script>
     <!-- Script que permite la aparición del menu -->
     <script src="{{ asset('js/menu.js') }}"> </script>
     <script src="{{ asset('js/maps.js') }}"> </script>

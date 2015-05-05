@@ -100,27 +100,37 @@
         <div class="container">
            <h2>Sugerencias</h2>
            <div id="suggestions1" class="suggestions_box_1" style="width: 50%; height: 100%; float: left;">
+            {!! Form::open() !!}
+              {!! Form::label('date', 'Fecha') !!}
+              {!! Form::text('date', null, [
+                'id' => 'datetimepicker4',
+                'class' => 'form-control',
+                'data-provide' => 'datepicker',
+                'placeholder' => 'Fecha'
+              ]) !!}
+              {!! Form::submit('Actualizar') !!}
+            {!! Form::close() !!}
             @if(sizeof($suggestions) > 0)
-              <table style="border: 1px solid black; width: 100%;">
+              <table class="table table-striped">
                 <thead>
-                  <tr style="border: 1px solid black;">
-                    <th style="border: 1px solid black;">Cliente</th>
-                    <th style="border: 1px solid black;" colspan="5">Ruta 1</th>
-                    <th style="border: 1px solid black;" colspan="5">Ruta 2</th>
-                    <th style="border: 1px solid black;" colspan="12">Fecha 1</th>
-                    <th style="border: 1px solid black;" colspan="12">Fecha 2</th>
-                    <th style="border: 1px solid black;" >Cami&oacute;n a Compartir</th>
+                  <tr >
+                    <th >Cliente</th>
+                    <th  colspan="5">Ruta 1</th>
+                    <th  colspan="5">Ruta 2</th>
+                    <th  colspan="12">Fecha 1</th>
+                    <th  colspan="12">Fecha 2</th>
+                    <th  >Cami&oacute;n a Compartir</th>
                   </tr>
                 </thead>
                 <tbody>
                  @for($i = 0; $i < sizeof($suggestions); $i++)
-                    <tr style="border: 1px solid black;">
-                      <td style="border: 1px solid black;"> {{ $suggestions[$i]['client_name'] }} </td>
-                      <td style="border: 1px solid black;" colspan="5"> {{ $suggestions[$i]['route_name_1'] }} </td>
-                      <td style="border: 1px solid black;" colspan="5"> {{ $suggestions[$i]['route_name_2'] }} </td>
-                      <td style="border: 1px solid black;" colspan="12"> {{ $suggestions[$i]['date_1'] }} </td>
-                      <td style="border: 1px solid black;" colspan="12"> {{ $suggestions[$i]['date_2'] }} </td>
-                      <td style="border: 1px solid black;"> {{ $suggestions[$i]['chosen_truck'] }} </td>
+                    <tr >
+                      <td > {{ $suggestions[$i]['client_name'] }} </td>
+                      <td  colspan="5"> {{ $suggestions[$i]['route_name_1'] }} </td>
+                      <td  colspan="5"> {{ $suggestions[$i]['route_name_2'] }} </td>
+                      <td  colspan="12"> {{ $suggestions[$i]['date_1'] }} </td>
+                      <td  colspan="12"> {{ $suggestions[$i]['date_2'] }} </td>
+                      <td > {{ $suggestions[$i]['chosen_truck'] }} </td>
                     </tr>
                   @endfor
                 </tbody>
@@ -318,7 +328,7 @@
                       .attr("transform", function(d) { return "translate(" + source.y0 + "," + source.x0 + ")"; })
                       .on("click", click);
 
-                  nodeEnter.append("circle1")
+                  nodeEnter.append("circle")
                       .attr("r", 1e-6)
                       .style("fill", function(d) { return d._children ? "lightsteelblue" : "#fff"; });
 
@@ -334,7 +344,7 @@
                       .duration(duration)
                       .attr("transform", function(d) { return "translate(" + d.y + "," + d.x + ")"; });
 
-                  nodeUpdate.select("circle1")
+                  nodeUpdate.select("circle")
                       .attr("r", 4.5)
                       .style("fill", function(d) { return d._children ? "lightsteelblue" : "#fff"; });
 
@@ -347,7 +357,7 @@
                       .attr("transform", function(d) { return "translate(" + source.y + "," + source.x + ")"; })
                       .remove();
 
-                  nodeExit.select("circle1")
+                  nodeExit.select("circle")
                       .attr("r", 1e-6);
 
                   nodeExit.select("text")
@@ -429,7 +439,7 @@
                 .attr("class", "node1")
                 .attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")"; })
 
-            node.append("circle1")
+            node.append("circle")
                 .attr("r", 4.5);
 
             node.append("text")

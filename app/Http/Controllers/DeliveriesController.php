@@ -105,7 +105,7 @@ class DeliveriesController extends Controller {
 
 		//var_dump($inception);
 		//como el archivo json ya existe comentare la linea para que no se genere el archivo cada ves que se haga refresh
-		//$this->inception($inception_info);
+		$this->inception($inception_info);
 
 
 		/********
@@ -240,11 +240,11 @@ class DeliveriesController extends Controller {
 							\"children\": ["
 						;
 
-						for ($j=0; $j < 30; $j++){
+						for ($j=0; $j < 15; $j++){
 					//var_dump($clientes[1]['clients'][$j]['name']);
 						//$aux = sizeof($clientes[1]['clients']);
 						//if(sizeof($clientes[1]['clients'])-1 == $j) {
- 				  		  if(30-1 == $j) {
+ 				  		  if(15-1 == $j) {
 						//if(3-1 == $j) {
 							if(sizeof($inception)-1==$i)
 								$json .= " {\"name\": \"".$inception[$i]['clients'][$j]['name']."\", \"size\": 743}]}]}";

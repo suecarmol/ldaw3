@@ -81,6 +81,30 @@ class Deliveries2Controller extends Controller {
 		//var_dump($nombres);
 		//var_dump($unidades);
 		//var_dump($word[0]['text']);
+		//bubble chart
+
+			//funcion para el bubble chart
+		$bubble_clientes = \DB::collection('proyecto')
+		->select('clients.name', 'clients.units_delivered')
+		->where('clients.units_delivered', '>', 0)
+		->orderBy('clients.units_delivered')
+		->get();
+
+		$bubble = $this->bubble_chart($bubble_clientes);
+
+		//var_dump($bubble[1]['size']);
+
+		//ínception
+
+		$inception_info = \DB::collection('proyecto')
+		->select('truck_id', 'route_id', 'clients.name')
+		->where('clients.units_delivered', '>', 0)
+		->orderBy('clients.units_delivered')
+		->get();
+
+		//var_dump($inception);
+		//como el archivo json ya existe comentare la linea para que no se genere el archivo cada ves que se haga refresh
+		$this->inception($inception_info);
 
 
 		/********
@@ -89,14 +113,13 @@ class Deliveries2Controller extends Controller {
 
 		$suggestions = $this->createSuggestions();
 
-		//var_dump($suggestions);
-
-		return view('deliveries_2.index')
+		return view('deliveries.index')
 		->with('average_delivery_units', $average_delivery_units)
 		->with('average_weight_per_route', $average_weight_per_route)
 		->with('deliveries_out_of_route', $deliveries_out_of_route)
 		->with('trucks_average_capacity', $trucks_average_capacity)
 		->with('nombres', $nombres)
+		->with('bubble', $bubble)
 		->with('unidades', $unidades)
 		->with('suggestions', $suggestions);
 	}
@@ -186,7 +209,111 @@ class Deliveries2Controller extends Controller {
 
 	}
 
+	public function inception($inception){
+		//compania -> Camiones -> Rutas -> Clientes
+		//recorre los camiones
+		//var_dump(sizeof($inception[0]['clients']));
+			$compania = \DB::collection('proyecto')
+					->select('company_name')
+					->where('truck_id', '=', $inception[0]['truck_id'])
+					->where('capacity', '>', 0)
+					->get();
+			
+			$nombre_comp = "nombre";
+			//var_dump($inception);
+			$aux_nombre = "nombre";
+			$json = "{ \"name\": \"flare\",
+ 						\"children\": [";
 
+			for($i= 0; $i<sizeof($inception); $i++){
+				$aux = \DB::collection('proyecto')
+					->select('company_name')
+					->where('truck_id', '=', $inception[$i]['truck_id'])
+					->where('capacity', '>', 0)
+					->get();
+				if($nombre_comp==$compania[0]['company_name']){
+					//var_dump("la compañia es igual");
+					$json .= " {\"name\": \"".$inception[$i]['truck_id']."\", 
+						\"children\": [" .
+						 " {\"name\": \"".$inception[$i]['route_id']."\", 
+							\"children\": ["
+						;
+
+						for ($j=0; $j < 15; $j++){
+					//var_dump($clientes[1]['clients'][$j]['name']);
+						//$aux = sizeof($clientes[1]['clients']);
+						//if(sizeof($clientes[1]['clients'])-1 == $j) {
+ 				  		  if(15-1 == $j) {
+						//if(3-1 == $j) {
+							if(sizeof($inception)-1==$i)
+								$json .= " {\"name\": \"".$inception[$i]['clients'][$j]['name']."\", \"size\": 743}]}]}";
+							else
+								$json .= " {\"name\": \"".$inception[$i]['clients'][$j]['name']."\", \"size\": 743}]}]},";
+    					}//cierre if
+    					else {
+    						$json .= " {\"name\": \"".$inception[$i]['clients'][$j]['name']."\", \"size\": 743},\n";	
+						}//cierre else						
+					}//cierre for de clientes
+				}
+				else{
+					if($i==0){
+					$json .= "{ \"name\":". "\"".$compania[0]['company_name']. "\"" .",
+ 						\"children\": [" ;
+ 					$nombre_comp = $compania[0]['company_name'];
+ 					}
+ 					else{
+ 						$json .= "]},";
+ 						$json .= "{ \"name\":". "\"".$compania[0]['company_name']. "\"" .",
+ 						\"children\": [" ;
+ 						$nombre_comp = $compania[0]['company_name'];
+
+
+ 					}//cierre else anidado
+
+				}//cierre else
+
+			}
+			$json .= " ]} ]}";
+			//var_dump($json);
+
+	
+			$myfile = fopen("js/inception.json", "w") or die("Unable to open file!");
+			fwrite($myfile, $json);
+			fclose($myfile);
+
+		return 0;
+
+
+	}//Cierre inception
+	
+	public function bubble_chart($bubble_clientes){
+
+		//var_dump($clientes);	
+			$bubble = array();
+			//for($i=0; $i < sizeof($bubble_clientes); $i++){
+			for($i=0; $i < 5; $i++){
+				$temp_clients = $bubble_clientes[$i]['clients'];
+				//var_dump($temp_clients);
+				for($j=0; $j < 2; $j++){
+					//var_dump($temp_clients[$j]['units_delivered']);
+					$bubble[] = array(
+						'text'=>$temp_clients[$j]['name'], 
+						'size'=>$temp_clients[$j]['units_delivered']
+					);
+				}//cierre fora anidado para temp_clients			
+			}//cierre for 
+
+			$units = array();
+			//ordering the array
+			foreach ($bubble as $key => $row) {
+				$units[$key] = $row['size'];
+			}
+			array_multisort($units, SORT_DESC, $bubble);
+
+			return $bubble;
+
+
+	}
 	public function word_cloud($clientes){
 			//var_dump($clientes);	
 

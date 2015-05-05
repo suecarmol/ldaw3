@@ -145,6 +145,7 @@ return [
 		'App\Providers\EventServiceProvider',
 		'App\Providers\RouteServiceProvider',
 		'Jenssegers\Mongodb\MongodbServiceProvider',
+		'Illuminate\Html\HtmlServiceProvider',
 
 
 	],
@@ -194,6 +195,10 @@ return [
 		'URL'       => 'Illuminate\Support\Facades\URL',
 		'Validator' => 'Illuminate\Support\Facades\Validator',
 		'View'      => 'Illuminate\Support\Facades\View',
+		//new additions
+		'Carbon' 		=> 'Carbon\Carbon',
+		'Html'      => 'Illuminate\Html\HtmlFacade',
+		'Form'      => 'Illuminate\Html\FormFacade',
 
 	],
 
