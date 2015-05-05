@@ -343,7 +343,7 @@ class DeliveriesController extends Controller {
 	}
 
 	public function dendogram($trucks){
-
+			
 			//recorre los camiones
 			$json = "{ \"name\": \"camiones\",
  						\"children\": [";
@@ -353,12 +353,13 @@ class DeliveriesController extends Controller {
 				//var_dump($trucks[$i]['truck_id']);
 				//obtiene los clientes por camion
 				$clientes = \DB::collection('proyecto')
-					->select('clients.name')
+					->select('clients.name', 'clients.weight_delivered')
 					->where('truck_id', '=', $trucks[$i]['truck_id'])
-					//->where('clients.weight_delivered', '>', 0)
+					->where('clients.weight_delivered', '>', 0)
+					->orderBy('clients.weight_delivered')
 					->get();
 
-				//var_dump($clientes);
+				var_dump($clientes);
 				$json .= " { \"name\":  \"".$trucks[$i]['truck_id']."\",
  									 \"children\": [ ";	
 				//recorre los clientes

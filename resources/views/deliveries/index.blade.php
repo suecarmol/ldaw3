@@ -108,10 +108,10 @@
                 'data-provide' => 'datepicker',
                 'placeholder' => 'Fecha'
               ]) !!}
-              {!! Form::submit('Actualizar') !!}
+              {!! Form::submit('Actualizar', array('class' => 'btn btn-success')) !!}
             {!! Form::close() !!}
             @if(sizeof($suggestions) > 0)
-              <table class="table table-striped">
+              <table id="table1" class="table table-striped">
                 <thead>
                   <tr >
                     <th >Cliente</th>
