@@ -43,9 +43,13 @@ class Deliveries2Controller extends Controller {
 		->where('clients.is_in_route', '=', 1)
 		->count();
 
-		$trucks_average_capacity = \DB::collection('proyecto')
+		$trucks_average_capacity = round(\DB::collection('proyecto')
 		->where('capacity', '>', 0)
-		->avg('capacity');
+		->avg('capacity'), 2);
+
+		$trucks_average_grade = round(\DB::collection('proyecto')
+		->where('capacity' , '>', 0)
+		->avg('average_grade'), 2);
 
 		//$x = $this->calculateBestRoute($deliveries);
 
@@ -123,6 +127,7 @@ class Deliveries2Controller extends Controller {
 		->with('average_weight_per_route', $average_weight_per_route)
 		->with('deliveries_out_of_route', $deliveries_out_of_route)
 		->with('trucks_average_capacity', $trucks_average_capacity)
+		->with('trucks_average_grade', $trucks_average_grade)
 		->with('nombres', $nombres)
 		->with('bubble', $bubble)
 		->with('unidades', $unidades)
@@ -223,6 +228,8 @@ class Deliveries2Controller extends Controller {
 					->where('truck_id', '=', $inception[0]['truck_id'])
 					->where('capacity', '>', 0)
 					->get();
+
+					var_dump($compania);
 			
 			$nombre_comp = "nombre";
 			//var_dump($inception);
@@ -517,11 +524,11 @@ class Deliveries2Controller extends Controller {
  									 \"children\": [ ";	
 				//recorre los clientes
 				//for ($j=0; $j < sizeof($clientes[1]['clients']); $j++){
- 				  for ($j=0; $j < 10; $j++){
+ 				  for ($j=0; $j < 5; $j++){
 					//var_dump($clientes[1]['clients'][$j]['name']);
 						//$aux = sizeof($clientes[1]['clients']);
 						//if(sizeof($clientes[1]['clients'])-1 == $j) {
- 				  		  if(10-1 == $j) {
+ 				  		  if(5-1 == $j) {
 						//if(3-1 == $j) {
 							$json .= " {\"name\": \"".$clientes[0]['clients'][$j]['name']."\", \"size\": 743}";
     					}//cierre if

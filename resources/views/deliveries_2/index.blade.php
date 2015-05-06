@@ -87,7 +87,8 @@
           </div>  
           <div class="clear"></div>
           <div id="st5" class="container" >
-           <h2>Stats</h2>
+           <h2>Calificaci&oacute;n promedio de los camiones</h2>
+           <h3> {{ $trucks_average_grade }} estrellas de 5 </h3>
           </div>  
           <div id="st6" class="container" >
            <h2>Stats</h2>
