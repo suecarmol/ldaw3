@@ -227,66 +227,70 @@ class Deliveries2Controller extends Controller {
 		//var_dump(sizeof($inception[0]['clients']));
 			$compania = \DB::collection('proyecto')
 					->select('company_name')
-					->where('truck_id', '=', $inception[0]['truck_id'])
 					->where('capacity', '>', 0)
 					->get();
 
-					//var_dump($compania);
-			
+					
 			$nombre_comp = "nombre";
 			//var_dump($inception);
 			$aux_nombre = "nombre";
 			$json = "{ \"name\": \"flare\",
  						\"children\": [";
 
-			for($i= 0; $i<sizeof($inception); $i++){
-				$aux = \DB::collection('proyecto')
-					->select('company_name')
-					->where('truck_id', '=', $inception[$i]['truck_id'])
-					->where('capacity', '>', 0)
-					->get();
-				if($nombre_comp==$compania[0]['company_name']){
-					//var_dump("la compañia es igual");
-					$json .= " {\"name\": \"".$inception[$i]['truck_id']."\", 
-						\"children\": [" .
-						 " {\"name\": \"".$inception[$i]['route_id']."\", 
-							\"children\": ["
-						;
+ 				for($a= 0; $a<sizeof($compania); $a++){
+					for($i= 0; $i<sizeof($inception); $i++){
+						$aux = \DB::collection('proyecto')
+							->select('company_name')
+							->where('truck_id', '=', $inception[$i]['truck_id'])
+							->where('company_name', '=', $compania[$a]['company_name'])
+							->where('capacity', '>', 0)
+							->get();
+						 
+						if($nombre_comp==$compania[$a]['company_name']){
+							//var_dump("la compañia es igual");
+							$json .= " {\"name\": \"".$inception[$i]['truck_id']."\", 
+								\"children\": [" .
+								 " {\"name\": \"".$inception[$i]['route_id']."\", 
+									\"children\": ["
+								;
 
-						for ($j=0; $j < 15; $j++){
-					//var_dump($clientes[1]['clients'][$j]['name']);
-						//$aux = sizeof($clientes[1]['clients']);
-						//if(sizeof($clientes[1]['clients'])-1 == $j) {
- 				  		  if(15-1 == $j) {
-						//if(3-1 == $j) {
-							if(sizeof($inception)-1==$i)
-								$json .= " {\"name\": \"".$inception[$i]['clients'][$j]['name']."\", \"size\": 743}]}]}";
-							else
-								$json .= " {\"name\": \"".$inception[$i]['clients'][$j]['name']."\", \"size\": 743}]}]},";
-    					}//cierre if
-    					else {
-    						$json .= " {\"name\": \"".$inception[$i]['clients'][$j]['name']."\", \"size\": 743},\n";	
-						}//cierre else						
-					}//cierre for de clientes
+								for ($j=0; $j < 15; $j++){
+							//var_dump($clientes[1]['clients'][$j]['name']);
+								//$aux = sizeof($clientes[1]['clients']);
+								//if(sizeof($clientes[1]['clients'])-1 == $j) {
+		 				  		  if(15-1 == $j) {
+								//if(3-1 == $j) {
+									if(sizeof($inception)-1==$i)
+										$json .= " {\"name\": \"".$inception[$i]['clients'][$j]['name']."\", \"size\": 743}]}]}";
+									else
+										$json .= " {\"name\": \"".$inception[$i]['clients'][$j]['name']."\", \"size\": 743}]}]},";
+		    					}//cierre if
+		    					else {
+		    						$json .= " {\"name\": \"".$inception[$i]['clients'][$j]['name']."\", \"size\": 743},\n";	
+								}//cierre else						
+							}//cierre for de clientes
+						}
+						else{
+							if($i==0){
+							$json .= "{ \"name\":". "\"".$compania[$a]['company_name']. "\"" .",
+		 						\"children\": [" ;
+		 					$nombre_comp = $compania[$a]['company_name'];
+
+		 					}
+		 					else{
+		 						var_dump($json);
+		 						$json .= "]},";
+		 						$json .= "{ \"name\":". "\"".$compania[$a]['company_name']. "\"" .",
+		 						\"children\": [" ;
+		 						$nombre_comp = $compania[$a]['company_name'];
+
+
+		 					}//cierre else anidado
+
+						}//cierre else
+
+					}
 				}
-				else{
-					if($i==0){
-					$json .= "{ \"name\":". "\"".$compania[0]['company_name']. "\"" .",
- 						\"children\": [" ;
- 					$nombre_comp = $compania[0]['company_name'];
- 					}
- 					else{
- 						$json .= "]},";
- 						$json .= "{ \"name\":". "\"".$compania[0]['company_name']. "\"" .",
- 						\"children\": [" ;
- 						$nombre_comp = $compania[0]['company_name'];
-
-
- 					}//cierre else anidado
-
-				}//cierre else
-
-			}
 			$json .= " ]} ]}";
 			//var_dump($json);
 
