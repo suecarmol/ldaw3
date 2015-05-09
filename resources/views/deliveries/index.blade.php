@@ -64,30 +64,30 @@
 
     <!-- stats -->
     <!-- The circle icons use Font Awesome's stacked icon classes. For more information, visit http://fontawesome.io/examples/ -->
-    <section id="stats" class="container">
-
-          <div id="st" class="container">
-            <h2>Unidades promedio entregadas por ruta</h2>
-            <h3>{{ $average_delivery_units }} unidades </h3>
+    <section id="stats" class="row">
+          <div id="st">
+            <h2>Entregas fuera de ruta</h2>
+            <h3>{{ $deliveries_out_of_route }}</h3>
           </div>
-          <div id="st2" class="container" >
+          <div id="st2" >
            <h2>Promedio de peso por ruta</h2>
            <h3>{{ $average_weight_per_route }} kilogramos</h3>
           </div>
           <div class="clear"></div>
-          <div id="st3" class="container" >
-            <h2>Entregas fuera de ruta</h2>
-            <h3>{{ $deliveries_out_of_route }}</h3>
+          <div id="st3" >
+            <h2>Unidades promedio entregadas por ruta</h2>
+            <h3>{{ $average_delivery_units }} unidades </h3>
           </div>	
-          <div id="st4" class="container" >
-           <h2>Capacidad promedio de los camiones</h2>
-           <h3>{{ $trucks_average_capacity }}</h3>
+          <div id="st4" >
+           <h2>Calificaci&oacute;n promedio</h2>
+           <h3> {{ $trucks_average_grade }} estrellas de 5 </h3>
           </div>  
           <div class="clear"></div>
-          <div id="st5" class="container" >
-           <h2>Stats</h2>
+          <div id="st5" >
+           <h2>Capacidad promedio de los camiones</h2>
+           <h3>{{ $trucks_average_capacity }}</h3>
           </div>	
-          <div id="st6" class="container" >
+          <div id="st6" >
            <h2>Stats</h2>
           </div>
           <div class="clear"></div>
@@ -107,49 +107,49 @@
     <section id="suggestions" class="suggestions">
         <div class="container">
            <h2>Sugerencias</h2>
-           <div id="suggestions1" class="suggestions_box_1" style="width: 50%; height: 100%; float: left;">
-            {!! Form::open() !!}
-              {!! Form::label('date', 'Fecha') !!}
+            {!! Form::open(array('class' => 'form-horizontal')) !!}
+              <div class="form-group">
+              <div class="col-xs-8">
               {!! Form::text('date', null, [
                 'id' => 'datetimepicker4',
                 'class' => 'form-control',
                 'data-provide' => 'datepicker',
                 'placeholder' => 'Fecha'
               ]) !!}
+              </div>
               {!! Form::submit('Actualizar', array('class' => 'btn btn-success')) !!}
+              </div>
             {!! Form::close() !!}
             @if(sizeof($suggestions) > 0)
-              <table id="table1" class="table table-striped">
-                <thead>
-                  <tr >
-                    <th >Cliente</th>
-                    <th  colspan="5">Ruta 1</th>
-                    <th  colspan="5">Ruta 2</th>
-                    <th  colspan="12">Fecha 1</th>
-                    <th  colspan="12">Fecha 2</th>
-                    <th  >Cami&oacute;n a Compartir</th>
-                  </tr>
-                </thead>
-                <tbody>
-                 @for($i = 0; $i < sizeof($suggestions); $i++)
+              <div class="table-responsive">
+                <table id="suggestions_table" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                  <thead>
                     <tr >
-                      <td > {{ $suggestions[$i]['client_name'] }} </td>
-                      <td  colspan="5"> {{ $suggestions[$i]['route_name_1'] }} </td>
-                      <td  colspan="5"> {{ $suggestions[$i]['route_name_2'] }} </td>
-                      <td  colspan="12"> {{ $suggestions[$i]['date_1'] }} </td>
-                      <td  colspan="12"> {{ $suggestions[$i]['date_2'] }} </td>
-                      <td > {{ $suggestions[$i]['chosen_truck'] }} </td>
+                      <th>Cliente</th>
+                      <th>Ruta 1</th>
+                      <th>Ruta 2</th>
+                      <th>Fecha 1</th>
+                      <th>Fecha 2</th>
+                      <th>Cami&oacute;n a Compartir</th>
                     </tr>
-                  @endfor
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                   @for($i = 0; $i < sizeof($suggestions); $i++)
+                      <tr >
+                        <td> {{ $suggestions[$i]['client_name'] }} </td>
+                        <td> {{ $suggestions[$i]['route_name_1'] }} </td>
+                        <td> {{ $suggestions[$i]['route_name_2'] }} </td>
+                        <td> {{ $suggestions[$i]['date_1'] }} </td>
+                        <td> {{ $suggestions[$i]['date_2'] }} </td>
+                        <td> {{ $suggestions[$i]['chosen_truck'] }} </td>
+                      </tr>
+                    @endfor
+                  </tbody>
+                </table>
+              </div>
             @else
               <h3>No hay sugerencias disponibles</h3>  
             @endif  
-           </div>
-           <div id="suggestions2" class="suggestions_box_2" style="width: 50%; height: 100%; float: right;">
-
-           </div>
         </div>
         <!-- /.container -->
     </section>
@@ -600,6 +600,16 @@
 
     </script>
     <!--cierre inception-->
+
+    <script type="text/javascript" src="http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
+
+     <script type="text/javascript" src="http://cdn.datatables.net/plug-ins/1.10.7/integration/bootstrap/3/dataTables.bootstrap.js"></script>
+
+    <script>
+      $(document).ready(function(){
+          $('#suggestions_table').dataTable();
+      });
+    </script>
 
   
     
