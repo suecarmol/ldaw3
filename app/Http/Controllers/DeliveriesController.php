@@ -45,9 +45,13 @@ class DeliveriesController extends Controller {
 		->where('clients.is_in_route', '=', 1)
 		->count();
 
-		$trucks_average_capacity = \DB::collection('proyecto')
+		$trucks_average_capacity = round(\DB::collection('proyecto')
 		->where('capacity', '>', 0)
-		->avg('capacity');
+		->avg('capacity'), 2);
+
+		$trucks_average_grade = round(\DB::collection('proyecto')
+		->where('capacity' , '>', 0)
+		->avg('average_grade'), 2);
 
 		//$x = $this->calculateBestRoute($deliveries);
 
@@ -120,6 +124,7 @@ class DeliveriesController extends Controller {
 		->with('average_weight_per_route', $average_weight_per_route)
 		->with('deliveries_out_of_route', $deliveries_out_of_route)
 		->with('trucks_average_capacity', $trucks_average_capacity)
+		->with('trucks_average_grade', $trucks_average_grade)
 		->with('nombres', $nombres)
 		->with('bubble', $bubble)
 		->with('unidades', $unidades)
@@ -132,7 +137,8 @@ class DeliveriesController extends Controller {
 		$date = '2014-05-12 08';
 		//not using this right now
 		$hour = '';
-		$routes = Delivery::where('clients.arrival_time', 'regexp', '/^'.$date.'*./')->get();
+		$routes = Delivery::where('clients.arrival_time', 'regexp', '/^'.$date.'*./')
+		->get();
 
 		$suggestions = array();
 
@@ -483,15 +489,16 @@ class DeliveriesController extends Controller {
 		for ($i=1; $i < sizeof($clients_matrix); $i++) { 
 			//check if lat/long coordinates are not 0
 			if($clients_matrix[$i]['latitude'] != 0 || $clients_matrix[$i]['longitude'] != 0){
-				$distance_matrix [] =
-					$this->vincentyGreatCircleDistance(
+				$distance_matrix [] = array(
+					'distance' => $this->vincentyGreatCircleDistance(
 						$clients_matrix[$i-1]['latitude'],
 						$clients_matrix[$i-1]['longitude'],
 						$clients_matrix[$i]['latitude'],
 						$clients_matrix[$i]['longitude']
-					);
-					//'clientTo' => $clients_matrix[$i]['client'],
-					//'clientFrom' => $clients_matrix[$i-1]['client']	
+					),
+					'clientTo' => $clients_matrix[$i]['client'],
+					'clientFrom' => $clients_matrix[$i-1]['client']	
+				);	
 			}
 		}
 
@@ -533,7 +540,7 @@ class DeliveriesController extends Controller {
 		for ($k=0; $k < sizeof($floydWarshall_matrix); $k++) { 
 			for ($i=0; $i < sizeof($floydWarshall_matrix); $i++) { 
 				for ($j=0; $j < sizeof($floydWarshall_matrix); $j++) { 
-					$temp = $floydWarshall_matrix[$i][$k] + $floydWarshall_matrix[$k][$j];
+					$temp = $floydWarshall_matrix[$i]['distance'] + $floydWarshall_matrix[$k]['distance'];
 					if ($temp < $floydWarshall_matrix[$i][$j]) {
 						$floydWarshall_matrix[$i][$j] = $temp;
 					}
