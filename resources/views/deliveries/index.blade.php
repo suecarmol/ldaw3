@@ -19,8 +19,7 @@
 
                   <div class="container theme-showcase tab-pane fade in active" role="main" id="dendogram">
 
-                          <h2>dendogram</h2>
-                          
+  
                         
                   </div> <!-- /container-->
 
@@ -28,15 +27,16 @@
                   <!--container del word_cloud-->
                    <div role="main" class="container theme-showcase tab-pane fade" id="word_cloud">
                       <div class="form-group" style="margin-top: 5px;">
-                        <div class="col-xs-8">
-                          <select class="form-control input-sm" id="opcion_bubble">
-                            <option value="1">Clientes por unidades</option>
-                            <option value="2">Clientes por peso entregado</option>
-                            <option value="3">Rutas con mas clientes</option>
-                            <option value="4">Camiones por mas rutas</option>
-                          </select>
-                         </div>
-                        <button type="button" class="btn btn-success btn-sm" id="boton_bubble">Graficar</button>
+                          <div class="col-xs-8">
+                            <select class="form-control input-sm" id="opcion_word">
+                              <option value="1">Clientes con mas unidades</option>
+                              <option value="2">Clientes con mas peso entregado</option>
+                              <option value="3">Rutas con mas clientes</option>
+                              <option value="4">Camiones con mas rutas</option>
+                              <option value="5">Clientes con mayor tiempo de entrega</option>
+                            </select>
+                          </div>  
+                        <button type="button" class="btn btn-success" id="boton_word">Graficar</button>
                       </div>
                        
                   </div><!-- /container-->
@@ -44,6 +44,17 @@
 
                    <!--container de las bubble_chart-->
                    <div role="main" class="container theme-showcase tab-pane fade bubbleChart" id="bubble_chart">
+                      <div class="form-group" style="margin-top: 5px;">
+                          <div class="col-xs-8">
+                            <select class="form-control input-sm" id="opcion_bubble">
+                              <option value="1">Clientes por unidades</option>
+                              <option value="2">Clientes por peso entregado</option>
+                              <option value="3">Camiones con mejor calificacion</option>
+                              <option value="4">Camiones con mayor capacidad</option>
+                            </select>
+                          </div>  
+                        <button type="button" class="btn btn-success" id="boton_bubble">Graficar</button>
+                      </div>
             
                   </div><!-- /container-->
 
@@ -170,109 +181,7 @@
     </section>
 
 <!--Scripts De las gráficas Staticas-->
-        <!--bubble chart-->
-        <!--
-    <script>
-        $(document).ready(function () {
-          var obj = {};
-          var clientes = [];
-          var text = 'text';
-          var size = 'size';
-           @for ($i = 0; $i < sizeof($bubble); $i++)
-                          obj = {text: '{{$bubble[$i]['text']}}', count: '{{$bubble[$i]['size']}}'};
-                          clientes.push(obj);
-          @endfor
-          //console.log(clientes);
-          //console.log(clientes);s
-          var bubbleChart = new d3.svg.BubbleChart({
-            supportResponsive: true,
-            //container: => use @default
-            size: 600,
-            //viewBoxSize: => use @default
-            innerRadius: 600 / 3.5,
-            //outerRadius: => use @default
-            radiusMin: 50,
-            //radiusMax: use @default
-            //intersectDelta: use @default
-            //intersectInc: use @default
-            //circleColor: use @default
-            //en items va el arreglo de objetos json
-            data: {
-              items: clientes,
-              eval: function (item) {return item.count;},
-              classed: function (item) {return item.text.split(" ").join("");}
-            },
-            plugins: [
-              {
-                name: "central-click",
-                options: {
-                  text: "(See more detail)",
-                  style: {
-                    "font-size": "12px",
-                    "font-style": "italic",
-                    "font-family": "Source Sans Pro, sans-serif",
-                    //"font-weight": "700",
-                    "text-anchor": "middle",
-                    "fill": "white"
-                  },
-                  attr: {dy: "65px"},
-                  centralClick: function() {
-                    alert("Here is more details!!");
-                  }
-                }
-              },
-              {
-                name: "lines",
-                options: {
-                  format: [
-                    {// Line #0
-                      textField: "count",
-                      classed: {count: true},
-                      style: {
-                        "font-size": "28px",
-                        "font-family": "Source Sans Pro, sans-serif",
-                        "text-anchor": "middle",
-                        fill: "white"
-                      },
-                      attr: {
-                        dy: "0px",
-                        x: function (d) {return d.cx;},
-                        y: function (d) {return d.cy;}
-                      }
-                    },
-                    {// Line #1
-                      textField: "text",
-                      classed: {text: true},
-                      style: {
-                        "font-size": "14px",
-                        "font-family": "Source Sans Pro, sans-serif",
-                        "text-anchor": "middle",
-                        fill: "white"
-                      },
-                      attr: {
-                        dy: "20px",
-                        x: function (d) {return d.cx;},
-                        y: function (d) {return d.cy;}
-                      }
-                    }
-                  ],
-                  centralFormat: [
-                    {// Line #0
-                      style: {"font-size": "50px"},
-                      attr: {}
-                    },
-                    {// Line #1
-                      style: {"font-size": "30px"},
-                      attr: {dy: "40px"}
-                    }
-                  ]
-                }
-              }]
-          });
-        });
-    </script> -->
-    <!--bubble chart -->
-    
+       
    <!--Nuevo dendogram-->
    <!--
 
@@ -422,103 +331,7 @@
 
    <!--Nuevo dendogram-->
    
-    <!--Dendogram
-    <script>
-          var radius = 2200 / 2;
-
-          var cluster = d3.layout.cluster().size([360, radius - 120]);
-
-          var diagonal = d3.svg.diagonal.radial().projection(function(d) { return [d.y, d.x / 180 * Math.PI]; });
-
-          var svg = d3.select("#dendogram").append("svg").attr("width", radius * 2).attr("height", radius * 2).append("g")
-              .attr("transform", "translate(" + radius + "," + radius + ")");
-
-          d3.json("js/camiones.json", function(error, root) {
-            var nodes = cluster.nodes(root);
-
-            var link = svg.selectAll("path.link1")
-                .data(cluster.links(nodes))
-              .enter().append("path")
-                .attr("class", "link1")
-                .attr("d", diagonal);
-
-            var node = svg.selectAll("g.node1")
-                .data(nodes)
-              .enter().append("g")
-                .attr("class", "node1")
-                .attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")"; })
-
-            node.append("circle")
-                .attr("r", 4.5);
-
-            node.append("text")
-                .attr("dy", ".31em")
-                .attr("text-anchor", function(d) { return d.x < 180 ? "start" : "end"; })
-                .attr("transform", function(d) { return d.x < 180 ? "translate(8)" : "rotate(180)translate(-8)"; })
-                .text(function(d) { return d.name; });
-          });
-
-          d3.select(self.frameElement).style("height", radius * 2 + "px");
-    </script>
-    Dendogram--> 
-   
-   
-    <!--word_cloud-->
-    <!--
-    <script>
-               var fill = d3.scale.category20();
-               var cont = 0;
-               var clientes = [];
-               var units = [];
-               var aux = false;
-              @for ($i = 0; $i < sizeof($nombres); $i++)
-                    clientes[{{$i}}] = "{{$nombres[$i]}}";
-              @endfor
-              @for ($i = 0; $i < sizeof($unidades); $i++)
-                    units[{{$i}}] = "{{$unidades[$i]}}";
-              @endfor
-
-            d3.layout.cloud().size([1250, 720])
-                .words(clientes.map(function(d) {
-                  //console.log(cont);
-                  if(!aux){
-                    aux = true;
-                    cont += 1;
-                    return {text: d, size: units[cont]};
-                  }
-                  else{
-                    cont += 1;
-                    return {text: d, size: units[cont]};
-                  }  
-              
-                }))
-                .padding(5)
-                .rotate(function() { return ~~(Math.random() * 2) * 90; })
-                .font("Impact")
-                .fontSize(function(d) { return d.size; })
-                .on("end", draw)
-                .start();
-            function draw(words) {
-              d3.select("#word_cloud").append("svg")
-                  .attr("width", 1250)
-                  .attr("height", 720)
-                .append("g")
-                  .attr("transform", "translate(565,275)")
-                .selectAll("text")
-                  .data(words)
-                .enter().append("text")
-                  .style("font-size", function(d) { return d.size + "px"; })
-                  .style("font-family", "Impact")
-                  .style("fill", function(d, i) { return fill(i); })
-                  .attr("text-anchor", "middle")
-                  .attr("transform", function(d) {
-                    return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
-                  })
-                  .text(function(d) { return d.text; });
-            }
-    </script>-->
-    <!--word_cloud-->
-
+  
          <!--inception-->
     <script>
         var margin = 20,

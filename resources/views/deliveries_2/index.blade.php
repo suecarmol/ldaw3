@@ -20,11 +20,7 @@
 
             <div class="tab-content">
 
-                  <div class="container theme-showcase tab-pane fade in active" role="main">
-                          <div id="dendogram">
-
-                          </div>
-                        
+                  <div class="container theme-showcase tab-pane fade in active" role="main" id="dendogram">
                   </div> <!-- /container-->
 
 

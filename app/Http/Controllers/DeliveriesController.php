@@ -59,44 +59,13 @@ class DeliveriesController extends Controller {
 		**** CHARTS
 		********/
 
-		//camiones 
-		//selecciona solamente los camiones
-		$trucks = \DB::collection('proyecto')
-		->select('truck_id')
-		->where('capacity', '>', 0)
-		->get();
 
-		$clientes = \DB::collection('proyecto')
-		->select('clients.name', 'clients.units_delivered')
-		->where('clients.units_delivered', '>', 0)
-		->orderBy('clients.units_delivered')
-		->get();
-		
-		//$this->dendogram($trucks);
-		$word = $this->word_cloud($clientes);
-		//var_dump($clientes);
-		//var_dump($trucks);
-		$nombres = array();
-		$unidades = array();
-
-		for($i=0; $i < 15; $i++){
-			$nombres[$i] = $word[$i]['text'];
-			$unidades[$i] = $word[$i]['size'];
-		}
 
 		//var_dump($nombres);
 		//var_dump($unidades);
 		//var_dump($word[0]['text']);
 		//bubble chart
 
-			//funcion para el bubble chart
-		$bubble_clientes = \DB::collection('proyecto')
-		->select('clients.name', 'clients.units_delivered')
-		->where('clients.units_delivered', '>', 0)
-		->orderBy('clients.units_delivered')
-		->get();
-
-		$bubble = $this->bubble_chart($bubble_clientes);
 
 		//var_dump($bubble[1]['size']);
 
@@ -125,9 +94,9 @@ class DeliveriesController extends Controller {
 		->with('deliveries_out_of_route', $deliveries_out_of_route)
 		->with('trucks_average_capacity', $trucks_average_capacity)
 		->with('trucks_average_grade', $trucks_average_grade)
-		->with('nombres', $nombres)
-		->with('bubble', $bubble)
-		->with('unidades', $unidades)
+		//->with('nombres', $nombres)
+		//->with('bubble', $bubble)
+		//->with('unidades', $unidades)
 		->with('suggestions', $suggestions);
 	}
 
@@ -307,8 +276,12 @@ class DeliveriesController extends Controller {
 
 	}//Cierre inception
 	
-	public function bubble_chart($bubble_clientes){
+	public function getBubble_chart(PeticionRequest $request){
 
+		$bubble_clientes = \DB::collection('proyecto')
+		->select('clients.name', 'clients.units_delivered')
+		->where('clients.units_delivered', '>', 0)
+		->get();
 		//var_dump($clientes);	
 			$bubble = array();
 			//for($i=0; $i < sizeof($bubble_clientes); $i++){
@@ -319,7 +292,7 @@ class DeliveriesController extends Controller {
 					//var_dump($temp_clients[$j]['units_delivered']);
 					$bubble[] = array(
 						'text'=>$temp_clients[$j]['name'], 
-						'size'=>$temp_clients[$j]['units_delivered']
+						'count'=>$temp_clients[$j]['units_delivered']
 					);
 				}//cierre fora anidado para temp_clients			
 			}//cierre for 
@@ -327,7 +300,7 @@ class DeliveriesController extends Controller {
 			$units = array();
 			//ordering the array
 			foreach ($bubble as $key => $row) {
-				$units[$key] = $row['size'];
+				$units[$key] = $row['count'];
 			}
 			array_multisort($units, SORT_DESC, $bubble);
 
@@ -335,8 +308,141 @@ class DeliveriesController extends Controller {
 
 
 	}
-	public function word_cloud($clientes){
+
+	
+	public function getBubble_chart_dinamica(PeticionRequest $request){
+		 $val = $request->get('val');
+
+		 if($val==1){
+
+				$bubble_clientes = \DB::collection('proyecto')
+				->select('clients.name', 'clients.units_delivered')
+				->where('clients.units_delivered', '>', 0)
+				->get();
+				//var_dump($clientes);	
+					$bubble = array();
+					//for($i=0; $i < sizeof($bubble_clientes); $i++){
+					for($i=0; $i < 5; $i++){
+						$temp_clients = $bubble_clientes[$i]['clients'];
+						//var_dump($temp_clients);
+						for($j=0; $j < 2; $j++){
+							//var_dump($temp_clients[$j]['units_delivered']);
+							$bubble[] = array(
+								'text'=>$temp_clients[$j]['name'], 
+								'count'=>$temp_clients[$j]['units_delivered']
+							);
+						}//cierre fora anidado para temp_clients			
+					}//cierre for 
+
+
+					$units = array();
+					//ordering the array
+					foreach ($bubble as $key => $row) {
+						$units[$key] = $row['count'];
+					}
+					array_multisort($units, SORT_DESC, $bubble);
+
+			}
+
+			if($val==2){
+
+				$bubble_clientes = \DB::collection('proyecto')
+				->select('clients.name', 'clients.weight_delivered')
+				->where('clients.weight_delivered', '>', 0)
+				->get();
+				//var_dump($clientes);	
+					$bubble = array();
+					//for($i=0; $i < sizeof($bubble_clientes); $i++){
+					for($i=0; $i < 5; $i++){
+						$temp_clients = $bubble_clientes[$i]['clients'];
+						//var_dump($temp_clients);
+						for($j=0; $j < 2; $j++){
+							//var_dump($temp_clients[$j]['units_delivered']);
+							$bubble[] = array(
+								'text'=>$temp_clients[$j]['name'], 
+								'count'=>$temp_clients[$j]['weight_delivered']
+							);
+						}//cierre fora anidado para temp_clients			
+					}//cierre for 
+
+					$units = array();
+					//ordering the array
+					foreach ($bubble as $key => $row) {
+						$units[$key] = $row['count'];
+					}
+					array_multisort($units, SORT_DESC, $bubble);
+
+			}
+
+			if($val==3){
+
+				$bubble_clientes = \DB::collection('proyecto')
+				->select('truck_id', 'average_grade')
+				->where('average_grade', '>', 0)
+				->get();
+				//var_dump($bubble_clientes);	
+				$bubble = array();
+					//for($i=0; $i < sizeof($bubble_clientes); $i++){
+					for($i=0; $i < 10; $i++){
+						//var_dump($temp_clients)
+							//var_dump($temp_clients[$j]['units_delivered']);
+							$bubble[] = array(
+								'text'=>$bubble_clientes[$i]['truck_id'], 
+								'count'=>$bubble_clientes[$i]['average_grade']
+							);	
+					}//cierre for 
+
+					//var_dump($bubble);
+
+					$units = array();
+					//ordering the array
+					foreach ($bubble as $key => $row) {
+						$units[$key] = $row['count'];
+					}
+					array_multisort($units, SORT_DESC, $bubble);
+			}
+
+
+			if($val==4){
+
+				$bubble_clientes = \DB::collection('proyecto')
+				->select('truck_id', 'capacity')
+				->where('capacity', '>', 0)
+				->get();
+				//var_dump($bubble_clientes);	
+				$bubble = array();
+					//for($i=0; $i < sizeof($bubble_clientes); $i++){
+					for($i=0; $i < 10; $i++){
+						//var_dump($temp_clients)
+							//var_dump($temp_clients[$j]['units_delivered']);
+							$bubble[] = array(
+								'text'=>$bubble_clientes[$i]['truck_id'], 
+								'count'=>$bubble_clientes[$i]['capacity']
+							);	
+					}//cierre for 
+
+					//var_dump($bubble);
+
+					$units = array();
+					//ordering the array
+					foreach ($bubble as $key => $row) {
+						$units[$key] = $row['count'];
+					}
+					array_multisort($units, SORT_DESC, $bubble);
+			}
+
+
+		return $bubble;
+
+
+	}
+	public function getWord_cloud(PeticionRequest $request){
 			//var_dump($clientes);	
+			$clientes = \DB::collection('proyecto')
+				->select('clients.name', 'clients.units_delivered')
+				->where('clients.units_delivered', '>', 0)
+				->get();
+
 
 			$word_cloud = array();
 
@@ -362,29 +468,161 @@ class DeliveriesController extends Controller {
 			return $word_cloud;
 	}
 
-	public function word_cloud_dinamica(PeticionRequest $request){
+
+	public function getWord_cloud_dinamica(PeticionRequest $request){
 			//var_dump($clientes);	
 
-			$word_cloud = array();
+			 $val = $request->get('val');
 
-			for($i=0; $i < sizeof($clientes); $i++){
-				$temp_clients = $clientes[$i]['clients'];
-				//var_dump($temp_clients);
-				for($j=0; $j < 10; $j++){
-					//var_dump($temp_clients[$j]['units_delivered']);
-					$word_cloud[] = array(
-						'text'=>$temp_clients[$j]['name'], 
-						'size'=>$temp_clients[$j]['units_delivered']
-					);
-				}//cierre fora anidado para temp_clients			
-			}//cierre for 
+			 if($val==1){
 
-			$units = array();
-			//ordering the array
-			foreach ($word_cloud as $key => $row) {
-				$units[$key] = $row['size'];
+						$clientes = \DB::collection('proyecto')
+							->select('clients.name', 'clients.units_delivered')
+							->where('clients.units_delivered', '>', 0)
+							->get();
+
+						$word_cloud = array();
+
+						for($i=0; $i < sizeof($clientes); $i++){
+							$temp_clients = $clientes[$i]['clients'];
+							//var_dump($temp_clients);
+							for($j=0; $j < 10; $j++){
+								//var_dump($temp_clients[$j]['units_delivered']);
+								$word_cloud[] = array(
+									'text'=>$temp_clients[$j]['name'], 
+									'size'=>$temp_clients[$j]['units_delivered']
+								);
+							}//cierre fora anidado para temp_clients			
+						}//cierre for 
+
+						$units = array();
+						//ordering the array
+						foreach ($word_cloud as $key => $row) {
+							$units[$key] = $row['size'];
+						}
+						array_multisort($units, SORT_DESC, $word_cloud);
 			}
-			array_multisort($units, SORT_DESC, $word_cloud);
+
+			if($val==2){
+
+				$clientes = \DB::collection('proyecto')
+							->select('clients.name', 'clients.weight_delivered')
+							->where('clients.weight_delivered', '>', 0)
+							->get();
+
+						$word_cloud = array();
+
+						for($i=0; $i < sizeof($clientes); $i++){
+							$temp_clients = $clientes[$i]['clients'];
+							//var_dump($temp_clients);
+							for($j=0; $j < 10; $j++){
+								//var_dump($temp_clients[$j]['units_delivered']);
+								$word_cloud[] = array(
+									'text'=>$temp_clients[$j]['name'], 
+									'size'=>$temp_clients[$j]['weight_delivered']* (.009)
+								);
+							}//cierre fora anidado para temp_clients			
+						}//cierre for 
+
+						$units = array();
+						//ordering the array
+						foreach ($word_cloud as $key => $row) {
+							$units[$key] = $row['size'];
+						}
+						array_multisort($units, SORT_DESC, $word_cloud);
+
+			}
+
+
+			if($val==3){
+				$clientes = \DB::collection('proyecto')
+				->select('clients.name', 'clients.weight_delivered', 'route_id')
+				->where('clients.weight_delivered', '>', 0)
+				->groupBy('route_id')
+				->get();
+
+							//var_dump($clientes);
+				$word_cloud = array();
+
+					for($i=0; $i < sizeof($clientes); $i++){
+							//var_dump($temp_clients[$j]['units_delivered']);
+							$word_cloud[] = array(
+								'text'=>$clientes[$i]['route_id'], 
+								'size'=>sizeof($clientes[$i]['clients'])* (.08)
+							);			
+					}//cierre for 
+
+					//var_dump($word_cloud);
+
+					$units = array();
+					//ordering the array
+					foreach ($word_cloud as $key => $row) {
+						$units[$key] = $row['size'];
+					}
+					array_multisort($units, SORT_DESC, $word_cloud);
+
+
+			}
+
+			if($val==4){
+
+
+				$clientes = \DB::collection('proyecto')
+				->select('route_id', 'truck_id')
+				->where('clients.weight_delivered', '>', 0)
+				->groupBy('truck_id')
+				->get();
+
+
+							//var_dump($clientes);
+							
+				$word_cloud = array();
+
+					for($i=0; $i < sizeof($clientes); $i++){
+							//var_dump($temp_clients[$j]['units_delivered']);
+							$word_cloud[] = array(
+								'text'=>$clientes[$i]['truck_id'], 
+								'size'=>sizeof($clientes[$i]['route_id'])*40
+							);			
+					}//cierre for */
+					//var_dump($word_cloud);
+					$units = array();
+					//ordering the array
+					foreach ($word_cloud as $key => $row) {
+						$units[$key] = $row['size'];
+					}
+					array_multisort($units, SORT_DESC, $word_cloud);
+
+			}
+
+			if($val==5){
+
+					$clientes = \DB::collection('proyecto')
+							->select('clients.name', 'clients.service_time')
+							->where('clients.units_delivered', '>', 0)
+							->get();
+
+						$word_cloud = array();
+
+						for($i=0; $i < sizeof($clientes); $i++){
+							$temp_clients = $clientes[$i]['clients'];
+							//var_dump($temp_clients);
+							for($j=0; $j < 10; $j++){
+								//var_dump($temp_clients[$j]['units_delivered']);
+								$word_cloud[] = array(
+									'text'=>$temp_clients[$j]['name'], 
+									'size'=>$temp_clients[$j]['service_time']*(.09)
+								);
+							}//cierre fora anidado para temp_clients			
+						}//cierre for 
+
+						$units = array();
+						//ordering the array
+						foreach ($word_cloud as $key => $row) {
+							$units[$key] = $row['size'];
+						}
+						array_multisort($units, SORT_DESC, $word_cloud);
+			}
 
 			return $word_cloud;
 	}
