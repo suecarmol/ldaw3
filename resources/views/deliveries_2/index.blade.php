@@ -43,10 +43,11 @@
                         <h2>Clientes con mas unidades entregadas</h2>
                         <br>
                         <select class="form-control" id="opcion_word">
-                          <option value="1">Clientes por unidades</option>
-                          <option value="2">Clientes por peso entregado</option>
+                          <option value="1">Clientes con mas unidades</option>
+                          <option value="2">Clientes con mas peso entregado</option>
                           <option value="3">Rutas con mas clientes</option>
-                          <option value="4">Camiones por mas rutas</option>
+                          <option value="4">Camiones con mas rutas</option>
+                          <option value="5">Clientes con mayor tiempo de entrega</option>
                         </select>
                           <br>
                         <button type="button" class="btn btn-success" id="boton_word">Graficar</button>
@@ -57,18 +58,19 @@
 
                    <!--container de las bubble_chart-->
                    <div role="main" class="container theme-showcase tab-pane fade bubbleChart" id="bubble_chart">
-                      <!--
+                      
                             <h2>bubble</h2>
                             <br>
                         <select class="form-control" id="opcion_bubble">
                           <option value="1">Clientes por unidades</option>
                           <option value="2">Clientes por peso entregado</option>
-                          <option value="3">Rutas con mas clientes</option>
-                          <option value="4">Camiones por mas rutas</option>
+                          <option value="3">Camiones con mejor calificacion</option>
+                          <option value="4">Camiones con mayor capacidad</option>
                         </select>
                           <br>
                         <button type="button" class="btn btn-success" id="boton_bubble">Graficar</button>
-                       -->
+                        <br>
+                        <br>
                   </div><!-- /container-->
 
                    <!--container de las bubble_chart-->
@@ -187,105 +189,8 @@
 
 <!--Scripts De las gráficas Staticas-->
         <!--bubble chart-->
-    <script>
-        $(document).ready(function () {
-          var obj = {};
-          var clientes = [];
-          var text = 'text';
-          var size = 'size';
-           @for ($i = 0; $i < sizeof($bubble); $i++)
-                          obj = {text: '{{$bubble[$i]['text']}}', count: '{{$bubble[$i]['size']}}'};
-                          clientes.push(obj);
-          @endfor
-          //console.log(clientes);
-          //console.log(clientes);s
-          var bubbleChart = new d3.svg.BubbleChart({
-            supportResponsive: true,
-            //container: => use @default
-            size: 600,
-            //viewBoxSize: => use @default
-            innerRadius: 600 / 3.5,
-            //outerRadius: => use @default
-            radiusMin: 50,
-            //radiusMax: use @default
-            //intersectDelta: use @default
-            //intersectInc: use @default
-            //circleColor: use @default
-            //en items va el arreglo de objetos json
-            data: {
-              items: clientes,
-              eval: function (item) {return item.count;},
-              classed: function (item) {return item.text.split(" ").join("");}
-            },
-            plugins: [
-              {
-                name: "central-click",
-                options: {
-                  text: "(See more detail)",
-                  style: {
-                    "font-size": "12px",
-                    "font-style": "italic",
-                    "font-family": "Source Sans Pro, sans-serif",
-                    //"font-weight": "700",
-                    "text-anchor": "middle",
-                    "fill": "white"
-                  },
-                  attr: {dy: "65px"},
-                  centralClick: function() {
-                    alert("Here is more details!!");
-                  }
-                }
-              },
-              {
-                name: "lines",
-                options: {
-                  format: [
-                    {// Line #0
-                      textField: "count",
-                      classed: {count: true},
-                      style: {
-                        "font-size": "28px",
-                        "font-family": "Source Sans Pro, sans-serif",
-                        "text-anchor": "middle",
-                        fill: "white"
-                      },
-                      attr: {
-                        dy: "0px",
-                        x: function (d) {return d.cx;},
-                        y: function (d) {return d.cy;}
-                      }
-                    },
-                    {// Line #1
-                      textField: "text",
-                      classed: {text: true},
-                      style: {
-                        "font-size": "14px",
-                        "font-family": "Source Sans Pro, sans-serif",
-                        "text-anchor": "middle",
-                        fill: "white"
-                      },
-                      attr: {
-                        dy: "20px",
-                        x: function (d) {return d.cx;},
-                        y: function (d) {return d.cy;}
-                      }
-                    }
-                  ],
-                  centralFormat: [
-                    {// Line #0
-                      style: {"font-size": "50px"},
-                      attr: {}
-                    },
-                    {// Line #1
-                      style: {"font-size": "30px"},
-                      attr: {dy: "40px"}
-                    }
-                  ]
-                }
-              }]
-          });
-        });
-    </script>
+
+    
     <!--bubble chart -->
     
    <!--Nuevo dendogram-->
