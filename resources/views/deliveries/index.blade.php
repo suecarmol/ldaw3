@@ -15,9 +15,6 @@
                 <li><a href="#inception">Inception</a></li>
             </ul>
 
-
-
-
             <div class="tab-content">
 
                   <div class="container theme-showcase tab-pane fade in active" role="main" id="dendogram">
@@ -30,27 +27,28 @@
 
                   <!--container del word_cloud-->
                    <div role="main" class="container theme-showcase tab-pane fade" id="word_cloud">
-                      <br>
-                        <select class="form-control" id="opcion_bubble">
-                          <option value="1">Clientes por unidades</option>
-                          <option value="2">Clientes por peso entregado</option>
-                          <option value="3">Rutas con mas clientes</option>
-                          <option value="4">Camiones por mas rutas</option>
-                        </select>
-                          <br>
-                        <button type="button" class="btn btn-success" id="boton_bubble">Graficar</button>
+                      <div class="form-group" style="margin-top: 5px;">
+                        <div class="col-xs-8">
+                          <select class="form-control input-sm" id="opcion_bubble">
+                            <option value="1">Clientes por unidades</option>
+                            <option value="2">Clientes por peso entregado</option>
+                            <option value="3">Rutas con mas clientes</option>
+                            <option value="4">Camiones por mas rutas</option>
+                          </select>
+                         </div>
+                        <button type="button" class="btn btn-success btn-sm" id="boton_bubble">Graficar</button>
+                      </div>
                        
                   </div><!-- /container-->
 
 
                    <!--container de las bubble_chart-->
                    <div role="main" class="container theme-showcase tab-pane fade bubbleChart" id="bubble_chart">
-                            <h2>bubble</h2>
+            
                   </div><!-- /container-->
 
                    <!--container de las bubble_chart-->
                    <div role="main" class="container theme-showcase tab-pane fade" id="inception">
-                      <h2>inception</h2>
                 
                   </div><!-- /container-->
 
@@ -542,7 +540,7 @@
           .append("g")
             .attr("transform", "translate(" + diameter / 2 + "," + diameter / 2 + ")");
 
-        d3.json("js/inception.json", function(error, root) {
+        d3.json("js/inception_bk2.json", function(error, root) {
           if (error) return console.error(error);
 
           var focus = root,

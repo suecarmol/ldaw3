@@ -108,7 +108,7 @@ class DeliveriesController extends Controller {
 		->orderBy('clients.units_delivered')
 		->get();
 
-		//var_dump($inception);
+		//var_dump($inception_info);
 		//como el archivo json ya existe comentare la linea para que no se genere el archivo cada ves que se haga refresh
 		$this->inception($inception_info);
 
@@ -223,74 +223,87 @@ class DeliveriesController extends Controller {
 		//var_dump(sizeof($inception[0]['clients']));
 			$compania = \DB::collection('proyecto')
 					->select('company_name')
-					->where('truck_id', '=', $inception[0]['truck_id'])
 					->where('capacity', '>', 0)
+					->groupBy('company_name')
+					->distinct()
 					->get();
+
+			//print_r($compania);				
 			
-			$nombre_comp = "nombre";
-			//var_dump($inception);
-			$aux_nombre = "nombre";
-			$json = "{ \"name\": \"flare\",
- 						\"children\": [";
+			$company_data = array();		
 
-			for($i= 0; $i<sizeof($inception); $i++){
-				$aux = \DB::collection('proyecto')
-					->select('company_name')
-					->where('truck_id', '=', $inception[$i]['truck_id'])
-					->where('capacity', '>', 0)
+			for($i = 0; $i < sizeof($compania); $i++){
+				$trucks = \DB::collection('proyecto')
+				->select('truck_id')
+				->where('company_name', '=', $compania[$i]['company_name'])
+				->get();
+
+				$trucks_data = array();
+
+				for($j = 0; $j < sizeof($trucks); $j++){
+
+					$clients = \DB::collection('proyecto')
+					->select('clients.name', 'clients.units_delivered')
+					->where('truck_id', '=', $trucks[$j]['truck_id'])
 					->get();
-				if($nombre_comp==$compania[0]['company_name']){
-					//var_dump("la compañia es igual");
-					$json .= " {\"name\": \"".$inception[$i]['truck_id']."\", 
-						\"children\": [" .
-						 " {\"name\": \"".$inception[$i]['route_id']."\", 
-							\"children\": ["
-						;
 
-						for ($j=0; $j < 15; $j++){
-					//var_dump($clientes[1]['clients'][$j]['name']);
-						//$aux = sizeof($clientes[1]['clients']);
-						//if(sizeof($clientes[1]['clients'])-1 == $j) {
- 				  		  if(15-1 == $j) {
-						//if(3-1 == $j) {
-							if(sizeof($inception)-1==$i)
-								$json .= " {\"name\": \"".$inception[$i]['clients'][$j]['name']."\", \"size\": 743}]}]}";
-							else
-								$json .= " {\"name\": \"".$inception[$i]['clients'][$j]['name']."\", \"size\": 743}]}]},";
-    					}//cierre if
-    					else {
-    						$json .= " {\"name\": \"".$inception[$i]['clients'][$j]['name']."\", \"size\": 743},\n";	
-						}//cierre else						
-					}//cierre for de clientes
-				}
-				else{
-					if($i==0){
-					$json .= "{ \"name\":". "\"".$compania[0]['company_name']. "\"" .",
- 						\"children\": [" ;
- 					$nombre_comp = $compania[0]['company_name'];
- 					}
- 					else{
- 						$json .= "]},";
- 						$json .= "{ \"name\":". "\"".$compania[0]['company_name']. "\"" .",
- 						\"children\": [" ;
- 						$nombre_comp = $compania[0]['company_name'];
+					$clients_data = array();
 
+					//print_r(json_encode($clients));
 
- 					}//cierre else anidado
+					//var_dump(sizeof($clients[0]));
 
-				}//cierre else
+					//var_dump($clients[0]);
 
-			}
-			$json .= " ]} ]}";
-			//var_dump($json);
+					for($k = 1; $k < sizeof($clients); $k++){
+						if(sizeof($clients[$k]) > 1){
 
-	
-			$myfile = fopen("js/inception.json", "w") or die("Unable to open file!");
+							$clients_array = $clients[$k]['clients'];
+
+							//print_r($clients_array);
+
+							for($l = 0; $l < 10; $l++)
+							{
+								array_push($clients_data, array(
+									'name' => $clients_array[$l]['name'],
+									'size' => $clients_array[$l]['units_delivered']
+								));
+							} //for clients_array
+
+						} //for clients
+
+						array_push($trucks_data, array(
+							'name' => $trucks[$j]['truck_id'],
+							'children' => $clients_data
+						));
+					}
+
+				}// for trucks
+
+				array_push($company_data, array(
+					'name'=> $compania[$i]['company_name'],
+					'children' => $trucks_data
+				));
+
+			}	//for companies	
+
+			$json = "{ \"name\": \"ldaw3\", \"children\": ";
+			/*
+			array_push($json, array(
+					'name' => 'ldaw3',
+					'children' => $company_data
+				));*/
+			$company_data = json_encode($company_data);
+
+			$json .= $company_data . "}";
+
+			//print_r($json);
+
+			$myfile = fopen("js/inception_bk2.json", "w") or die("Unable to open file!");
 			fwrite($myfile, $json);
 			fclose($myfile);
 
 		return 0;
-
 
 	}//Cierre inception
 	
@@ -378,50 +391,81 @@ class DeliveriesController extends Controller {
 
 	public function dendogram($trucks){
 			
-			//recorre los camiones
-			$json = "{ \"name\": \"camiones\",
- 						\"children\": [";
-
-			for ($i=0; $i < sizeof($trucks); $i++) { 
- 			 //for ($i=0; $i < 3; $i++) { 
-				//var_dump($trucks[$i]['truck_id']);
-				//obtiene los clientes por camion
-				$clientes = \DB::collection('proyecto')
-					->select('clients.name', 'clients.weight_delivered')
-					->where('truck_id', '=', $trucks[$i]['truck_id'])
-					->where('clients.weight_delivered', '>', 0)
-					->orderBy('clients.weight_delivered')
+		$compania = \DB::collection('proyecto')
+					->select('company_name')
+					->where('capacity', '>', 0)
+					->groupBy('company_name')
+					->distinct()
 					->get();
 
-				var_dump($clientes);
-				$json .= " { \"name\":  \"".$trucks[$i]['truck_id']."\",
- 									 \"children\": [ ";	
-				//recorre los clientes
-				//for ($j=0; $j < sizeof($clientes[1]['clients']); $j++){
- 				  for ($j=0; $j < 10; $j++){
-					//var_dump($clientes[1]['clients'][$j]['name']);
-						//$aux = sizeof($clientes[1]['clients']);
-						//if(sizeof($clientes[1]['clients'])-1 == $j) {
- 				  		  if(10-1 == $j) {
-						//if(3-1 == $j) {
-							$json .= " {\"name\": \"".$clientes[1]['clients'][$j]['name']."\", \"size\": 743}";
-    					}//cierre if
-    					else {
-    						$json .= " {\"name\": \"".$clientes[1]['clients'][$j]['name']."\", \"size\": 743},";	
-						}//cierre else						
-				}//cierre for de clientes
+			//print_r($compania);				
+			
+			$company_data = array();		
 
-				if(sizeof($trucks) -1 == $i){
-				//if(3-1 == $i){
-					$json .= "] }";
-				}
-				else{
-					$json .= "] },";
-				}
-				//var_dump($clientes);
-			}
+			for($i = 0; $i < sizeof($compania); $i++){
+				$trucks = \DB::collection('proyecto')
+				->select('truck_id')
+				->where('company_name', '=', $compania[$i]['company_name'])
+				->get();
 
-			$json .= " ] }";
+				$trucks_data = array();
+
+				for($j = 0; $j < sizeof($trucks); $j++){
+
+					$clients = \DB::collection('proyecto')
+					->select('clients.name', 'clients.units_delivered')
+					->where('truck_id', '=', $trucks[$j]['truck_id'])
+					->get();
+
+					$clients_data = array();
+
+					//print_r(json_encode($clients));
+
+					//var_dump(sizeof($clients[0]));
+
+					//var_dump($clients[0]);
+
+					for($k = 1; $k < sizeof($clients); $k++){
+						if(sizeof($clients[$k]) > 1){
+
+							$clients_array = $clients[$k]['clients'];
+
+							//print_r($clients_array);
+
+							for($l = 0; $l < 10; $l++)
+							{
+								array_push($clients_data, array(
+									'name' => $clients_array[$l]['name'],
+									'size' => $clients_array[$l]['units_delivered']
+								));
+							} //for clients_array
+
+						} //for clients
+
+						array_push($trucks_data, array(
+							'name' => $trucks[$j]['truck_id'],
+							'children' => $clients_data
+						));
+					}
+
+				}// for trucks
+
+				array_push($company_data, array(
+					'name'=> $compania[$i]['company_name'],
+					'children' => $trucks_data
+				));
+
+			}	//for companies	
+
+			$json = "{ \"name\": \"ldaw3\", \"children\": ";
+			/*
+			array_push($json, array(
+					'name' => 'ldaw3',
+					'children' => $company_data
+				));*/
+			$company_data = json_encode($company_data);
+
+			$json .= $company_data . "}";
 			//ar_dump($json);
 			$myfile = fopen("js/camiones.json", "w") or die("Unable to open file!");
 			fwrite($myfile, $json);
