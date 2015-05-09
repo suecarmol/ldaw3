@@ -30,8 +30,16 @@
 
                   <!--container del word_cloud-->
                    <div role="main" class="container theme-showcase tab-pane fade" id="word_cloud">
-                        <h2>word</h2>
-                        
+                      <br>
+                        <select class="form-control" id="opcion_bubble">
+                          <option value="1">Clientes por unidades</option>
+                          <option value="2">Clientes por peso entregado</option>
+                          <option value="3">Rutas con mas clientes</option>
+                          <option value="4">Camiones por mas rutas</option>
+                        </select>
+                          <br>
+                        <button type="button" class="btn btn-success" id="boton_bubble">Graficar</button>
+                       
                   </div><!-- /container-->
 
 
@@ -165,6 +173,7 @@
 
 <!--Scripts De las gráficas Staticas-->
         <!--bubble chart-->
+        <!--
     <script>
         $(document).ready(function () {
           var obj = {};
@@ -263,10 +272,11 @@
               }]
           });
         });
-    </script>
+    </script> -->
     <!--bubble chart -->
     
    <!--Nuevo dendogram-->
+   <!--
 
       <script>
 
@@ -408,7 +418,8 @@
                   update(d);
                 }
 
-      </script>
+      </script>-->
+
 
 
    <!--Nuevo dendogram-->
@@ -455,6 +466,7 @@
    
    
     <!--word_cloud-->
+    <!--
     <script>
                var fill = d3.scale.category20();
                var cont = 0;
@@ -506,7 +518,7 @@
                   })
                   .text(function(d) { return d.text; });
             }
-    </script>
+    </script>-->
     <!--word_cloud-->
 
          <!--inception-->

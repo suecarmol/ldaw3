@@ -2,8 +2,9 @@
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\PeticionRequest;
 
-use Illuminate\Http\Request;
+use Request;
 
 use App\Delivery;
 
@@ -316,6 +317,33 @@ class DeliveriesController extends Controller {
 
 	}
 	public function word_cloud($clientes){
+			//var_dump($clientes);	
+
+			$word_cloud = array();
+
+			for($i=0; $i < sizeof($clientes); $i++){
+				$temp_clients = $clientes[$i]['clients'];
+				//var_dump($temp_clients);
+				for($j=0; $j < 10; $j++){
+					//var_dump($temp_clients[$j]['units_delivered']);
+					$word_cloud[] = array(
+						'text'=>$temp_clients[$j]['name'], 
+						'size'=>$temp_clients[$j]['units_delivered']
+					);
+				}//cierre fora anidado para temp_clients			
+			}//cierre for 
+
+			$units = array();
+			//ordering the array
+			foreach ($word_cloud as $key => $row) {
+				$units[$key] = $row['size'];
+			}
+			array_multisort($units, SORT_DESC, $word_cloud);
+
+			return $word_cloud;
+	}
+
+	public function word_cloud_dinamica(PeticionRequest $request){
 			//var_dump($clientes);	
 
 			$word_cloud = array();

@@ -124,6 +124,7 @@
 
 
     <!-- Bootstrap Core JavaScript -->
+
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap.js') }}"></script>
     <script src="{{ asset('js/bootstrap-datepicker.js') }}"></script>
