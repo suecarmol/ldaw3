@@ -19,7 +19,8 @@ Route::get('deliveries', 'DeliveriesController@index');
 
 Route::get('deliveries_2', 'Deliveries2Controller@index');
 
-Route::get('word_cloud_dinamica', 'DeliveriesController@word_cloud_dinamica');
+Route::get('word_cloud', 'Deliveries2Controller@getWord_cloud');
+Route::get('word_cloud_dinamica', 'Deliveries2Controller@getWord_cloud_dinamica');
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',

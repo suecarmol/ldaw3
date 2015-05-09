@@ -2,8 +2,9 @@
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\PeticionRequest;
 
-use Illuminate\Http\Request;
+use Request;
 
 use App\Delivery;
 
@@ -69,7 +70,7 @@ class Deliveries2Controller extends Controller {
 		//$this->dendogram_2($trucks);
 		//$this->dendogram_3($trucks);
 
-
+		/*
 		$clientes = \DB::collection('proyecto')
 		->select('clients.name', 'clients.units_delivered')
 		->where('clients.units_delivered', '>', 0)
@@ -85,7 +86,9 @@ class Deliveries2Controller extends Controller {
 		for($i=0; $i < 15; $i++){
 			$nombres[$i] = $word[$i]['text'];
 			$unidades[$i] = $word[$i]['size'];
-		}
+		}*/
+
+
 
 		//var_dump($nombres);
 		//var_dump($unidades);
@@ -128,9 +131,9 @@ class Deliveries2Controller extends Controller {
 		->with('deliveries_out_of_route', $deliveries_out_of_route)
 		->with('trucks_average_capacity', $trucks_average_capacity)
 		->with('trucks_average_grade', $trucks_average_grade)
-		->with('nombres', $nombres)
+		//->with('nombres', $nombres)
 		->with('bubble', $bubble)
-		->with('unidades', $unidades)
+		//->with('unidades', $unidades)
 		->with('suggestions', $suggestions);
 	}
 
@@ -229,7 +232,7 @@ class Deliveries2Controller extends Controller {
 					->where('capacity', '>', 0)
 					->get();
 
-					var_dump($compania);
+					//var_dump($compania);
 			
 			$nombre_comp = "nombre";
 			//var_dump($inception);
@@ -325,8 +328,14 @@ class Deliveries2Controller extends Controller {
 
 
 	}
-	public function word_cloud($clientes){
+	public function getWord_cloud(PeticionRequest $request){
 			//var_dump($clientes);	
+			$clientes = \DB::collection('proyecto')
+				->select('clients.name', 'clients.units_delivered')
+				->where('clients.units_delivered', '>', 0)
+				->orderBy('clients.units_delivered')
+				->get();
+
 
 			$word_cloud = array();
 
@@ -348,6 +357,138 @@ class Deliveries2Controller extends Controller {
 				$units[$key] = $row['size'];
 			}
 			array_multisort($units, SORT_DESC, $word_cloud);
+
+			return $word_cloud;
+	}
+
+
+	public function getWord_cloud_dinamica(PeticionRequest $request){
+			//var_dump($clientes);	
+
+			 $estado = $request->get('val');
+
+			 if($estado==1){
+
+						$clientes = \DB::collection('proyecto')
+							->select('clients.name', 'clients.units_delivered')
+							->where('clients.units_delivered', '>', 0)
+							->orderBy('clients.units_delivered')
+							->get();
+
+						$word_cloud = array();
+
+						for($i=0; $i < sizeof($clientes); $i++){
+							$temp_clients = $clientes[$i]['clients'];
+							//var_dump($temp_clients);
+							for($j=0; $j < 10; $j++){
+								//var_dump($temp_clients[$j]['units_delivered']);
+								$word_cloud[] = array(
+									'text'=>$temp_clients[$j]['name'], 
+									'size'=>$temp_clients[$j]['units_delivered']
+								);
+							}//cierre fora anidado para temp_clients			
+						}//cierre for 
+
+						$units = array();
+						//ordering the array
+						foreach ($word_cloud as $key => $row) {
+							$units[$key] = $row['size'];
+						}
+						array_multisort($units, SORT_DESC, $word_cloud);
+			}
+
+			if($estado==2){
+
+				$clientes = \DB::collection('proyecto')
+							->select('clients.name', 'clients.weight_delivered')
+							->where('clients.weight_delivered', '>', 0)
+							->orderBy('clients.weight_delivered')
+							->get();
+
+						$word_cloud = array();
+
+						for($i=0; $i < sizeof($clientes); $i++){
+							$temp_clients = $clientes[$i]['clients'];
+							//var_dump($temp_clients);
+							for($j=0; $j < 10; $j++){
+								//var_dump($temp_clients[$j]['units_delivered']);
+								$word_cloud[] = array(
+									'text'=>$temp_clients[$j]['name'], 
+									'size'=>$temp_clients[$j]['weight_delivered']* (.009)
+								);
+							}//cierre fora anidado para temp_clients			
+						}//cierre for 
+
+						$units = array();
+						//ordering the array
+						foreach ($word_cloud as $key => $row) {
+							$units[$key] = $row['size'];
+						}
+						array_multisort($units, SORT_DESC, $word_cloud);
+
+			}
+
+
+			if($estado==3){
+				$clientes = \DB::collection('proyecto')
+				->select('clients.name', 'clients.weight_delivered', 'route_id')
+				->where('clients.weight_delivered', '>', 0)
+				->orderBy('clients.weight_delivered')
+				->get();
+
+							//var_dump($clientes);
+				$word_cloud = array();
+
+					for($i=0; $i < sizeof($clientes); $i++){
+							//var_dump($temp_clients[$j]['units_delivered']);
+							$word_cloud[] = array(
+								'text'=>$clientes[$i]['route_id'], 
+								'size'=>sizeof($clientes[$i]['clients'])* (.08)
+							);			
+					}//cierre for 
+
+					//var_dump($word_cloud);
+
+					$units = array();
+					//ordering the array
+					foreach ($word_cloud as $key => $row) {
+						$units[$key] = $row['size'];
+					}
+					array_multisort($units, SORT_DESC, $word_cloud);
+
+
+			}
+
+			if($estado==4){
+
+
+				$clientes = \DB::collection('proyecto')
+				->select('route_id', 'truck_id')
+				->where('clients.weight_delivered', '>', 0)
+				->orderBy('clients.weight_delivered')
+				->get();
+
+
+							//var_dump($clientes);
+							
+				$word_cloud = array();
+
+					for($i=0; $i < sizeof($clientes); $i++){
+							//var_dump($temp_clients[$j]['units_delivered']);
+							$word_cloud[] = array(
+								'text'=>$clientes[$i]['truck_id'], 
+								'size'=>sizeof($clientes[$i]['route_id'])*40
+							);			
+					}//cierre for */
+					//var_dump($word_cloud);
+					$units = array();
+					//ordering the array
+					foreach ($word_cloud as $key => $row) {
+						$units[$key] = $row['size'];
+					}
+					array_multisort($units, SORT_DESC, $word_cloud);
+
+			}
 
 			return $word_cloud;
 	}
