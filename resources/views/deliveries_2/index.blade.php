@@ -21,16 +21,6 @@
             <div class="tab-content">
 
                   <div class="container theme-showcase tab-pane fade in active" role="main">
-
-                          <h2>10 clientes con más unidades entregadas por camion</h2>
-
-                          <select class="form-control" id="opcion_dendo">
-                            <option value="1">Unidades Entregadas</option>
-                            <option value="2">Peso Entregado</option>
-                            <option value="3">Tiempo de Servicio</option>
-                          </select>
-                          <br>
-                          <button type="button" class="btn btn-success" id="boton_dendo">Graficar!</button>
                           <div id="dendogram">
 
                           </div>
@@ -40,17 +30,18 @@
 
                   <!--container del word_cloud-->
                    <div role="main" class="container theme-showcase tab-pane fade" id="word_cloud">
-                        <h2>Clientes con mas unidades entregadas</h2>
-                        <br>
-                        <select class="form-control" id="opcion_word">
-                          <option value="1">Clientes con mas unidades</option>
-                          <option value="2">Clientes con mas peso entregado</option>
-                          <option value="3">Rutas con mas clientes</option>
-                          <option value="4">Camiones con mas rutas</option>
-                          <option value="5">Clientes con mayor tiempo de entrega</option>
-                        </select>
-                          <br>
+                        <div class="form-group" style="margin-top: 5px;">
+                          <div class="col-xs-8">
+                            <select class="form-control input-sm" id="opcion_word">
+                              <option value="1">Clientes con mas unidades</option>
+                              <option value="2">Clientes con mas peso entregado</option>
+                              <option value="3">Rutas con mas clientes</option>
+                              <option value="4">Camiones con mas rutas</option>
+                              <option value="5">Clientes con mayor tiempo de entrega</option>
+                            </select>
+                          </div>  
                         <button type="button" class="btn btn-success" id="boton_word">Graficar</button>
+                      </div>
 
                       
                   </div><!-- /container-->
@@ -58,19 +49,17 @@
 
                    <!--container de las bubble_chart-->
                    <div role="main" class="container theme-showcase tab-pane fade bubbleChart" id="bubble_chart">
-                      
-                            <h2>bubble</h2>
-                            <br>
-                        <select class="form-control" id="opcion_bubble">
-                          <option value="1">Clientes por unidades</option>
-                          <option value="2">Clientes por peso entregado</option>
-                          <option value="3">Camiones con mejor calificacion</option>
-                          <option value="4">Camiones con mayor capacidad</option>
-                        </select>
-                          <br>
+                      <div class="form-group" style="margin-top: 5px;">
+                          <div class="col-xs-8">
+                            <select class="form-control input-sm" id="opcion_bubble">
+                              <option value="1">Clientes por unidades</option>
+                              <option value="2">Clientes por peso entregado</option>
+                              <option value="3">Camiones con mejor calificacion</option>
+                              <option value="4">Camiones con mayor capacidad</option>
+                            </select>
+                          </div>  
                         <button type="button" class="btn btn-success" id="boton_bubble">Graficar</button>
-                        <br>
-                        <br>
+                      </div>
                   </div><!-- /container-->
 
                    <!--container de las bubble_chart-->
@@ -91,29 +80,29 @@
     <!-- The circle icons use Font Awesome's stacked icon classes. For more information, visit http://fontawesome.io/examples/ -->
     <section id="stats" class="container">
 
-          <div id="st" class="container">
-            <h2>Unidades promedio entregadas por ruta</h2>
-            <h3>{{ $average_delivery_units }} unidades </h3>
+         <div id="st">
+            <h2>Entregas fuera de ruta</h2>
+            <h3>{{ $deliveries_out_of_route }}</h3>
           </div>
-          <div id="st2" class="container" >
+          <div id="st2" >
            <h2>Promedio de peso por ruta</h2>
            <h3>{{ $average_weight_per_route }} kilogramos</h3>
           </div>
           <div class="clear"></div>
-          <div id="st3" class="container" >
-            <h2>Entregas fuera de ruta</h2>
-            <h3>{{ $deliveries_out_of_route }}</h3>
+          <div id="st3" >
+            <h2>Unidades promedio entregadas por ruta</h2>
+            <h3>{{ $average_delivery_units }} unidades </h3>
           </div>  
-          <div id="st4" class="container" >
+          <div id="st4" >
+           <h2>Calificaci&oacute;n promedio</h2>
+           <h3> {{ $trucks_average_grade }} estrellas de 5 </h3>
+          </div>  
+          <div class="clear"></div>
+          <div id="st5" >
            <h2>Capacidad promedio de los camiones</h2>
            <h3>{{ $trucks_average_capacity }}</h3>
           </div>  
-          <div class="clear"></div>
-          <div id="st5" class="container" >
-           <h2>Calificaci&oacute;n promedio de los camiones</h2>
-           <h3> {{ $trucks_average_grade }} estrellas de 5 </h3>
-          </div>  
-          <div id="st6" class="container" >
+          <div id="st6" >
            <h2>Stats</h2>
           </div>
           <div class="clear"></div>
@@ -133,39 +122,49 @@
     <section id="suggestions" class="suggestions">
         <div class="container">
            <h2>Sugerencias</h2>
-           <div id="suggestions1" class="suggestions_box_1" style="width: 50%; height: 100%; float: left;">
+            {!! Form::open(array('class' => 'form-horizontal')) !!}
+              <div class="form-group">
+              <div class="col-xs-8">
+              {!! Form::text('date', null, [
+                'id' => 'datetimepicker4',
+                'class' => 'form-control',
+                'data-provide' => 'datepicker',
+                'placeholder' => 'Fecha'
+              ]) !!}
+              </div>
+              {!! Form::submit('Actualizar', array('class' => 'btn btn-success')) !!}
+              </div>
+            {!! Form::close() !!}
             @if(sizeof($suggestions) > 0)
-              <table style="border: 1px solid black; width: 100%;">
-                <thead>
-                  <tr style="border: 1px solid black;">
-                    <th style="border: 1px solid black;">Cliente</th>
-                    <th style="border: 1px solid black;" colspan="5">Ruta 1</th>
-                    <th style="border: 1px solid black;" colspan="5">Ruta 2</th>
-                    <th style="border: 1px solid black;" colspan="12">Fecha 1</th>
-                    <th style="border: 1px solid black;" colspan="12">Fecha 2</th>
-                    <th style="border: 1px solid black;" >Cami&oacute;n a Compartir</th>
-                  </tr>
-                </thead>
-                <tbody>
-                 @for($i = 0; $i < sizeof($suggestions); $i++)
-                    <tr style="border: 1px solid black;">
-                      <td style="border: 1px solid black;"> {{ $suggestions[$i]['client_name'] }} </td>
-                      <td style="border: 1px solid black;" colspan="5"> {{ $suggestions[$i]['route_name_1'] }} </td>
-                      <td style="border: 1px solid black;" colspan="5"> {{ $suggestions[$i]['route_name_2'] }} </td>
-                      <td style="border: 1px solid black;" colspan="12"> {{ $suggestions[$i]['date_1'] }} </td>
-                      <td style="border: 1px solid black;" colspan="12"> {{ $suggestions[$i]['date_2'] }} </td>
-                      <td style="border: 1px solid black;"> {{ $suggestions[$i]['chosen_truck'] }} </td>
+              <div class="table-responsive">
+                <table id="suggestions_table" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                  <thead>
+                    <tr >
+                      <th>Cliente</th>
+                      <th>Ruta 1</th>
+                      <th>Ruta 2</th>
+                      <th>Fecha 1</th>
+                      <th>Fecha 2</th>
+                      <th>Cami&oacute;n a Compartir</th>
                     </tr>
-                  @endfor
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                   @for($i = 0; $i < sizeof($suggestions); $i++)
+                      <tr >
+                        <td> {{ $suggestions[$i]['client_name'] }} </td>
+                        <td> {{ $suggestions[$i]['route_name_1'] }} </td>
+                        <td> {{ $suggestions[$i]['route_name_2'] }} </td>
+                        <td> {{ $suggestions[$i]['date_1'] }} </td>
+                        <td> {{ $suggestions[$i]['date_2'] }} </td>
+                        <td> {{ $suggestions[$i]['chosen_truck'] }} </td>
+                      </tr>
+                    @endfor
+                  </tbody>
+                </table>
+              </div>
             @else
               <h3>No hay sugerencias disponibles</h3>  
             @endif  
-           </div>
-           <div id="suggestions2" class="suggestions_box_2" style="width: 50%; height: 100%; float: right;">
-
-           </div>
         </div>
         <!-- /.container -->
     </section>
@@ -185,7 +184,7 @@
       <div class="clear"></div>
     </div>
         <!-- /.container -->
-    </section>
+  </section>
 
 <!--Scripts De las gráficas Staticas-->
         <!--bubble chart-->
@@ -411,7 +410,7 @@
           .append("g")
             .attr("transform", "translate(" + diameter / 2 + "," + diameter / 2 + ")");
 
-        d3.json("js/inception.json", function(error, root) {
+        d3.json("js/inception_bk2.json", function(error, root) {
           if (error) return console.error(error);
 
           var focus = root,
@@ -469,7 +468,5 @@
 
     </script>
     <!--cierre inception-->
-
-  
     
   @stop 

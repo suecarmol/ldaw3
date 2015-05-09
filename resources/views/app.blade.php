@@ -133,6 +133,15 @@
     <script src="{{ asset('js/maps.js') }}"> </script>
     <script src="{{ asset('js/charts_dinamicas.js') }}"> </script>
     <script src="{{ asset('js/init_map_bk.js') }}"> </script>
+    <script type="text/javascript" src="http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
+
+     <script type="text/javascript" src="http://cdn.datatables.net/plug-ins/1.10.7/integration/bootstrap/3/dataTables.bootstrap.js"></script>
+
+    <script>
+      $(document).ready(function(){
+          $('#suggestions_table').dataTable();
+      });
+    </script>
 
 </body>
 

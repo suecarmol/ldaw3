@@ -228,74 +228,82 @@ class Deliveries2Controller extends Controller {
 			$compania = \DB::collection('proyecto')
 					->select('company_name')
 					->where('capacity', '>', 0)
+					->groupBy('company_name')
+					->distinct()
 					->get();
 
-					
-			$nombre_comp = "nombre";
-			//var_dump($inception);
-			$aux_nombre = "nombre";
-			$json = "{ \"name\": \"flare\",
- 						\"children\": [";
+			//print_r($compania);				
+			
+			$company_data = array();		
 
- 				for($a= 0; $a<sizeof($compania); $a++){
-					for($i= 0; $i<sizeof($inception); $i++){
-						$aux = \DB::collection('proyecto')
-							->select('company_name')
-							->where('truck_id', '=', $inception[$i]['truck_id'])
-							->where('company_name', '=', $compania[$a]['company_name'])
-							->where('capacity', '>', 0)
-							->get();
-						 
-						if($nombre_comp==$compania[$a]['company_name']){
-							//var_dump("la compañia es igual");
-							$json .= " {\"name\": \"".$inception[$i]['truck_id']."\", 
-								\"children\": [" .
-								 " {\"name\": \"".$inception[$i]['route_id']."\", 
-									\"children\": ["
-								;
+			for($i = 0; $i < sizeof($compania); $i++){
+				$trucks = \DB::collection('proyecto')
+				->select('truck_id')
+				->where('company_name', '=', $compania[$i]['company_name'])
+				->get();
 
-								for ($j=0; $j < 15; $j++){
-							//var_dump($clientes[1]['clients'][$j]['name']);
-								//$aux = sizeof($clientes[1]['clients']);
-								//if(sizeof($clientes[1]['clients'])-1 == $j) {
-		 				  		  if(15-1 == $j) {
-								//if(3-1 == $j) {
-									if(sizeof($inception)-1==$i)
-										$json .= " {\"name\": \"".$inception[$i]['clients'][$j]['name']."\", \"size\": 743}]}]}";
-									else
-										$json .= " {\"name\": \"".$inception[$i]['clients'][$j]['name']."\", \"size\": 743}]}]},";
-		    					}//cierre if
-		    					else {
-		    						$json .= " {\"name\": \"".$inception[$i]['clients'][$j]['name']."\", \"size\": 743},\n";	
-								}//cierre else						
-							}//cierre for de clientes
-						}
-						else{
-							if($i==0){
-							$json .= "{ \"name\":". "\"".$compania[$a]['company_name']. "\"" .",
-		 						\"children\": [" ;
-		 					$nombre_comp = $compania[$a]['company_name'];
+				$trucks_data = array();
 
-		 					}
-		 					else{
-		 						var_dump($json);
-		 						$json .= "]},";
-		 						$json .= "{ \"name\":". "\"".$compania[$a]['company_name']. "\"" .",
-		 						\"children\": [" ;
-		 						$nombre_comp = $compania[$a]['company_name'];
+				for($j = 0; $j < sizeof($trucks); $j++){
 
+					$clients = \DB::collection('proyecto')
+					->select('clients.name', 'clients.units_delivered')
+					->where('truck_id', '=', $trucks[$j]['truck_id'])
+					->get();
 
-		 					}//cierre else anidado
+					$clients_data = array();
 
-						}//cierre else
+					//print_r(json_encode($clients));
 
+					//var_dump(sizeof($clients[0]));
+
+					//var_dump($clients[0]);
+
+					for($k = 1; $k < sizeof($clients); $k++){
+						if(sizeof($clients[$k]) > 1){
+
+							$clients_array = $clients[$k]['clients'];
+
+							//print_r($clients_array);
+
+							for($l = 0; $l < 10; $l++)
+							{
+								array_push($clients_data, array(
+									'name' => $clients_array[$l]['name'],
+									'size' => $clients_array[$l]['units_delivered']
+								));
+							} //for clients_array
+
+						} //for clients
+
+						array_push($trucks_data, array(
+							'name' => $trucks[$j]['truck_id'],
+							'children' => $clients_data
+						));
 					}
-				}
-			$json .= " ]} ]}";
-			//var_dump($json);
 
-	
-			$myfile = fopen("js/inception.json", "w") or die("Unable to open file!");
+				}// for trucks
+
+				array_push($company_data, array(
+					'name'=> $compania[$i]['company_name'],
+					'children' => $trucks_data
+				));
+
+			}	//for companies	
+
+			$json = "{ \"name\": \"ldaw3\", \"children\": ";
+			/*
+			array_push($json, array(
+					'name' => 'ldaw3',
+					'children' => $company_data
+				));*/
+			$company_data = json_encode($company_data);
+
+			$json .= $company_data . "}";
+
+			//print_r($json);
+
+			$myfile = fopen("js/inception_bk2.json", "w") or die("Unable to open file!");
 			fwrite($myfile, $json);
 			fclose($myfile);
 
