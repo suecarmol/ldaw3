@@ -17,27 +17,33 @@ class Deliveries2Controller extends Controller {
 	public function index()
 	{
 		/********
-		**** STATS
+		**** SUGGESTIONS - FLOYD WARSHALL
 		********/
+
 		$deliveries = \DB::collection('proyecto')
-		->where('clients.cost', '=', 'null')
+		->where('clients.cost', '>', 0)
 		->orderBy('clients.arrival_time')
+		->take(2)
 		->get();
 
 		//var_dump($deliveries);
+		//$x = $this->calculateBestRoute($deliveries);
+		//var_dump($x);
+
+		/********
+		**** STATS
+		********/
 
 		$average_deliveries = \DB::collection('proyecto')
 		->select('clients.units_delivered')
 		->where('clients.units_delivered', '>', 0)
 		->get();
-
 		$average_delivery_units = $this->getAvgDeliveryUnits($average_deliveries);
 
 		$average_weight_delivered = \DB::collection('proyecto')
 		->select('clients.weight_delivered')
 		->where('clients.weight_delivered', '>', 0)
 		->get();
-
 		$average_weight_per_route = $this->getAvgWeight($average_weight_delivered);
 
 		$deliveries_out_of_route = \DB::collection('proyecto')
@@ -52,7 +58,10 @@ class Deliveries2Controller extends Controller {
 		->where('capacity' , '>', 0)
 		->avg('average_grade'), 2);
 
-		//$x = $this->calculateBestRoute($deliveries);
+		$trucks_service_time = \DB::collection('proyecto')
+		->where('clients.service_time', '>', 0)
+		->get();
+		$trucks_average_service_time = $this->getAvgServiceTime($trucks_service_time);
 
 		/********
 		**** CHARTS
@@ -66,46 +75,11 @@ class Deliveries2Controller extends Controller {
 		->where('capacity', '>', 0)
 		->get();
 
-		//$this->dendogram($trucks);
+		$this->dendogram($trucks);
 		//$this->dendogram_2($trucks);
 		//$this->dendogram_3($trucks);
-
-		/*
-		$clientes = \DB::collection('proyecto')
-		->select('clients.name', 'clients.units_delivered')
-		->where('clients.units_delivered', '>', 0)
-		->orderBy('clients.units_delivered')
-		->get();
-	
-		$word = $this->word_cloud($clientes);
-		//var_dump($clientes);
-		//var_dump($trucks);
-		$nombres = array();
-		$unidades = array();
-
-		for($i=0; $i < 15; $i++){
-			$nombres[$i] = $word[$i]['text'];
-			$unidades[$i] = $word[$i]['size'];
-		}*/
-
-		//var_dump($nombres);
-		//var_dump($unidades);
-		//var_dump($word[0]['text']);
-		//bubble chart
-
-			//funcion para el bubble chartq
-		/*
-		$bubble_clientes = \DB::collection('proyecto')
-		->select('clients.name', 'clients.units_delivered')
-		->where('clients.units_delivered', '>', 0)
-		->orderBy('clients.units_delivered')
-		->get();
-
-		$bubble = $this->bubble_chart($bubble_clientes);*/
-		//var_dump($bubble[1]['size']);
 		
-
-		//ínception
+		//inception
 
 		$inception_info = \DB::collection('proyecto')
 		->select('truck_id', 'route_id', 'clients.name')
@@ -130,9 +104,7 @@ class Deliveries2Controller extends Controller {
 		->with('deliveries_out_of_route', $deliveries_out_of_route)
 		->with('trucks_average_capacity', $trucks_average_capacity)
 		->with('trucks_average_grade', $trucks_average_grade)
-		//->with('nombres', $nombres)
-		//->with('bubble', $bubble)
-		//->with('unidades', $unidades)
+		->with('trucks_average_service_time', $trucks_average_service_time)
 		->with('suggestions', $suggestions);
 	}
 
@@ -176,10 +148,6 @@ class Deliveries2Controller extends Controller {
 								->where('truck_id', '=', $routes[$ii]['truck_id'])
 								->where('capacity', '>', $total_weight_delivered)
 								->get();
-
-								//var_dump($total_weight_delivered);
-								//var_dump($truck1);
-								//var_dump($truck2);
 
 								//choose between the two trucks based on average grade
 								if($truck1[0]['average_grade'] > $truck2[0]['average_grade']){
@@ -230,16 +198,15 @@ class Deliveries2Controller extends Controller {
 					->where('capacity', '>', 0)
 					->groupBy('company_name')
 					->distinct()
-					->get();
-
-			//print_r($compania);				
+					->get();				
 			
 			$company_data = array();		
 
 			for($i = 0; $i < sizeof($compania); $i++){
+
 				$trucks = \DB::collection('proyecto')
 				->select('truck_id')
-				->where('company_name', '=', $compania[$i]['company_name'])
+				->where('company_name', '=', $compania[$i]['_id']['company_name'])
 				->get();
 
 				$trucks_data = array();
@@ -253,18 +220,10 @@ class Deliveries2Controller extends Controller {
 
 					$clients_data = array();
 
-					//print_r(json_encode($clients));
-
-					//var_dump(sizeof($clients[0]));
-
-					//var_dump($clients[0]);
-
-					for($k = 1; $k < sizeof($clients); $k++){
+					for($k = 0; $k < sizeof($clients); $k++){
 						if(sizeof($clients[$k]) > 1){
 
 							$clients_array = $clients[$k]['clients'];
-
-							//print_r($clients_array);
 
 							for($l = 0; $l < 10; $l++)
 							{
@@ -276,11 +235,12 @@ class Deliveries2Controller extends Controller {
 
 						} //for clients
 
-						array_push($trucks_data, array(
+					}
+
+					array_push($trucks_data, array(
 							'name' => $trucks[$j]['truck_id'],
 							'children' => $clients_data
 						));
-					}
 
 				}// for trucks
 
@@ -292,13 +252,7 @@ class Deliveries2Controller extends Controller {
 			}	//for companies	
 
 			$json = "{ \"name\": \"ldaw3\", \"children\": ";
-			/*
-			array_push($json, array(
-					'name' => 'ldaw3',
-					'children' => $company_data
-				));*/
 			$company_data = json_encode($company_data);
-
 			$json .= $company_data . "}";
 
 			//print_r($json);
@@ -663,201 +617,83 @@ class Deliveries2Controller extends Controller {
 	//Dedogram por peso entregado
 	public function dendogram($trucks){
 
-			//recorre los camiones
-			$json = "{ \"name\": \"camiones\",
- 						\"children\": [";
-
-			for ($i=0; $i < sizeof($trucks); $i++) { 
- 			 //for ($i=0; $i < 3; $i++) { 
-				//var_dump($trucks[$i]['truck_id']);
-				//obtiene los clientes por camion
-				$clientes = \DB::collection('proyecto')
-					->select('clients.name', 'clients.weight_delivered')
-					->where('truck_id', '=', $trucks[$i]['truck_id'])
-					->where('clients.weight_delivered', '>', 0)
-					->orderBy('clients.weight_delivered')
+			//compania -> Camiones -> Rutas -> Clientes
+		//recorre los camiones
+		//var_dump(sizeof($inception[0]['clients']));
+			$compania = \DB::collection('proyecto')
+					->select('company_name')
+					->where('capacity', '>', 0)
+					->groupBy('company_name')
+					->distinct()
 					->get();
 
-				//var_dump($clientes);
-				$peso = array();
-				$aux = 0;
-				foreach ($clientes as $key => $row) {
-					//var_dump($row);
-					$peso[$aux] = $row['clients'][$aux]['weight_delivered'];
-					$aux++;
-				}
+			$company_data = array();
 
-				array_multisort($peso, SORT_DESC, $clientes);
+			for($i = 0; $i < sizeof($compania); $i++){
 
-				
-				//var_dump($clientes);
-				$json .= " { \"name\":  \"".$trucks[$i]['truck_id']."\",
- 									 \"children\": [ ";	
-				//recorre los clientes
-				//for ($j=0; $j < sizeof($clientes[1]['clients']); $j++){
- 				  for ($j=0; $j < 10; $j++){
-					//var_dump($clientes[1]['clients'][$j]['name']);
-						//$aux = sizeof($clientes[1]['clients']);
-						//if(sizeof($clientes[1]['clients'])-1 == $j) {
- 				  		  if(10-1 == $j) {
-						//if(3-1 == $j) {
-							$json .= " {\"name\": \"".$clientes[0]['clients'][$j]['name']."\", \"size\": 743}";
-    					}//cierre if
-    					else {
-    						$json .= " {\"name\": \"".$clientes[0]['clients'][$j]['name']."\", \"size\": 743},";	
-						}//cierre else						
-				}//cierre for de clientes
+				$compania_aux = $compania[$i]['company_name'];
 
-				if(sizeof($trucks) -1 == $i){
-				//if(3-1 == $i){
-					$json .= "] }";
-				}
-				else{
-					$json .= "] },";
-				}
-				//var_dump($clientes);
-			}
+				$trucks = \DB::collection('proyecto')
+				->select('truck_id')
+				->where('company_name', '=', $compania[$i]['company_name'])
+				->distinct()
+				->get();
 
-			$json .= " ] }";
-			//ar_dump($json);
-			$myfile = fopen("js/camiones.json", "w") or die("Unable to open file!");
-			fwrite($myfile, $json);
-			fclose($myfile);
+				$trucks_data = array();
 
-		return 0;
+				for($j = 0; $j < sizeof($trucks); $j++){
 
-	}//close dendogram
-
-
-	//dendogram por unidades entregadas
-	public function dendogram_2($trucks){
-
-			//recorre los camiones
-			$json = "{ \"name\": \"camiones\",
- 						\"children\": [";
-
-			for ($i=0; $i < sizeof($trucks); $i++) { 
- 			 //for ($i=0; $i < 3; $i++) { 
-				//var_dump($trucks[$i]['truck_id']);
-				//obtiene los clientes por camion
-				$clientes = \DB::collection('proyecto')
+					$clients = \DB::collection('proyecto')
 					->select('clients.name', 'clients.units_delivered')
-					->where('truck_id', '=', $trucks[$i]['truck_id'])
-					->where('clients.units_delivered', '>', 0)
-					->orderBy('clients.units_delivered')
-					->get();
-					//var_dump($clientes);
-
-					$peso = array();
-				$aux = 0;
-				foreach ($clientes as $key => $row) {
-					//var_dump($row);
-					$peso[$aux] = $row['clients'][$aux]['units_delivered'];
-					$aux++;
-				}
-
-				array_multisort($peso, SORT_DESC, $clientes);
-
-				//var_dump($clientes);
-
-				//var_dump($clientes);
-				$json .= " { \"name\":  \"".$trucks[$i]['truck_id']."\",
- 									 \"children\": [ ";	
-				//recorre los clientes
-				//for ($j=0; $j < sizeof($clientes[1]['clients']); $j++){
- 				  for ($j=0; $j < 10; $j++){
-					//var_dump($clientes[1]['clients'][$j]['name']);
-						//$aux = sizeof($clientes[1]['clients']);
-						//if(sizeof($clientes[1]['clients'])-1 == $j) {
- 				  		  if(10-1 == $j) {
-						//if(3-1 == $j) {
-							$json .= " {\"name\": \"".$clientes[0]['clients'][$j]['name']."\", \"size\": 743}";
-    					}//cierre if
-    					else {
-    						$json .= " {\"name\": \"".$clientes[0]['clients'][$j]['name']."\", \"size\": 743},";	
-						}//cierre else						
-				}//cierre for de clientes
-
-				if(sizeof($trucks) -1 == $i){
-				//if(3-1 == $i){
-					$json .= "] }";
-				}
-				else{
-					$json .= "] },";
-				}
-				//var_dump($clientes);
-			}
-
-			$json .= " ] }";
-			//ar_dump($json);
-			$myfile = fopen("js/camiones2.json", "w") or die("Unable to open file!");
-			fwrite($myfile, $json);
-			fclose($myfile);
-
-		return 0;
-
-	}//close dendogram
-
-	public function dendogram_3($trucks){
-
-			//recorre los camiones
-			$json = "{ \"name\": \"camiones\",
- 						\"children\": [";
-
-			for ($i=0; $i < sizeof($trucks); $i++) { 
- 			 //for ($i=0; $i < 3; $i++) { 
-				//var_dump($trucks[$i]['truck_id']);
-				//obtiene los clientes por camion
-				$clientes = \DB::collection('proyecto')
-					->select('clients.name', 'clients.service_time')
-					->where('truck_id', '=', $trucks[$i]['truck_id'])
-					->where('clients.service_time', '>', 0)
-					->orderBy('clients.service_time')
+					->where('truck_id', '=', $trucks[$j])
 					->get();
 
-				$peso = array();
-				$aux = 0;
-				foreach ($clientes as $key => $row) {
-					//var_dump($row);
-					$peso[$aux] = $row['clients'][$aux]['service_time'];
-					$aux++;
-				}
+					$clients_data = array();
 
-				array_multisort($peso, SORT_DESC, $clientes);
+					for($k = 0; $k < sizeof($clients); $k++){
+						if(sizeof($clients[$k]) > 1){
 
-				//var_dump($clientes);
+							$clients_array = $clients[$k]['clients'];
 
-				//var_dump($clientes);
-				$json .= " { \"name\":  \"".$trucks[$i]['truck_id']."\",
- 									 \"children\": [ ";	
-				//recorre los clientes
-				//for ($j=0; $j < sizeof($clientes[1]['clients']); $j++){
- 				  for ($j=0; $j < 5; $j++){
-					//var_dump($clientes[1]['clients'][$j]['name']);
-						//$aux = sizeof($clientes[1]['clients']);
-						//if(sizeof($clientes[1]['clients'])-1 == $j) {
- 				  		  if(5-1 == $j) {
-						//if(3-1 == $j) {
-							$json .= " {\"name\": \"".$clientes[0]['clients'][$j]['name']."\", \"size\": 743}";
-    					}//cierre if
-    					else {
-    						$json .= " {\"name\": \"".$clientes[0]['clients'][$j]['name']."\", \"size\": 743},";	
-						}//cierre else						
-				}//cierre for de clientes
+							for($l = 0; $l < 10; $l++)
+							{
+								array_push($clients_data, array(
+									'name' => $clients_array[$l]['name'],
+									'size' => $clients_array[$l]['units_delivered']
+								));
+							} //for clients_array
 
-				if(sizeof($trucks) -1 == $i){
-				//if(3-1 == $i){
-					$json .= "] }";
-				}
-				else{
-					$json .= "] },";
-				}
-				//var_dump($clientes);
-			}
+						} //for clients
+						
+					}
 
-			$json .= " ] }";
-			//ar_dump($json);
-			$myfile = fopen("js/camiones3.json", "w") or die("Unable to open file!");
+						array_push($trucks_data, array(
+							'name' => $trucks[$j],
+							'children' => $clients_data
+						));
+
+				}// for trucks
+
+				array_push($company_data, array(
+					'name'=> $compania[$i]['company_name'],
+					'children' => $trucks_data
+				));
+
+			}	//for companies	
+
+			$json = "{ \"name\": \"ldaw3\", \"children\": ";
+			/*
+			array_push($json, array(
+					'name' => 'ldaw3',
+					'children' => $company_data
+				));*/
+			$company_data = json_encode($company_data);
+
+			$json .= $company_data . "}";
+
+			//print_r($json);
+
+			$myfile = fopen("js/camiones_bk.json", "w") or die("Unable to open file!");
 			fwrite($myfile, $json);
 			fclose($myfile);
 
@@ -899,6 +735,24 @@ class Deliveries2Controller extends Controller {
 		return $average_delivery_units;
 	}
 
+	public function getAvgServiceTime($trucks_service_time)
+	{
+		$service_time_sum = 0;
+
+		for ($i=0; $i < sizeof($trucks_service_time); $i++) { 
+			$temp_clients = $trucks_service_time[$i]['clients'];
+			//var_dump($temp_clients);
+			for ($j=0; $j < sizeof($temp_clients); $j++) { 
+				$service_time_sum += $temp_clients[$j]['service_time'];
+			}
+		}
+
+
+		$average_service_time = round(($service_time_sum / count($trucks_service_time))/3600, 2);
+
+		return $average_service_time;
+	}
+
 	public function calculateBestRoute($deliveries)
 	{
 
@@ -923,15 +777,12 @@ class Deliveries2Controller extends Controller {
 		for ($i=1; $i < sizeof($clients_matrix); $i++) { 
 			//check if lat/long coordinates are not 0
 			if($clients_matrix[$i]['latitude'] != 0 || $clients_matrix[$i]['longitude'] != 0){
-				$distance_matrix [] =
-					$this->vincentyGreatCircleDistance(
+				$distance_matrix [] = $this->vincentyGreatCircleDistance(
 						$clients_matrix[$i-1]['latitude'],
 						$clients_matrix[$i-1]['longitude'],
 						$clients_matrix[$i]['latitude'],
 						$clients_matrix[$i]['longitude']
 					);
-					//'clientTo' => $clients_matrix[$i]['client'],
-					//'clientFrom' => $clients_matrix[$i-1]['client']	
 			}
 		}
 
@@ -962,20 +813,22 @@ class Deliveries2Controller extends Controller {
 
 	public function floydWarshall($distance_matrix)
 	{	
+		//print_r($distance_matrix);
 		$floydWarshall_matrix = array();
 		//replicating the distance matrix
 		for ($i=0; $i < sizeof($distance_matrix); $i++) { 
 			$floydWarshall_matrix [] = $distance_matrix[$i]; 
 		}
 
-		var_dump($floydWarshall_matrix);
+		//print_r($floydWarshall_matrix);
 
 		for ($k=0; $k < sizeof($floydWarshall_matrix); $k++) { 
 			for ($i=0; $i < sizeof($floydWarshall_matrix); $i++) { 
 				for ($j=0; $j < sizeof($floydWarshall_matrix); $j++) { 
-					$temp = $floydWarshall_matrix[$i][$k] + $floydWarshall_matrix[$k][$j];
-					if ($temp < $floydWarshall_matrix[$i][$j]) {
-						$floydWarshall_matrix[$i][$j] = $temp;
+					$temp = $floydWarshall_matrix[$i]['distance'] + $floydWarshall_matrix[$k]['distance'];
+					//print_r($temp . " < " . $floydWarshall_matrix[$j]['distance'] . "? \n");
+					if ($temp < $floydWarshall_matrix[$j]['distance']) {
+						$floydWarshall_matrix[$j]['distance'] = $temp;
 					}
 				}
 			}

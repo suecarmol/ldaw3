@@ -2,9 +2,6 @@
   @section('content')
        <!-- Map -->
     <section id="rutas" class="rutas">
-     
-      <h1>Gr&aacute;ficas</h1>
-
 
         <!--tab-->
         <div class="tab-graficas" id="navv">
@@ -59,9 +56,7 @@
                   </div><!-- /container-->
 
                    <!--container de las bubble_chart-->
-                   <div role="main" class="container theme-showcase tab-pane fade" id="inception">
-                      <h2>inception</h2>
-                
+                   <div role="main" class="container theme-showcase tab-pane fade" id="inception">                
                   </div><!-- /container-->
 
             </div><!--tab-content-->
@@ -95,11 +90,12 @@
           </div>  
           <div class="clear"></div>
           <div id="st5" >
-           <h2>Capacidad promedio de los camiones</h2>
-           <h3>{{ $trucks_average_capacity }}</h3>
+           <h2>Tiempo promedio de servicio</h2>
+           <h3>{{ $trucks_average_service_time }} horas</h3>
           </div>  
           <div id="st6" >
-           <h2>Stats</h2>
+           <h2>Capacidad promedio de los camiones</h2>
+           <h3>{{ $trucks_average_capacity }} kilogramos</h3>
           </div>
           <div class="clear"></div>
     </section>
@@ -182,20 +178,15 @@
         <!-- /.container -->
   </section>
 
-<!--Scripts De las gráficas Staticas-->
-        <!--bubble chart-->
-
-    
-    <!--bubble chart -->
+<!--Scripts De las gráficas Estaticas-->
     
    <!--Nuevo dendogram-->
 
-<!--
       <script>
 
-                var margin = {top: 20, right: 120, bottom: 20, left: 120},
-                    width = 960 - margin.right - margin.left,
-                    height = 800 - margin.top - margin.bottom;
+                var margin = {top: 5, right: 120, bottom: 5, left: 100},
+                    width = 880 - margin.right - margin.left,
+                    height = 620 - margin.top - margin.bottom;
                     
                 var i = 0,
                     duration = 750,
@@ -213,7 +204,7 @@
                   .append("g")
                     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-                d3.json("js/camiones.json", function(error, flare) {
+                d3.json("js/camiones_bk.json", function(error, flare) {
                   root1 = flare;
                   root1.x0 = height / 2;
                   root1.y0 = 0;
@@ -230,7 +221,7 @@
                   update(root1);
                 });
 
-                d3.select(self.frameElement).style("height", "800px");
+                d3.select(self.frameElement).style("height", "700px");
 
                 function update(source) {
 
@@ -331,64 +322,13 @@
                   update(d);
                 }
 
-      </script>-->
+      </script> 
+      <!--cierre Nuevo dendogram-->
 
-
-   <!--Nuevo dendogram-->
-   
-    <!--Dendogram
+    <!--inception-->
     <script>
-          var radius = 2200 / 2;
-
-          var cluster = d3.layout.cluster().size([360, radius - 120]);
-
-          var diagonal = d3.svg.diagonal.radial().projection(function(d) { return [d.y, d.x / 180 * Math.PI]; });
-
-          var svg = d3.select("#dendogram").append("svg").attr("width", radius * 2).attr("height", radius * 2).append("g")
-              .attr("transform", "translate(" + radius + "," + radius + ")");
-
-          d3.json("js/camiones.json", function(error, root) {
-            var nodes = cluster.nodes(root);
-
-            var link = svg.selectAll("path.link1")
-                .data(cluster.links(nodes))
-              .enter().append("path")
-                .attr("class", "link1")
-                .attr("d", diagonal);
-
-            var node = svg.selectAll("g.node1")
-                .data(nodes)
-              .enter().append("g")
-                .attr("class", "node1")
-                .attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")"; })
-
-            node.append("circle")
-                .attr("r", 4.5);
-
-            node.append("text")
-                .attr("dy", ".31em")
-                .attr("text-anchor", function(d) { return d.x < 180 ? "start" : "end"; })
-                .attr("transform", function(d) { return d.x < 180 ? "translate(8)" : "rotate(180)translate(-8)"; })
-                .text(function(d) { return d.name; });
-          });
-
-          d3.select(self.frameElement).style("height", radius * 2 + "px");
-    </script>
-    Dendogram--> 
-   
-   
-    <!--word_cloud-->
-    <!--
-    <script>
-      /*
-            }*/
-    </script>-->
-    <!--word_cloud-->
-
-         <!--inception-->
-    <script>
-        var margin = 20,
-            diameter = 960;
+        var margin = 10,
+            diameter = 610;
 
         var color = d3.scale.linear()
             .domain([-1, 5])
