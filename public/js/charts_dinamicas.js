@@ -1,6 +1,11 @@
 
 $(document).ready(function(){       
-
+		//Date time picker
+		$(function () {
+	        $('#datetimepicker1').datetimepicker({
+	        		format: 'YYYY-MM-DD HH'
+	        });
+    	});
 		var token = "{{ csrf_token() }}";
 
 		//Gráfica word cloud
@@ -12,7 +17,7 @@ $(document).ready(function(){
 		        success: function(response_word)
 		        {
 		            //$('#something').html(response);
-		            console.log(response_word);
+		            //console.log(response_word);
 
 		             var cont = 0;
               		 var clientes = [];
@@ -88,7 +93,7 @@ $(document).ready(function(){
        $( "#boton_word" ).click(function() {
         var val = $( "#opcion_word" ).val();
         //var token = "{{ csrf_token() }}";
-        console.log(val);
+        //console.log(val);
         $( "svg" ).remove();
 
 		            	/*
@@ -106,7 +111,7 @@ $(document).ready(function(){
 		        success: function(response_word)
 		        {
 		            //$('#something').html(response);
-		            console.log(response_word);
+		            //console.log(response_word);
 		           
 		            
 
@@ -126,8 +131,8 @@ $(document).ready(function(){
 	    					
 						}
 
-					console.log(clientes)
-					console.log(units);
+					//console.log(clientes)
+					//console.log(units);
 					   var fill = d3.scale.category20();
              
 			            d3.layout.cloud().size([1250, 720])
@@ -281,7 +286,7 @@ $(document).ready(function(){
        $( "#boton_bubble" ).click(function() {
         var val = $( "#opcion_bubble" ).val();
         //var token = "{{ csrf_token() }}";
-        console.log(val);
+        //console.log(val);
         $( "svg" ).remove();
 
 		            	/*
@@ -298,7 +303,7 @@ $(document).ready(function(){
 		        success: function(response_word)
 		        {
 		            //$('#something').html(response);
-		            console.log("bubble chart dinamica ");
+		            //console.log("bubble chart dinamica ");
 		            //console.log(response_word);
 		            var bubbleChart = new d3.svg.BubbleChart({
 			            supportResponsive: true,
@@ -394,7 +399,66 @@ $(document).ready(function(){
 
         });//Cierre on click
 
+
+		//sugerencias dinamicas
+       $( "#acutaliza_sugerencia" ).click(function() {
+	        var val = $( "#date" ).val();
+	        //val = val.toString();
+	        //var token = "{{ csrf_token() }}";
+	        console.log(val);
+	        $("#suggestions_table").fadeOut();
+	        //$('#suggestions_table').dataTable();
+	        //$('#suggestions_table_wrapper').fadeOut();
+        
+       		$.ajax({
+		        url: "suggestions_dinamicas",
+		        type: 'GET',
+		        data: {"date": val, "_token": token },
+		        cache: false,
+			        success: function(response_word)
+
+			        {
+			        		console.log(response_word);
+			           		var table = '<table id="suggestions_table" class="table table-striped table-bordered" cellspacing="0" width="100%">'+'<thead>'+'<tr >'+'<th>Cliente</th>'+'<th>Ruta 1</th>'+'<th>Ruta 2</th>'+'<th>Fecha 1</th>'+'<th>Fecha 2</th>'+'<th>Cami&oacute;n a Compartir</th>';
+			           		table += '<tbody>';
+			           		for(var i= 0; i<response_word.length;i++){
+			           			table += '<tr>';
+			           			table +='<td>'+ response_word[i]['client_name'] + '</td>';
+			           			table +='<td>'+ response_word[i]['route_name_1'] + '</td>';
+			           			table +='<td>'+ response_word[i]['route_name_2'] + '</td>';
+			           			table +='<td>'+ response_word[i]['date_1'] + '</td>';
+			           			table +='<td>'+ response_word[i]['date_2'] + '</td>';
+			           			table +='<td>'+ response_word[i]['chosen_truck'] + '</td>';
+			           			table += '</tr>';
+			           		}
+
+			       			table += '</tbody>' + '</table>';
+			       			//console.log(table)
+			       			$('#suggestions_table').replaceWith(table);
+			       			$('#suggestions_table').dataTable();
+
+
+			        }
+		    });//cirre peiticon
+
+
+        });//Cierre on click
 });//cierre on document ready
+	/*
+                  <tbody>
+                   @for($i = 0; $i < sizeof($suggestions); $i++)
+                      <tr >
+                        <td> {{ $suggestions[$i]['client_name'] }} </td>
+                        <td> {{ $suggestions[$i]['route_name_1'] }} </td>
+                        <td> {{ $suggestions[$i]['route_name_2'] }} </td>
+                        <td> {{ $suggestions[$i]['date_1'] }} </td>
+                        <td> {{ $suggestions[$i]['date_2'] }} </td>
+                        <td> {{ $suggestions[$i]['chosen_truck'] }} </td>
+                      </tr>
+                    @endfor
+                  </tbody>
+                </table>
+              </div>*/
 /*
 
 

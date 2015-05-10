@@ -118,15 +118,17 @@
            <h2>Sugerencias</h2>
             {!! Form::open(array('class' => 'form-horizontal')) !!}
               <div class="form-group">
-              <div class="col-xs-8">
-              {!! Form::text('date', null, [
-                'id' => 'datetimepicker4',
-                'class' => 'form-control',
-                'data-provide' => 'datepicker',
-                'placeholder' => 'Fecha'
-              ]) !!}
-              </div>
-              {!! Form::submit('Actualizar', array('class' => 'btn btn-success')) !!}
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div class="input-group date" id="datetimepicker1">
+                      <input type="text" class="form-control" id="date"/>
+                      <span class="input-group-addon">
+                      <span class="glyphicon glyphicon-calendar"></span>
+                      </span>
+                    </div>
+                  </div>
+                  <button type="button" class="btn btn-success" id="acutaliza_sugerencia">Actualizar!</button>
+                </div>
               </div>
             {!! Form::close() !!}
             @if(sizeof($suggestions) > 0)

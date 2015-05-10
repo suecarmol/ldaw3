@@ -23,6 +23,7 @@ Route::get('word_cloud', 'Deliveries2Controller@getWord_cloud');
 Route::get('word_cloud_dinamica', 'Deliveries2Controller@getWord_cloud_dinamica');
 Route::get('bubble_chart', 'Deliveries2Controller@getBubble_chart');
 Route::get('bubble_chart_dinamica', 'Deliveries2Controller@getBubble_chart_dinamica');
+Route::get('suggestions_dinamicas', 'DeliveriesController@getSuggestions_dinamicas');
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',
