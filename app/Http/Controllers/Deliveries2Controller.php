@@ -27,8 +27,8 @@ class Deliveries2Controller extends Controller {
 		->get();
 
 		//var_dump($deliveries);
-		//$x = $this->calculateBestRoute($deliveries);
-		//var_dump($x);
+		$floyd = $this->calculateBestRoute($deliveries);
+		//var_dump($floyd);
 
 		/********
 		**** STATS
@@ -105,7 +105,8 @@ class Deliveries2Controller extends Controller {
 		->with('trucks_average_capacity', $trucks_average_capacity)
 		->with('trucks_average_grade', $trucks_average_grade)
 		->with('trucks_average_service_time', $trucks_average_service_time)
-		->with('suggestions', $suggestions);
+		->with('suggestions', $suggestions)
+		->with('floyd', $floyd);
 	}
 
 	public function createSuggestions()
@@ -777,12 +778,31 @@ class Deliveries2Controller extends Controller {
 		for ($i=1; $i < sizeof($clients_matrix); $i++) { 
 			//check if lat/long coordinates are not 0
 			if($clients_matrix[$i]['latitude'] != 0 || $clients_matrix[$i]['longitude'] != 0){
-				$distance_matrix [] = $this->vincentyGreatCircleDistance(
-						$clients_matrix[$i-1]['latitude'],
-						$clients_matrix[$i-1]['longitude'],
-						$clients_matrix[$i]['latitude'],
-						$clients_matrix[$i]['longitude']
-					);
+				for($j = 0; $j < sizeof($clients_matrix); $j++)
+				{
+					if($i == $j)
+					{
+						$distance_matrix[$i][$j] = array(
+							'distance' => 0,
+							'clientFrom' => $clients_matrix[$i]['client'],
+							'clientTo' => $clients_matrix[$j]['client']
+						);	
+					}
+					else
+					{
+						$distance_matrix [$i][$j] = array(
+							'distance' => $this->vincentyGreatCircleDistance(
+								$clients_matrix[$j]['latitude'],
+								$clients_matrix[$j]['longitude'],
+								$clients_matrix[$i]['latitude'],
+								$clients_matrix[$i]['longitude']
+							),
+							'clientFrom' => $clients_matrix[$i]['client'],
+							'clientTo' => $clients_matrix[$j]['client']
+
+						);
+					}
+				}
 			}
 		}
 
@@ -813,28 +833,20 @@ class Deliveries2Controller extends Controller {
 
 	public function floydWarshall($distance_matrix)
 	{	
-		//print_r($distance_matrix);
-		$floydWarshall_matrix = array();
-		//replicating the distance matrix
-		for ($i=0; $i < sizeof($distance_matrix); $i++) { 
-			$floydWarshall_matrix [] = $distance_matrix[$i]; 
-		}
 
-		//print_r($floydWarshall_matrix);
-
-		for ($k=0; $k < sizeof($floydWarshall_matrix); $k++) { 
-			for ($i=0; $i < sizeof($floydWarshall_matrix); $i++) { 
-				for ($j=0; $j < sizeof($floydWarshall_matrix); $j++) { 
-					$temp = $floydWarshall_matrix[$i]['distance'] + $floydWarshall_matrix[$k]['distance'];
-					//print_r($temp . " < " . $floydWarshall_matrix[$j]['distance'] . "? \n");
-					if ($temp < $floydWarshall_matrix[$j]['distance']) {
-						$floydWarshall_matrix[$j]['distance'] = $temp;
+		for ($k=1; $k < sizeof($distance_matrix); $k++) { 
+			for ($i=1; $i < sizeof($distance_matrix); $i++) { 
+				for ($j=0; $j < sizeof($distance_matrix); $j++) { 
+					$temp = $distance_matrix[$i][$k]['distance'] + $distance_matrix[$k][$j]['distance'];
+					//print_r($temp . " < " . $distance_matrix[$i][$j]['distance'] . "? \n");
+					if ($temp < $distance_matrix[$i][$j]['distance']) {
+						$distance_matrix[$i][$j]['distance'] = $temp;
 					}
 				}
 			}
 		}
 
-		return $floydWarshall_matrix;
+		return $distance_matrix;
 
 	}
 

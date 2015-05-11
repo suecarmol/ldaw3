@@ -12,9 +12,6 @@
                 <li><a href="#inception">Inception</a></li>
             </ul>
 
-
-
-
             <div class="tab-content">
 
                   <div class="container theme-showcase tab-pane fade in active" role="main" id="dendogram">
@@ -163,18 +160,35 @@
 
      <!-- Portfolio -->
     <section id="newbusiness" class="newbusiness">
-      <!--
-        <div id="map-canvas-nb"></div>-->
-    <div id="map-legend"> 
-      <div id="map_options_header"> Opciones del mapa </div>
-       <div id="search_map_button" class="search_map_button"> 
-        <div id="search_map_text" class="search_map_text"> Buscar</div>
-      </div>
-     <div id="clear_map_button" class="clear_map_button"> 
-        <div id="clear_map_text" class="clear_map_text"> Clear</div>
-      </div>
-      <div class="clear"></div>
-    </div>
+      <div class="container">
+           <h2>Floyd</h2>
+            @if(sizeof($floyd) > 0)
+              <div class="table-responsive">
+                <table id="floyd_table" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                  <thead>
+                    <tr >
+                      <th>Cliente 1</th>
+                      <th>Cliente 1</th>
+                      <th>Distancia entre clientes</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                   @for($i = 1; $i < sizeof($floyd); $i++)
+                    @for($j = 0; $j < sizeof($floyd); $j++)
+                        <tr >
+                          <td> {{ $floyd[$i][$j]['clientFrom'] }} </td>
+                          <td> {{ $floyd[$i][$j]['clientTo'] }} </td>
+                          <td> {{ $floyd[$i][$j]['distance'] }} </td>
+                        </tr>
+                    @endfor    
+                  @endfor
+                  </tbody>
+                </table>
+              </div>
+            @else
+              <h3>No hay informaci&oacute;n disponible</h3>  
+            @endif  
+        </div>
         <!-- /.container -->
   </section>
 
@@ -201,6 +215,7 @@
                 var svg2 = d3.select("#dendogram").append("svg")
                     .attr("width", width + margin.right + margin.left)
                     .attr("height", height + margin.top + margin.bottom)
+                    .attr("overflow", "auto")
                   .append("g")
                     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
@@ -221,7 +236,7 @@
                   update(root1);
                 });
 
-                d3.select(self.frameElement).style("height", "700px");
+                d3.select(self.frameElement).style("height", "100%");
 
                 function update(source) {
 
@@ -404,5 +419,11 @@
 
     </script>
     <!--cierre inception-->
+
+    <script>
+      $(document).ready(function(){
+          $('#floyd_table').dataTable();
+      });
+    </script>
     
   @stop 
