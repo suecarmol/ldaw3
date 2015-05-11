@@ -1,0 +1,432 @@
+id,latitude,longitude,name,type,color
+317,53.285965,-3.584884,Tesco Superstore Abergele,Heineken,00529d
+318,51.729205,-3.137244,Tesco Superstore Abertillery,Heineken,00529d
+319,57.180039,-2.145659,Tesco Extra Aberdeen,Heineken,00529d
+320,51.666929,-1.309399,Tesco Extra Abingdon,Heineken,00529d
+321,51.824659,-3.020606,Tesco Metro Abergavenny,Heineken,00529d
+322,51.717935,-3.44885,Tesco Superstore Aberdare,Heineken,00529d
+323,51.372149,-0.487561,Tesco Extra Addlestone,Heineken,00529d
+324,53.385547,-2.347503,Tesco Extra Altrincham,Heineken,00529d
+325,51.666138,-0.611386,Tesco Superstore Amersham,Heineken,00529d
+326,51.251096,-0.775539,Tesco Superstore Aldershot,Heineken,00529d
+327,51.216256,-1.473654,Tesco Extra Andover,Heineken,00529d
+328,51.136421,0.914603,Tesco Extra Ashford Crooksfoot,Heineken,00529d
+329,51.222141,-1.470738,Tesco Express Andover Cricketers,Heineken,00529d
+330,51.207887,-1.480363,Tesco Metro Andover,Heineken,00529d
+331,51.821326,-0.836839,Tesco Extra Aylesbury,Heineken,00529d
+332,51.123062,0.864495,Tesco Extra Ashford Park Farm,Heineken,00529d
+333,56.113266,-3.787739,Tesco Extra Alloa,Heineken,00529d
+334,51.816366,-0.80048,Tesco Superstore Aylesbury Tring Road,Heineken,00529d
+335,55.467907,-4.608851,Tesco Extra Ayr,Heineken,00529d
+336,51.827572,-0.842874,Tesco Express Aylesbury Jackson Road,Heineken,00529d
+337,52.75296,-1.45258,Tesco Extra Ashby De La Zouch,Heineken,00529d
+338,57.189448,-3.829923,Tesco Metro Aviemore,Heineken,00529d
+339,50.782357,-3.001215,Tesco Superstore Axminster,Heineken,00529d
+340,53.095138,-1.389187,Tesco Superstore Alfreton,Heineken,00529d
+341,54.715339,-6.212905,Tesco Extra Antrim Massereene,Heineken,00529d
+342,52.218659,-1.865524,Tesco Express Alcester Kinwarton Road,Heineken,00529d
+343,51.298758,0.4376,Tesco Express Larkfield Esso,Heineken,00529d
+344,51.310815,0.441625,Tesco Extra Aylesford Lunsford Park,Heineken,00529d
+345,51.701,-0.403354,Tesco Express Leavesden Green,Heineken,00529d
+346,51.148271,0.881043,Tesco Express Ashford Mace Lane,Heineken,00529d
+347,53.522601,-2.489577,Tesco Superstore Atherton,Heineken,00529d
+348,51.764898,-0.737678,Tesco Express Wendover,Heineken,00529d
+349,51.111746,-1.043181,Tesco Express Four Marks,Heineken,00529d
+350,51.159926,-0.969038,Tesco Express Alton Anstey Lane,Heineken,00529d
+351,51.255376,-1.618969,Tesco Express Ludgershall,Heineken,00529d
+352,51.090979,-1.160969,Tesco Express Alresford,Heineken,00529d
+353,53.750748,-2.361233,Tesco Express Accrington Abbey Street Esso,Heineken,00529d
+354,51.317085,-0.304788,Tesco Express Ashtead Craddocks,Heineken,00529d
+355,51.219455,-1.497702,Tesco Express Charlton,Heineken,00529d
+356,51.434912,-0.465146,Tesco Express Ashford,Heineken,00529d
+357,53.375941,-2.343291,Tesco Express Hale,Heineken,00529d
+358,57.203175,-2.189281,Tesco Express Dyce,Heineken,00529d
+359,51.674659,-0.608074,Tesco Express Amersham Hill Avenue,Heineken,00529d
+360,51.666595,-0.564146,Tesco Express Little Chalfont,Heineken,00529d
+361,55.477697,-4.621432,Tesco Express Ayr,Heineken,00529d
+362,51.20906,-1.504085,Tesco Express Andover Weyhill Road,Heineken,00529d
+363,51.522807,-0.259998,Tesco Express Acton,Heineken,00529d
+364,57.129903,-2.139235,Tesco Express Great Western Road,Heineken,00529d
+365,55.868053,-3.985453,Tesco Express Auld Cross Esso,Heineken,00529d
+366,57.117261,-2.177382,Tesco Express Aberdeen North Dees,Heineken,00529d
+367,53.743862,-2.395835,Tesco Express Oswaldtwistle Mill,Heineken,00529d
+368,57.130277,-2.094239,Tesco Superstore Aberdeen South,Heineken,00529d
+369,56.562227,-2.591901,Tesco Superstore Arbroath,Heineken,00529d
+370,53.302683,-2.235998,Tesco Express Alderley Edge,Heineken,00529d
+371,57.142902,-2.11139,Tesco Express Aberdeen Union Street,Heineken,00529d
+372,54.985894,-3.250221,Tesco Superstore Annan,Heineken,00529d
+373,53.751838,-2.369341,Tesco Extra Accrington,Heineken,00529d
+374,51.410833,-0.673127,Tesco Express Ascot High Street,Heineken,00529d
+375,54.600099,-5.877779,Tesco Express Belmont Road Belfast,Heineken,00529d
+376,55.462444,-4.629769,Tesco Express Ayr High Street,Heineken,00529d
+377,57.137672,-2.114084,Tesco Express Aberdeen Hlbrn St,Heineken,00529d
+378,51.679133,-1.288662,Tesco Express Abingdon Fitzharris,Heineken,00529d
+379,57.150336,-2.171111,Tesco Superstore Aberdeen Woodend,Heineken,00529d
+380,51.788403,-3.988135,Tesco Superstore Ammanford,Heineken,00529d
+381,51.67764,-1.276825,Tesco Express Abingdon Oxford Road,Heineken,00529d
+382,55.862898,-3.977951,Tesco Superstore Airdrie,Heineken,00529d
+383,54.431415,-2.962571,Tesco Express Ambleside Market Place,Heineken,00529d
+384,53.491704,-2.080839,Tesco Express Mossley Road,Heineken,00529d
+385,53.50345,-2.105782,Tesco Express Ashton Under Lyne Oldham Road,Heineken,00529d
+386,51.272434,-0.722651,Tesco Express Ashvale Lysons Avenue,Heineken,00529d
+387,53.602494,-3.037979,Tesco Express Ainsdale Station Road,Heineken,00529d
+388,51.149191,0.871076,Tesco Express Ashford High Street,Heineken,00529d
+389,54.620892,-5.937082,Tesco Superstore Belfast Antrim Road,Heineken,00529d
+390,51.985082,-0.186334,Tesco Extra Baldock,Heineken,00529d
+391,54.599586,-5.931119,Tesco Metro Belfast,Heineken,00529d
+392,54.347508,-6.264558,Tesco Superstore Banbridge,Heineken,00529d
+393,51.53332,0.105839,Tesco Express Barking Esso,Heineken,00529d
+394,57.664753,-2.519915,Tesco Metro Banff,Heineken,00529d
+395,52.074064,-1.339511,Tesco Extra Banbury,Heineken,00529d
+396,55.893709,-3.619128,Tesco Superstore Bathgate Blackburn Road,Heineken,00529d
+397,53.540782,-1.43597,Tesco Extra Barnsley,Heineken,00529d
+398,51.536378,0.070926,Tesco Superstore Barking,Heineken,00529d
+399,51.590565,0.476683,Tesco Extra Basildon Mayflower Retail Park,Heineken,00529d
+400,51.283524,-1.058759,Tesco Superstore Basingstoke,Heineken,00529d
+401,51.415009,-3.290586,Tesco Superstore Barry,Heineken,00529d
+402,51.568121,0.399529,Tesco Superstore Basildon Langdon Hills,Heineken,00529d
+403,51.07302,-4.036166,Tesco Superstore Barnstaple,Heineken,00529d
+404,52.142104,-0.42479,Tesco Superstore Bedford Riverfield Drive,Heineken,00529d
+405,51.760271,-0.563364,Tesco Metro Berkhamsted,Heineken,00529d
+406,50.843745,0.499903,Tesco Superstore Bexhill-on-sea,Heineken,00529d
+407,54.113217,-3.23597,Tesco Extra Barrow-in-furness,Heineken,00529d
+408,53.408031,-3.070394,Tesco Extra Birkenhead Bidston Moss,Heineken,00529d
+409,51.898757,-1.152406,Tesco Metro Bicester Sheep Street,Heineken,00529d
+410,51.875044,0.135353,Tesco Superstore Bishop's Stortford,Heineken,00529d
+411,50.796837,-0.669886,Tesco Superstore Bognor Regis,Heineken,00529d
+412,53.794828,-2.9927,Tesco Extra Blackpool Clifton,Heineken,00529d
+413,53.750827,-2.459047,Tesco Superstore Blackburn,Heineken,00529d
+414,52.129751,-0.451333,Tesco Extra Bedford,Heineken,00529d
+416,52.970815,-0.061119,Tesco Superstore Boston,Heineken,00529d
+417,50.759777,-1.993625,Tesco Express Broadstone,Heineken,00529d
+418,51.892952,-1.159141,Tesco Superstore Bicester Pingle Drive,Heineken,00529d
+419,51.426819,-0.731451,Tesco Superstore Bracknell North,Heineken,00529d
+420,50.850952,-2.15936,Tesco Superstore Blandford Forum,Heineken,00529d
+421,51.266098,-1.08834,Tesco Metro Basingstoke,Heineken,00529d
+422,51.661114,-3.206454,Tesco Express Blackwood Newport,Heineken,00529d
+423,51.133603,-2.976208,Tesco Express Bower Manor,Heineken,00529d
+424,52.023162,-1.151878,Tesco Superstore Brackley,Heineken,00529d
+425,51.65558,-0.269317,Tesco Extra Borehamwood,Heineken,00529d
+426,51.457266,-2.591292,Tesco Metro Bristol,Heineken,00529d
+427,51.509185,-3.579228,Tesco Superstore Bridgend Brewery Lane,Heineken,00529d
+428,51.408011,-0.725113,Tesco Superstore Bracknell,Heineken,00529d
+429,51.877823,0.552335,Tesco Superstore Braintree,Heineken,00529d
+430,51.473428,-2.562921,Tesco Extra Bristol East,Heineken,00529d
+431,53.75926,-1.794227,Tesco Superstore Bradford Buttershaw,Heineken,00529d
+432,51.358425,1.440562,Tesco Metro Broadstairs,Heineken,00529d
+433,51.432475,-2.554649,Tesco Extra Bristol Brislington,Heineken,00529d
+434,53.597384,-2.295192,Tesco Superstore Bury,Heineken,00529d
+435,54.084292,-0.196955,Tesco Superstore Bridlington,Heineken,00529d
+436,51.485933,-2.596185,Tesco Superstore Lime Trees Road,Heineken,00529d
+437,51.497503,-3.568581,Tesco Extra Bridgend,Heineken,00529d
+438,51.236477,-2.984529,Tesco Superstore Burnham-on-sea,Heineken,00529d
+439,51.989354,-0.981342,Tesco Superstore Buckingham,Heineken,00529d
+440,50.95067,-0.14896,Tesco Superstore Burgess Hill,Heineken,00529d
+441,50.745714,-1.816898,Tesco Extra Bournemouth,Heineken,00529d
+442,56.017645,-3.604048,Tesco Metro Bo Ness,Heineken,00529d
+443,52.254174,0.71531,Tesco Superstore Bury St Edmunds,Heineken,00529d
+444,53.803307,-1.754245,Tesco Superstore Bradford Peel Centre,Heineken,00529d
+445,52.44414,0.618273,Tesco Metro Brandon,Heineken,00529d
+446,52.796664,-1.634052,Tesco Superstore Burton Upon Trent,Heineken,00529d
+447,53.84416,-0.429901,Tesco Superstore Beverley,Heineken,00529d
+448,51.857393,0.522219,Tesco Superstore Braintree Great Notley,Heineken,00529d
+449,54.646312,-5.655358,Tesco Superstore Bangor,Heineken,00529d
+450,51.88078,0.582873,Tesco Superstore Braintree Marks Farm,Heineken,00529d
+451,51.617134,0.291487,Tesco Express Brentwood Esso,Heineken,00529d,
+452,50.910554,0.493609,Tesco Express Battle Esso,Heineken,00529d,
+453,51.632856,-0.339642,Tesco Express Bushey Heath Esso,Heineken,00529d,
+454,53.785906,-2.240662,Tesco Extra Burnley,Heineken,00529d,
+455,53.714605,-1.631749,Tesco Extra Batley,Heineken,00529d,
+456,54.607447,-1.279656,Tesco Superstore Billingham,Heineken,00529d,
+457,53.589759,-2.31721,Tesco Express Bury Esso,Heineken,00529d,
+458,51.627675,0.815175,Tesco Express Burnham-on-crouch,Heineken,00529d,
+459,51.32288,-0.199589,Tesco Express Banstead,Heineken,00529d,
+460,52.771535,-0.377321,Tesco Express Bourne Esso,Heineken,00529d,
+461,51.108995,-0.864335,Tesco Superstore Bordon,Heineken,00529d,
+462,50.785816,-0.675802,Tesco Express Bognor Regis Station Road,Heineken,00529d,
+463,50.781614,-0.686772,Tesco Express Bognor Regis Aldwick Road,Heineken,00529d,
+464,53.814762,-3.035381,Tesco Express Blackpool Whitegate Drive,Heineken,00529d,
+465,51.359035,1.399689,Tesco Extra Broadstairs,Heineken,00529d,
+466,53.553159,-0.493725,Tesco Superstore Brigg,Heineken,00529d,
+467,51.392461,0.00238,Tesco Express Bromley Esso,Heineken,00529d,
+468,53.703708,-1.776214,Tesco Superstore Brighouse Bradford Road,Heineken,00529d,
+469,51.468814,-2.61354,Tesco Express Clifton,Heineken,00529d,
+470,53.608743,-2.313695,Tesco Express Brandlesholme,Heineken,00529d,
+471,50.840582,0.461736,Tesco Express Bexhill-on-sea,Heineken,00529d,
+472,52.506662,-1.759749,Tesco Express Castle Bromwich Green Lane,Heineken,00529d,
+473,51.276414,-1.05803,Tesco Express Chineham Lychpit,Heineken,00529d,
+474,52.501568,-1.77084,Tesco Metro Castle Bromwich,Heineken,00529d,
+475,53.169324,-2.973952,Tesco Extra Broughton Chester,Heineken,00529d,
+476,55.066913,-6.518457,Tesco Superstore Ballymoney Castle Street,Heineken,00529d,
+477,54.59493,-5.890427,Tesco Metro Connswater,Heineken,00529d,
+478,51.901123,-1.174075,Tesco Express Bicester Bowmont Square,Heineken,00529d,
+479,54.584375,-5.898367,Tesco Superstore Cregagh Road,Heineken,00529d,
+480,53.803796,-3.039575,Tesco Express Blackpool Ansdell Road,Heineken,00529d,
+481,51.356618,-2.368257,Tesco Express Combe Down Esso,Heineken,00529d,
+482,53.864349,-1.850384,Tesco Express Crossflatts,Heineken,00529d,
+483,52.535971,-2.419656,Tesco Express Bridgnorth,Heineken,00529d,
+484,52.49757,-1.706579,Tesco Express Coleshill,Heineken,00529d,
+485,52.037174,-1.153683,Tesco Express Brackley Lark Rise,Heineken,00529d,
+486,54.552148,-6.000205,Tesco Superstore Dunmurry,Heineken,00529d,
+487,51.396657,-0.05018,Tesco Superstore Beckenham Elmers End,Heineken,00529d,
+488,52.474082,-1.918307,Tesco Superstore Edgbaston,Heineken,00529d,
+489,52.533535,-1.828183,Tesco Express Erdington Esso,Heineken,00529d,
+490,51.505212,-2.578009,Tesco Express Bristol Filton Esso,Heineken,00529d,
+491,52.479407,-1.899083,Tesco Metro Birmingham Caxton,Heineken,00529d,
+492,52.360934,-1.990748,Tesco Express Barnt Green,Heineken,00529d,
+493,53.030511,-1.462986,Tesco Express Alton Manor,Heineken,00529d,
+494,51.014799,-0.451071,Tesco Express Billingshurst,Heineken,00529d,
+495,51.525669,-2.539998,Tesco Express Bradley Stoke Baileys Court,Heineken,00529d,
+496,51.471641,-2.523695,Tesco Express Fishponds,Heineken,00529d,
+497,52.002727,-0.498333,Tesco Superstore Flitwick,Heineken,00529d,
+498,51.501912,-3.601641,Tesco Express Bridgend Gentle Way,Heineken,00529d,
+499,51.486187,-2.609856,Tesco Express Henleaze Esso,Heineken,00529d,
+500,51.908391,-1.138123,Tesco Express Bicester Hart Place,Heineken,00529d,
+501,53.58142,-2.53196,Tesco Extra Bolton Horwich,Heineken,00529d,
+502,51.246649,-1.138383,Tesco Express Kempshott,Heineken,00529d,
+503,52.120319,-0.49231,Tesco Express Kempston Bedford Road,Heineken,00529d,
+504,51.455063,-2.494145,Tesco Express Kingswood,Heineken,00529d,
+505,54.619868,-5.858448,Tesco Extra Knocknagoney Road,Heineken,00529d,
+506,53.799282,-3.051184,Tesco Express Blackpool Lytham Road,Heineken,00529d,
+507,51.891461,-1.138113,Tesco Express Langford Village,Heineken,00529d,
+508,54.580257,-5.949995,Tesco Superstore Lisburn Road,Heineken,00529d,
+509,51.482848,-2.485258,Tesco Express Mangotsfield,Heineken,00529d,
+510,51.29258,-2.498981,Tesco Superstore Midsomer Norton,Heineken,00529d,
+511,51.437946,-2.493385,Tesco Express Longwell Green,Heineken,00529d,
+512,51.43473,-2.75323,Tesco Superstore Nailsea,Heineken,00529d,
+513,54.595725,-5.871693,Tesco Express Ballyhackamore,Heineken,00529d,
+514,51.646162,-0.167182,Tesco Express Barnet Esso,Heineken,00529d,
+515,51.543259,-2.55862,Tesco Express Bradley Stoke,Heineken,00529d,
+516,52.245003,0.742073,Tesco Express Bury St Edmunds Lawson Place,Heineken,00529d,
+517,50.780105,-0.73578,Tesco Express Bognor Regis Nyetimber,Heineken,00529d,
+518,50.834125,-0.207654,Tesco Metro Portslade,Heineken,00529d,
+519,51.562761,0.501995,Tesco Extra Basildon Pitsea,Heineken,00529d,
+520,50.767374,-1.8857,Tesco Express Northbourne,Heineken,00529d,
+521,51.630361,0.328582,Tesco Express Shenfield,Heineken,00529d,
+522,51.459698,-2.553555,Tesco Metro Redfield,Heineken,00529d,
+523,53.80987,-2.226129,Tesco Express Reedley Esso,Heineken,00529d,
+524,53.365639,-3.015845,Tesco Metro Birkenhead Rock Ferry,Heineken,00529d,
+525,51.277341,-1.089881,Tesco Express Basingstoke Oakridge Road,Heineken,00529d,
+526,51.912491,-1.150533,Tesco Express Southwold,Heineken,00529d,
+527,52.7983,-1.603174,Tesco Express Stapenhill,Heineken,00529d,
+528,51.517483,-2.546775,Tesco Express Stoke Gifford,Heineken,00529d,
+529,53.785361,-3.045721,Tesco Express South Shore,Heineken,00529d,
+530,52.47543,-1.905614,Tesco Express Birmingham Mailbox,Heineken,00529d,
+531,51.604066,-2.524063,Tesco Superstore Thornbury,Heineken,00529d,
+532,51.442071,-2.578506,Tesco Express Totterdown,Heineken,00529d,
+533,51.287093,-1.083551,Tesco Express Popley,Heineken,00529d,
+534,52.518266,-1.741781,Tesco Express Water Orton,Heineken,00529d,
+535,51.413796,-2.559168,Tesco Express Whitchurch Esso,Heineken,00529d,
+536,50.836256,-0.077721,Tesco Express Woodingdean Esso,Heineken,00529d,
+537,51.540527,-2.423149,Tesco Express Yate Station Road,Heineken,00529d,
+538,54.609528,-5.927178,Tesco Superstore Yorkgate Centre,Heineken,00529d,
+539,54.579676,-5.92,Tesco Express Ormeau Road Belfast,Heineken,00529d,
+540,52.365791,-2.038903,Tesco Express Marlbrook,Heineken,00529d,
+541,51.648236,-0.355818,Tesco Express Bushey Harcourt Road,Heineken,00529d,
+542,51.336758,-0.796558,Tesco Express Blackwater Darby Green,Heineken,00529d,
+543,50.761063,-1.86174,Tesco Express Muscliffe,Heineken,00529d,
+544,51.397753,-0.728618,Tesco Express Forest Park,Heineken,00529d,
+545,50.961895,-0.150693,Tesco Express Burgess Hill Gatehouse,Heineken,00529d,
+546,52.482297,-1.894143,Tesco Express Birmingham Corporation Street,Heineken,00529d,
+547,53.731354,-1.660565,Tesco Express Birstall Smithies Lane,Heineken,00529d,
+548,50.74886,-1.877694,Tesco Express Moordown,Heineken,00529d,
+549,53.811189,-3.049371,Tesco Express Blackpool Central Drive,Heineken,00529d,
+550,51.551879,-2.411629,Tesco Express Yate Brimsham Park,Heineken,00529d,
+551,52.238483,0.704303,Tesco Express Bury St Edmunds Horringer,Heineken,00529d,
+552,50.819477,-1.576914,Tesco Express Brockenhurst,Heineken,00529d,
+553,53.852483,-3.038911,Tesco Express Bispham,Heineken,00529d,
+554,52.453221,-1.790353,Tesco Superstore Sheldon,Heineken,00529d,
+555,51.474584,-2.591286,Tesco Express Bishopston,Heineken,00529d,
+556,52.459306,1.565228,Tesco Superstore Beccles,Heineken,00529d,
+557,54.550237,-5.920495,Tesco Extra Newtownbreda,Heineken,00529d,
+558,53.780649,-1.787839,Tesco Extra Bradford,Heineken,00529d,
+559,56.589923,-3.335324,Tesco Superstore Blairgowrie Welton,Heineken,00529d,
+560,52.000928,-0.986921,Tesco Express Buckingham Market Hill,Heineken,00529d,
+561,53.50033,-1.448658,Tesco Express Hoyland West Street,Heineken,00529d,
+562,53.820218,-3.043703,Tesco Express Blackpool Caunce Street,Heineken,00529d,
+563,53.816171,-1.815835,Tesco Express Heaton Haworth Road,Heineken,00529d,
+564,53.206626,-4.152502,Tesco Extra Bangor,Heineken,00529d,
+565,52.407997,-1.995472,Tesco Express Birmingham Frankley,Heineken,00529d,
+566,50.803537,-0.058144,Tesco Express Rottingdean,Heineken,00529d,
+567,51.454804,-2.618749,Tesco Express Clifton Regent Street,Heineken,00529d,
+568,52.473534,-1.896387,Tesco Express Birmingham Hurst Street,Heineken,00529d,
+569,52.501437,-1.802557,Tesco Express Castle Bromwich,Heineken,00529d,
+570,53.742502,-2.49768,Tesco Express Blackburn Bank Top,Heineken,00529d,
+571,51.45539,-2.592376,Tesco Express Bristol Wine Street,Heineken,00529d,
+572,51.459917,-2.593385,Tesco Express Bristol Blenheim Court,Heineken,00529d,
+573,53.570503,-2.452365,Tesco Express Bolton Wigan Road Esso,Heineken,00529d,
+574,53.806343,-3.02875,Tesco Express Blackpool Marton,Heineken,00529d,
+575,51.527985,-2.504564,Tesco Express Winterbourne Esso,Heineken,00529d,
+576,54.555602,-5.906974,Tesco Express Cairns Hill,Heineken,00529d,
+577,50.824597,-0.139042,Tesco Express Brighton Jubilee Street,Heineken,00529d,
+578,52.458863,-1.999809,Tesco Superstore Quinton,Heineken,00529d,
+579,52.926328,-1.213253,Tesco Extra Nottingham Beeston,Heineken,00529d,
+580,54.856736,-6.26194,Tesco Superstore Ballymena,Heineken,00529d,
+581,50.732018,-1.822732,Tesco Express Boscombe,Heineken,00529d,
+582,51.439556,-2.601048,Tesco Express Bedminster,Heineken,00529d,
+584,53.57081,-1.466814,Tesco Express Smithies Carlton Road,Heineken,00529d,
+585,51.567153,0.549843,Tesco Express Benfleet London Road,Heineken,00529d,
+586,52.423144,-1.932709,Tesco Express Birmingham Bournville Esso,Heineken,00529d,
+587,52.486745,-1.912982,Tesco Express Birmingham Jewellery Quarter,Heineken,00529d,
+588,50.734687,-1.869144,Tesco Express Bournemouth Charminster Road,Heineken,00529d,
+589,54.599237,-1.297246,Tesco Express Billingham Bypass Esso,Heineken,00529d,
+590,56.73425,-2.660082,Tesco Express Brechin Esso,Heineken,00529d,
+591,53.2495,-1.910383,Tesco Express Buxton Esso,Heineken,00529d,
+592,54.65429,-5.697407,Tesco Superstore Springhill,Heineken,00529d,
+593,53.602573,-2.321976,Tesco Express Bury Tottington Road,Heineken,00529d,
+594,51.423734,-0.003704,Tesco Express Downham Bromley Road,Heineken,00529d,
+595,51.316113,-2.425901,Tesco Express Peasedown St John,Heineken,00529d,
+596,54.364546,-2.920175,Tesco Express Bowness-on-windermere,Heineken,00529d,
+597,52.42146,-1.891686,Tesco Express Kings Heath,Heineken,00529d,
+598,52.512803,-1.887528,Tesco Superstore Aston Lane,Heineken,00529d,
+599,52.472924,-1.956807,Tesco Express Edgbaston Hagley Road,Heineken,00529d,
+600,51.453562,-2.596497,Tesco Express Bristol Clare Street,Heineken,00529d,
+601,54.608299,-5.96812,Tesco Superstore Ballygomartin,Heineken,00529d,
+602,51.366551,-2.391248,Tesco Express Bath Englishcombe Lane,Heineken,00529d,
+603,54.590986,-5.932622,Tesco Express Belfast Dublin Road,Heineken,00529d,
+604,52.439568,-1.97789,Tesco Express Birmingham Weoley Esso,Heineken,00529d,
+605,51.382627,-2.349125,Tesco Express Bathwick Hill,Heineken,00529d,
+606,53.802873,-1.761779,Tesco Express Manninghm Lane Bradford,Heineken,00529d,
+607,52.534749,-2.411875,Tesco Express Bridgnorth Hermitage Esso,Heineken,00529d,
+608,51.469251,-2.511027,Tesco Express Bristol Soundwell Esso,Heineken,00529d,
+609,55.131387,-1.593719,Tesco Superstore Bedlington,Heineken,00529d,
+610,53.647081,-2.315735,Tesco Metro Ramsbottom,Heineken,00529d,
+611,53.562016,-2.371911,Tesco Metro Bolton Little Lever,Heineken,00529d,
+612,53.554412,-2.508632,Tesco Express Westhoughton,Heineken,00529d,
+613,53.578363,-2.41383,Tesco Express Bradford Street Esso,Heineken,00529d,
+614,54.115431,-3.194729,Tesco Metro Barrow,Heineken,00529d,
+615,53.452644,-2.993344,Tesco Metro Bootle,Heineken,00529d,
+616,50.726424,-1.816392,Tesco Express Southbourne Grove,Heineken,00529d,
+617,53.79353,-1.755365,Tesco Express Bradford Sunbridge Road,Heineken,00529d,
+618,51.400073,0.031438,Tesco Superstore Bromley,Heineken,00529d,
+619,51.536456,-2.548344,Tesco Extra Bradley Stoke,Heineken,00529d,
+620,52.424163,-1.848475,Tesco Express Robin Hood,Heineken,00529d,
+621,54.872057,-6.28429,Tesco Express Carniny Ballymena,Heineken,00529d,
+622,53.791644,-1.82889,Tesco Express Leaventhorpe Esso,Heineken,00529d,
+623,52.132636,-0.482383,Tesco Express Bedford Ford End,Heineken,00529d,
+624,51.460406,-2.480759,Tesco Express Warmley Deanery Road Esso,Heineken,00529d,
+625,50.820853,-0.133852,Tesco Express Brighton St James's,Heineken,00529d,
+626,50.844009,0.433874,Tesco Express Bexhill,Heineken,00529d,
+627,55.850031,-4.116091,Tesco Express Baillieston,Heineken,00529d,
+628,53.808264,-1.731104,Tesco Express Undercliffe,Heineken,00529d,
+630,52.521781,-1.844661,Tesco Express Erdington Six Ways,Heineken,00529d,
+631,52.394457,-2.014357,Tesco Metro Rubery,Heineken,00529d,
+633,53.69072,-0.44175,Tesco Superstore Barton Upon Humber,Heineken,00529d,
+634,53.769286,-2.478061,Tesco Express Blackburn Roe Lee,Heineken,00529d,
+635,51.440343,-2.608842,Tesco Express Bristol St North,Heineken,00529d,
+636,50.793958,-0.637886,Tesco Express Bognor Regis,Heineken,00529d,
+637,52.066502,-1.322059,Tesco Express Middleton Road Banbury,Heineken,00529d,
+638,51.103033,-4.164588,Tesco Superstore Braunton,Heineken,00529d,
+639,54.8654,-6.273514,Tesco Express Ballymena Church Street,Heineken,00529d,
+640,52.477177,-1.898528,Tesco Express Birmingham Pallasades,Heineken,00529d,
+641,50.720503,-1.884128,Tesco Express Bournemouth Triangle,Heineken,00529d,
+642,52.473102,-1.906856,Tesco Express Bathrow Birmingham,Heineken,00529d,
+643,52.416489,-1.970329,Tesco Express Northfield,Heineken,00529d,
+644,50.394634,-3.515156,Tesco Express Brixham Fore Street,Heineken,00529d,
+645,51.405356,-3.269654,Tesco Express Barry Holton,Heineken,00529d,
+646,51.537139,0.0805,Tesco Express Barking Ripple Road,Heineken,00529d,
+647,51.868689,0.160342,Tesco Express Bishop's Stortford South Street,Heineken,00529d,
+649,51.480765,-2.503812,Tesco Metro Bristol Staple Hill,Heineken,00529d,
+650,55.820018,-4.021284,Tesco Extra Bellshill,Heineken,00529d,
+651,50.826584,-0.141888,Tesco Express Brighton Queens Road,Heineken,00529d,
+652,52.136583,-0.466395,Tesco Express Bedford,Heineken,00529d,
+653,51.534423,-0.658392,Tesco Express Burnham High Street,Heineken,00529d,
+654,53.787898,-2.214233,Tesco Express Burnley,Heineken,00529d,
+655,51.452691,-2.599753,Tesco Express College Bristol,Heineken,00529d,
+656,53.725959,-2.523992,Tesco Express Livesey Blackburn,Heineken,00529d,
+657,55.005415,-1.518509,Tesco Express Battle Wallsend,Heineken,00529d,
+658,53.678338,-1.741726,Tesco Express Hudders Leeds Road,Heineken,00529d,
+659,51.491543,0.150228,Tesco Express Belvedere,Heineken,00529d,
+661,52.482291,-1.897309,Tesco Express Birmingham Colmore,Heineken,00529d,
+662,52.44676,-1.930216,Tesco Express Selly Oak Bristol Road Esso,Heineken,00529d,
+663,53.841616,-1.764401,Tesco Express Baildon,Heineken,00529d,
+664,51.433988,-2.578332,Tesco Express Bristol Axbridge Road,Heineken,00529d,
+665,51.449932,-2.602911,Tesco Express Bristol Canons,Heineken,00529d,
+666,52.246101,0.711301,Tesco Express Bury St Edmunds Cornhill,Heineken,00529d,
+667,55.76384,-2.022891,Tesco Superstore Berwick-upon-tweed,Heineken,00529d,
+668,51.750977,-1.298225,Tesco Express Botley,Heineken,00529d,
+669,51.465283,-2.590158,Tesco Express Cheltnhm Road Bristol,Heineken,00529d,
+670,51.406754,-0.032841,Tesco Express Beckenham,Heineken,00529d,
+671,51.018258,-4.188412,Tesco Superstore Bideford,Heineken,00529d,
+672,57.66718,-2.957959,Tesco Superstore Buckie,Heineken,00529d,
+673,57.060531,-2.464907,Tesco Superstore Banchory,Heineken,00529d,
+674,52.399936,-1.960905,Tesco Express West Heath Birmingham,Heineken,00529d,
+675,52.489079,-1.908118,Tesco Express Birmingham Hockley,Heineken,00529d,
+676,50.724393,-1.864251,Tesco Express Bournemouth Holden Road,Heineken,00529d,
+677,51.392925,-1.067167,Tesco Express Burghfield Common,Heineken,00529d,
+678,53.831714,-3.030162,Tesco Express Blackpool Westcliffe Drive,Heineken,00529d,
+679,54.64037,-1.698486,Tesco Extra Bishop Auckland,Heineken,00529d,
+680,51.541183,0.083474,Tesco Express Longbridge Road Barking,Heineken,00529d,
+681,52.060735,-1.337199,Tesco Express High St Banbury,Heineken,00529d,
+682,53.796996,-3.037038,Tesco Express Marton Drive Blckpool,Heineken,00529d,
+683,51.452703,-2.588556,Tesco Express Bristol Paragon,Heineken,00529d,
+684,51.370085,-2.366253,Tesco Express Bath Wellsway,Heineken,00529d,
+685,52.759415,-0.368109,Tesco Superstore Bourne,Heineken,00529d,
+686,54.115108,-3.226847,Tesco Express Rawlinson Street Barrow,Heineken,00529d,
+687,52.48176,-1.998469,Tesco Express Birmingham Bristnall,Heineken,00529d,
+688,50.72076,-1.879764,Tesco Metro Bournemouth,Heineken,00529d,
+689,51.539774,-2.412327,Tesco Extra Yate,Heineken,00529d,
+690,53.757623,-1.764401,Tesco Express Low Moor Bradford,Heineken,00529d,
+691,54.588726,-5.895389,Tesco Superstore Castlereagh Road,Heineken,00529d,
+692,51.5029,-2.601463,Tesco Express Greystoke Avenue,Heineken,00529d,
+693,52.479717,-1.893575,Tesco Express Birmingham Carrs Lane,Heineken,00529d,
+694,52.4619,-1.814508,Tesco Extra Yardley,Heineken,00529d,
+695,52.480964,-1.474764,Tesco Extra Bedworth,Heineken,00529d,
+696,54.595316,-5.934167,Tesco Express Belfast Great Victoria Street,Heineken,00529d,
+697,56.154077,-3.945055,Tesco Express Bridge Of Allan High St,Heineken,00529d,
+698,51.460791,-2.530969,Tesco Express Bristol Bell Hill Road,Heineken,00529d,
+699,52.136032,-0.471017,Tesco Metro Bedford,Heineken,00529d,
+700,50.730659,-1.854419,Tesco Express Holdenhurst Road,Heineken,00529d,
+701,56.000854,-3.887392,Tesco Express Bonnybridge Bridge Street,Heineken,00529d,
+702,51.626442,0.428354,Tesco Express Billericay Meadow Rise,Heineken,00529d,
+703,51.381012,-2.362662,Tesco Express Bath Westgate Building,Heineken,00529d,
+704,50.845194,-0.194161,Tesco Express Westway Hove,Heineken,00529d,
+705,52.154287,-0.465714,Tesco Express Bedford Brickhill Drive,Heineken,00529d,
+706,52.513272,-1.938068,Tesco Express Handsworth Oxhill Road,Heineken,00529d,
+707,52.445423,-1.934338,Tesco Express Birmingham Bristol Road,Heineken,00529d,
+708,52.78757,-1.618173,Tesco Express Copper Hawthorn Burton,Heineken,00529d,
+709,53.177786,-4.058844,Tesco Express Bethesda High Street,Heineken,00529d,
+710,50.798944,-0.692445,Tesco Express Bognor Regis,Heineken,00529d,
+711,51.330099,-0.78568,Tesco Express Blackwater London,Heineken,00529d,
+712,52.396358,-1.880916,Tesco Express Birmingham Alcester,Heineken,00529d,
+713,51.413274,-3.256687,Tesco Express Barry Road,Heineken,00529d,
+714,54.101394,-3.249382,Tesco Express Barrow Walney Island,Heineken,00529d,
+715,51.629478,0.344965,Tesco Express Brentwood,Heineken,00529d,
+716,51.495032,-2.574697,Tesco Express Bristol Filton Avenue,Heineken,00529d,
+717,53.563964,-1.498711,Tesco Express Barnsley Huddersfield Road,Heineken,00529d,
+718,53.321319,-4.22641,Tesco Express Benllech Anglesey,Heineken,00529d,
+719,51.862344,0.155855,Tesco Express Havers Lane,Heineken,00529d,
+720,51.379539,-0.083657,Tesco Express Croydon Addiscombe Esso,Heineken,00529d,
+721,55.46671,-4.289273,Tesco Superstore Auchinleck,Heineken,00529d,
+722,52.254568,0.01814,Tesco Extra Cambridge Bar Hill,Heineken,00529d,
+723,51.525055,-3.325178,Tesco Express Cregiau,Heineken,00529d,
+724,51.946475,-2.061917,Tesco Superstore Cheltenham Bishops Cleeve,Heineken,00529d,
+725,51.811374,1.024931,Tesco Express Brightlingsea,Heineken,00529d,
+726,52.692184,-1.998478,Tesco Superstore Cannock,Heineken,00529d,
+727,52.088799,-4.646592,Tesco Superstore Cardigan,Heineken,00529d,
+728,53.133453,-4.27092,Tesco Superstore Caernarfon South Road,Heineken,00529d,
+729,54.897051,-2.893484,Tesco Superstore Carlisle Warwick Road,Heineken,00529d,
+730,52.229928,0.136792,Tesco Express Cambridge Campkin Road,Heineken,00529d,
+731,51.57428,-3.21955,Tesco Metro Caerphilly,Heineken,00529d,
+732,52.211429,0.143413,Tesco Superstore Cambridge Newmarket Road,Heineken,00529d,
+733,52.18755,0.17366,Tesco Express Cherry Hinton,Heineken,00529d,
+734,51.497962,-3.206044,Tesco Extra Cardiff,Heineken,00529d,
+735,51.487542,-3.127273,Tesco Extra Cardiff Pengam,Heineken,00529d,
+736,55.428534,-5.607969,Tesco Metro Campbeltown,Heineken,00529d,
+737,50.214839,-5.291826,Tesco Superstore Camborne,Heineken,00529d,
+738,51.49306,-3.170638,Tesco Metro Cardiff Roath,Heineken,00529d,
+739,51.480985,-3.200772,Tesco Metro Cardiff Canton,Heineken,00529d,
+740,54.892796,-2.935829,Tesco Metro Carlisle Victoria Viaduct,Heineken,00529d,
+741,54.374597,-1.723895,Tesco Superstore Catterick Garrison,Heineken,00529d,
+742,51.38035,0.531138,Tesco Superstore Chatham,Heineken,00529d,
+743,50.874081,-2.954273,Tesco Superstore Chard,Heineken,00529d,
+744,53.192681,-2.887384,Tesco Superstore Chester,Heineken,00529d,
+745,53.249126,-1.445446,Tesco Express Chesterfield Esso,Heineken,00529d,
+746,50.834465,-0.801127,Tesco Extra Chichester,Heineken,00529d,
+747,51.902017,-2.07591,Tesco Metro Cheltenham,Heineken,00529d,
+748,51.641088,-2.671514,Tesco Superstore Chepstow,Heineken,00529d,
+749,51.290405,-0.100938,Tesco Superstore Caterham,Heineken,00529d,
+750,53.65603,-2.658743,Tesco Extra Chorley,Heineken,00529d,
+751,54.85877,-1.577426,Tesco Superstore Chester-le-street,Heineken,00529d,
+752,51.705983,-1.952804,Tesco Extra Cirencester,Heineken,00529d,
+753,51.905974,-2.086862,Tesco Superstore Cheltenham,Heineken,00529d,

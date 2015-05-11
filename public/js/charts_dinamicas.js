@@ -59,10 +59,11 @@ $(document).ready(function(){
 			                .start();
 			            function draw(words) {
 			              d3.select("#word_cloud").append("svg")
-			                  .attr("width", 1250)
-			                  .attr("height", 720)
+			                  //.attr("width", 1250)
+			                  //.attr("height", 720)
+			                  .classed("svg-word", true)
 			                .append("g")
-			                  .attr("transform", "translate(565,275)")
+			                  .attr("transform", "translate("+(1250/2)+","+(720/2)+")")
 			                .selectAll("text")
 			                  .data(words)
 			                .enter().append("text")
@@ -94,7 +95,7 @@ $(document).ready(function(){
         var val = $( "#opcion_word" ).val();
         //var token = "{{ csrf_token() }}";
         //console.log(val);
-        $( "svg" ).remove();
+        $( ".svg-word" ).remove();
 
 		            	/*
 		            var head = '<h2>Clientes con mas unidades entregadas</h2>';
@@ -157,10 +158,11 @@ $(document).ready(function(){
 			                .start();
 			            function draw(words) {
 			              d3.select("#word_cloud").append("svg")
-			                  .attr("width", 1250)
-			                  .attr("height", 720)
+			              	  .classed("svg-word", true)
+			                  //.attr("width", 1250)
+			                  //.attr("height", 720)
 			                .append("g")
-			                  .attr("transform", "translate(565,275)")
+			                  .attr("transform", "translate("+(1250/2)+","+(720/2)+")")
 			                .selectAll("text")
 			                  .data(words)
 			                .enter().append("text")
@@ -196,6 +198,7 @@ $(document).ready(function(){
 			            supportResponsive: true,
 			            //container: => use @default
 			            size: 600,
+
 			            //viewBoxSize: => use @default
 			            innerRadius: 600 / 3.5,
 			            //outerRadius: => use @default
@@ -313,6 +316,7 @@ $(document).ready(function(){
 			            innerRadius: 600 / 3.5,
 			            //outerRadius: => use @default
 			            radiusMin: 50,
+
 			            //radiusMax: use @default
 			            //intersectDelta: use @default
 			            //intersectInc: use @default

@@ -165,12 +165,37 @@
         <!-- /.container -->
     </section>
 
-    <hr class="divider">
+    <section id="aux" class="aux"></section>
      <!-- Portfolio -->
+
+    <hr class="divider">
+
     <section id="newbusiness" class="newbusiness">
-        <div id="map_canvas"></div>
+
+        <!--
+        <div id="map_canvas"></div>-->
+        
+        <div id='map'>
+        </div>
+        <div class="container" id="box">
+          <div id='selections' class="selections">
+            <a href='#' class="show">Seleccion las compañias que deseas ver</a>
+            <div class='content'>
+              <a href='#' class="hide">Esconder</a>
+              <div id="toggles">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id='loading'>
+        </div>
+        <div id='selected'>
+          <h1>Tiendas</h1>
+        </div>
+        
         <!-- /.container -->
     </section>
+
 
     <hr class="divider">
 <!--Scripts De las gráficas Staticas-->
@@ -328,8 +353,8 @@
          <!--inception-->
     <script>
         var margin = 20,
-            diameter = 960;
-
+            diameter = 700;
+            
         var color = d3.scale.linear()
             .domain([-1, 5])
             .range(["hsl(152,80%,80%)", "hsl(228,30%,40%)"])
@@ -341,14 +366,15 @@
             .value(function(d) { return d.size; })
 
         var svg = d3.select("#inception").append("svg")
-            .attr("width", diameter)
-            .attr("height", diameter)
+         .classed("svg-container", true) 
+            /*.attr("width", 3200)
+            .attr("height", 800)*/
           .append("g")
             .attr("transform", "translate(" + diameter / 2 + "," + diameter / 2 + ")");
 
         d3.json("js/inception_bk2.json", function(error, root) {
           if (error) return console.error(error);
-
+          
           var focus = root,
               nodes = pack.nodes(root),
               view;

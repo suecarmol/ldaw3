@@ -34,8 +34,11 @@
     <script src="http://phuonghuynh.github.io/js/bower_components/bubble-chart/src/plugins/lines/lines.js"></script>
     <script src="{{ asset('js/d3.layout.cloud.js') }}"> </script>
     <script src="{{ asset('js/topojson.v0.min.js') }}"> </script>
-    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
-
+    <script src="https://api.tiles.mapbox.com/mapbox.js/v1.6.3/mapbox.js"></script>
+    <link href='https://api.tiles.mapbox.com/mapbox.js/v1.6.3/mapbox.css' rel='stylesheet' />
+    <script src="{{ asset('js/voronoi_map.js') }}"> </script>
+    <!--<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    -->
     <!-- Custom Fonts -->
     <!--
     <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
@@ -134,10 +137,10 @@
     <script src="{{ asset('js/bootstrap-datetimepicker.min.js') }}"></script>
     <!-- Script que permite la aparición del menu -->
     <script src="{{ asset('js/menu.js') }}"> </script>
-    <script src="{{ asset('js/maps.js') }}"> </script>
+    <!--<script src="{{ asset('js/maps.js') }}"> </script>-->
     <script src="{{ asset('js/voronoi.js') }}"> </script>
     <script src="{{ asset('js/charts_dinamicas.js') }}"> </script>
-    <script src="{{ asset('js/init_map_bk.js') }}"> </script>
+    <!--<script src="{{ asset('js/init_map_bk.js') }}"> </script>-->
     <script type="text/javascript" src="http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
 
      <script type="text/javascript" src="http://cdn.datatables.net/plug-ins/1.10.7/integration/bootstrap/3/dataTables.bootstrap.js"></script>

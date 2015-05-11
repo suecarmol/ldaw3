@@ -89,7 +89,7 @@ class DeliveriesController extends Controller {
 		//var_dump($suggestions);
 
 			//llama al metodo voronoi
-		$this->voronoi();
+		$this->voronoi($inception_info);
 
 		return view('deliveries.index')
 		->with('average_delivery_units', $average_delivery_units)
@@ -928,7 +928,7 @@ class DeliveriesController extends Controller {
 		return $floydWarshall_matrix;
 
 	}
-
+	/*
 	public function voronoi(){
 
 		$clientes = \DB::collection('proyecto')
@@ -969,6 +969,120 @@ class DeliveriesController extends Controller {
 		fclose($myfile);
 		//var_dump($json);
 
-	}
+	}*/
+	public function voronoi($inception){
+		//compania -> Camiones -> Rutas -> Clientes
+		//recorre los camiones
+		//var_dump(sizeof($inception[0]['clients']));
+			$compania = \DB::collection('proyecto')
+					->select('company_name')
+					->where('capacity', '>', 0)
+					->groupBy('company_name')
+					->distinct()
+					->get();
+
+			//print_r($compania);				
+			
+			$company_data = array();		
+
+			for($i = 0; $i < sizeof($compania); $i++){
+				$trucks = \DB::collection('proyecto')
+				->select('truck_id')
+				->where('company_name', '=', $compania[$i]['company_name'])
+				->get();
+
+				$trucks_data = array();
+
+				for($j = 0; $j < sizeof($trucks); $j++){
+
+					$clients = \DB::collection('proyecto')
+					->select('clients.name', 'clients.geo.coordinates')
+					->where('truck_id', '=', $trucks[$j]['truck_id'])
+					->get();
+
+					$clients_data = array();
+
+					//print_r(json_encode($clients));
+
+					//var_dump(sizeof($clients[0]));
+
+					//var_dump($clients[0]);
+
+					for($k = 1; $k < sizeof($clients); $k++){
+						if(sizeof($clients[$k]) > 1){
+
+							$clients_array = $clients[$k]['clients'];
+
+							//print_r($clients_array);
+
+							for($l = 0; $l < sizeof($clients_array); $l++)
+							{
+								array_push($clients_data, array(
+									'name' => $clients_array[$l]['name'],
+									'size' => $clients_array[$l]['geo']
+								));
+							} //for clients_array
+
+						} //for clients
+
+						//array_push($trucks_data, array(
+							//'name' => $trucks[$j]['truck_id'],
+							//'children' => $clients_data
+						//));
+					}
+
+				}// for trucks
+
+				array_push($company_data, array(
+					'name'=> $compania[$i]['company_name'],
+					'children' => $clients_data
+				));
+
+			}	//for companies	
+
+
+			//var_dump($company_data);
+			//$json = "{ \"name\": \"ldaw3\", \"children\": ";
+			$json = "id,latitude,longitude,name,type,color\n";
+			$cont = 1;
+			for($i = 0; $i<sizeof($company_data);$i++){
+				$temp = $company_data[$i]['children'];
+				for($j = 0; $j<sizeof($temp);$j++){
+					//var_dump($temp[$j]['size']['coordinates'][0]);
+					//var_dump($temp[$j]['name']);
+					//var_dump($company_data[$i]['name']);
+					if($i==0)
+						$json .= "".$cont.",".$temp[$j]['size']['coordinates'][1].",".$temp[$j]['size']['coordinates'][0].",".$temp[$j]['name'].",". $company_data[$i]['name'].","."00529d\n";
+					if($i==1)
+						$json .= "".$cont.",".$temp[$j]['size']['coordinates'][1].",".$temp[$j]['size']['coordinates'][0].",".$temp[$j]['name'].",". $company_data[$i]['name'].","."BEF781\n";
+					if($i==2)
+						$json .= "".$cont.",".$temp[$j]['size']['coordinates'][1].",".$temp[$j]['size']['coordinates'][0].",".$temp[$j]['name'].",". $company_data[$i]['name'].","."F7819F\n";
+					if($i==3)
+						$json .= "".$cont.",".$temp[$j]['size']['coordinates'][1].",".$temp[$j]['size']['coordinates'][0].",".$temp[$j]['name'].",". $company_data[$i]['name'].","."FE2E2E\n";
+					if($i==4)
+						$json .= "".$cont.",".$temp[$j]['size']['coordinates'][1].",".$temp[$j]['size']['coordinates'][0].",".$temp[$j]['name'].",". $company_data[$i]['name'].","."FFFF00\n";
+					
+					$cont += 1;
+				}
+			}
+			//var_dump($json);
+			/*
+			array_push($json, array(
+					'name' => 'ldaw3',
+					'children' => $company_data
+				));*/
+			$company_data = json_encode($company_data);
+
+			//$json .= $company_data . "}";
+
+			//print_r($json);
+
+			$myfile = fopen("js/voronoi.csv", "w") or die("Unable to open file!");
+			fwrite($myfile, $json);
+			fclose($myfile);
+
+		return 0;
+
+	}//Cierre inception
 
 }
