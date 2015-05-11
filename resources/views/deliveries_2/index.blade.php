@@ -215,7 +215,6 @@
                 var svg2 = d3.select("#dendogram").append("svg")
                     .attr("width", width + margin.right + margin.left)
                     .attr("height", height + margin.top + margin.bottom)
-                    .attr("overflow", "auto")
                   .append("g")
                     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
