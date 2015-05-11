@@ -16,6 +16,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/inception.css') }}"/>
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/mapa_voronoi.css') }}" rel="stylesheet">
     <link href="{{ asset('css/bootstrap-datetimepicker.css') }}" rel="stylesheet">
     <script src="http://d3js.org/d3.v3.min.js"></script>
     <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet">
@@ -32,11 +33,14 @@
     <script src="http://phuonghuynh.github.io/js/bower_components/bubble-chart/src/plugins/central-click/central-click.js"></script>
     <script src="http://phuonghuynh.github.io/js/bower_components/bubble-chart/src/plugins/lines/lines.js"></script>
     <script src="{{ asset('js/d3.layout.cloud.js') }}"> </script>
-    <!-- Custom Fonts -->
+    <script src="{{ asset('js/topojson.v0.min.js') }}"> </script>
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
 
+    <!-- Custom Fonts -->
+    <!--
     <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
 
-	<script src="http://maps.googleapis.com/maps/api/js"></script>
+	<script src="http://maps.googleapis.com/maps/api/js"></script>-->
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -131,6 +135,7 @@
     <!-- Script que permite la aparición del menu -->
     <script src="{{ asset('js/menu.js') }}"> </script>
     <script src="{{ asset('js/maps.js') }}"> </script>
+    <script src="{{ asset('js/voronoi.js') }}"> </script>
     <script src="{{ asset('js/charts_dinamicas.js') }}"> </script>
     <script src="{{ asset('js/init_map_bk.js') }}"> </script>
     <script type="text/javascript" src="http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>

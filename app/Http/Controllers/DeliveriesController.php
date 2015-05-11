@@ -81,13 +81,15 @@ class DeliveriesController extends Controller {
 		//como el archivo json ya existe comentare la linea para que no se genere el archivo cada ves que se haga refresh
 		$this->inception($inception_info);
 
-
 		/********
 		**** SUGGESTIONS
 		********/
 
 		$suggestions = $this->createSuggestions();
 		//var_dump($suggestions);
+
+			//llama al metodo voronoi
+		$this->voronoi();
 
 		return view('deliveries.index')
 		->with('average_delivery_units', $average_delivery_units)
@@ -924,6 +926,48 @@ class DeliveriesController extends Controller {
 		}
 
 		return $floydWarshall_matrix;
+
+	}
+
+	public function voronoi(){
+
+		$clientes = \DB::collection('proyecto')
+		->select('clients.geo.coordinates')
+		->where('clients.units_delivered', '>', 0)
+		//->orderBy('clients.units_delivered')
+		->get();
+		//var_dump($clientes);
+
+
+		for($i = 0; $i<sizeof($clientes);$i++){
+			$temp = $clientes[$i]['clients'];
+			for($j = 0; $j<sizeof($temp);$j++){
+				$coordenadas [] = array(
+					//'client' => $t['name'],
+					'longitude' => $temp[$j]['geo']['coordinates'][0],
+					'latitude' => $temp[$j]['geo']['coordinates'][1]
+				);
+			}
+		}//cierre for 
+		$json = "{\"type\": \"FeatureCollection\", \n \"features\": [";
+		//var_dump($json);
+	
+		//for($i = 0; $i<sizeof($coordenadas);$i++){
+		  for($i = 0; $i<50;$i++){
+			//if($i == sizeof($coordenadas)-1)
+			if($i == 50-1)
+				$json .= "{ \"type\": \"Feature\", \"id\": ". $i . ", \"properties\": { }, \"geometry\": { \"type\": \"Point\", \"coordinates\": [ " . $coordenadas[$i]['longitude'].",". $coordenadas[$i]['latitude'] ."] } }\n";
+ 			else
+ 				$json .= "{ \"type\": \"Feature\", \"id\": ". $i . ", \"properties\": { }, \"geometry\": { \"type\": \"Point\", \"coordinates\": [ " . $coordenadas[$i]['longitude'].",". $coordenadas[$i]['latitude'] ."] } },\n";
+ 			
+		}
+
+		$json .= "\n] }" ;
+
+		$myfile = fopen("js/voronoi.geojson", "w") or die("Unable to open file!");
+			fwrite($myfile, $json);
+		fclose($myfile);
+		//var_dump($json);
 
 	}
 

@@ -406,9 +406,9 @@ $(document).ready(function(){
 	        //val = val.toString();
 	        //var token = "{{ csrf_token() }}";
 	        console.log(val);
-	        $("#suggestions_table").fadeOut();
+	        //$("#suggestions_table").remove();
 	        //$('#suggestions_table').dataTable();
-	        //$('#suggestions_table_wrapper').fadeOut();
+	        $('#suggestions_table_wrapper').remove();
         
        		$.ajax({
 		        url: "suggestions_dinamicas",
@@ -434,7 +434,9 @@ $(document).ready(function(){
 
 			       			table += '</tbody>' + '</table>';
 			       			//console.log(table)
-			       			$('#suggestions_table').replaceWith(table);
+			       			//$('#suggestions_table').replaceWith(table);
+			       			$(".sug_table").append(table);
+			       			//$('#suggestions_table_wrapper').fadeOut();
 			       			$('#suggestions_table').dataTable();
 
 

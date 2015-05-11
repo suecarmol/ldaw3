@@ -132,7 +132,7 @@
               </div>
             {!! Form::close() !!}
             @if(sizeof($suggestions) > 0)
-              <div class="table-responsive">
+              <div class="table-responsive sug_table" id="sug_table">
                 <table id="suggestions_table" class="table table-striped table-bordered" cellspacing="0" width="100%">
                   <thead>
                     <tr >
@@ -165,23 +165,14 @@
         <!-- /.container -->
     </section>
 
+    <hr class="divider">
      <!-- Portfolio -->
     <section id="newbusiness" class="newbusiness">
-      <!--
-        <div id="map-canvas-nb"></div>-->
-    <div id="map-legend"> 
-      <div id="map_options_header"> Opciones del mapa </div>
-       <div id="search_map_button" class="search_map_button"> 
-        <div id="search_map_text" class="search_map_text"> Buscar</div>
-      </div>
-     <div id="clear_map_button" class="clear_map_button"> 
-        <div id="clear_map_text" class="clear_map_text"> Clear</div>
-      </div>
-      <div class="clear"></div>
-    </div>
+        <div id="map_canvas"></div>
         <!-- /.container -->
     </section>
 
+    <hr class="divider">
 <!--Scripts De las gráficas Staticas-->
        
    <!--Nuevo dendogram-->
