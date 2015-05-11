@@ -86,18 +86,19 @@
           <div id="st3" >
             <h2>Unidades promedio entregadas por ruta</h2>
             <h3>{{ $average_delivery_units }} unidades </h3>
-          </div>	
+          </div>  
           <div id="st4" >
            <h2>Calificaci&oacute;n promedio</h2>
            <h3> {{ $trucks_average_grade }} estrellas de 5 </h3>
           </div>  
           <div class="clear"></div>
           <div id="st5" >
-           <h2>Capacidad promedio de los camiones</h2>
-           <h3>{{ $trucks_average_capacity }}</h3>
-          </div>	
+           <h2>Tiempo promedio de servicio</h2>
+           <h3>{{ $trucks_average_service_time }} horas</h3>
+          </div>  
           <div id="st6" >
-           <h2>Stats</h2>
+           <h2>Capacidad promedio de los camiones</h2>
+           <h3>{{ $trucks_average_capacity }} kilogramos</h3>
           </div>
           <div class="clear"></div>
     </section>
@@ -108,7 +109,33 @@
     <!-- Portfolio -->
     <section id="scenarios" class="scenarios">
         <div class="container">
-           <h1>Escenarios</h1>
+           <h2>Floyd</h2>
+            @if(sizeof($floyd) > 0)
+              <div class="table-responsive">
+                <table id="floyd_table" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                  <thead>
+                    <tr >
+                      <th>Cliente 1</th>
+                      <th>Cliente 1</th>
+                      <th>Distancia entre clientes</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                   @for($i = 1; $i < sizeof($floyd); $i++)
+                    @for($j = 0; $j < sizeof($floyd); $j++)
+                        <tr >
+                          <td> {{ $floyd[$i][$j]['clientFrom'] }} </td>
+                          <td> {{ $floyd[$i][$j]['clientTo'] }} </td>
+                          <td> {{ $floyd[$i][$j]['distance'] }} </td>
+                        </tr>
+                    @endfor    
+                  @endfor
+                  </tbody>
+                </table>
+              </div>
+            @else
+              <h3>No hay informaci&oacute;n disponible</h3>  
+            @endif  
         </div>
         <!-- /.container -->
     </section>
@@ -201,13 +228,12 @@
 <!--Scripts De las gráficas Staticas-->
        
    <!--Nuevo dendogram-->
-   <!--
 
       <script>
 
-                var margin = {top: 20, right: 120, bottom: 20, left: 120},
-                    width = 960 - margin.right - margin.left,
-                    height = 800 - margin.top - margin.bottom;
+              var margin = {top: 5, right: 120, bottom: 5, left: 100},
+                    width = 880 - margin.right - margin.left,
+                    height = 620 - margin.top - margin.bottom;
                     
                 var i = 0,
                     duration = 750,
@@ -225,7 +251,7 @@
                   .append("g")
                     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-                d3.json("js/camiones.json", function(error, flare) {
+                d3.json("js/camiones_bk.json", function(error, flare) {
                   root1 = flare;
                   root1.x0 = height / 2;
                   root1.y0 = 0;
@@ -242,7 +268,7 @@
                   update(root1);
                 });
 
-                d3.select(self.frameElement).style("height", "800px");
+                d3.select(self.frameElement).style("height", "100%");
 
                 function update(source) {
 
@@ -343,7 +369,7 @@
                   update(d);
                 }
 
-      </script>-->
+      </script>
 
 
 

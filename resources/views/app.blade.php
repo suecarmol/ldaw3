@@ -67,19 +67,19 @@
                 <a href="#top" onclick = $("#menu-close").click();>Inicio</a>
             </li>
             <li>
-                <a href="#rutas" onclick = $("#menu-close").click();>Rutas</a>
+                <a href="#rutas" onclick = $("#menu-close").click();>Gr&aacute;ficas</a>
             </li>
             <li>
                 <a href="#stats" onclick = $("#menu-close").click();>Stats</a>
             </li>
             <li>
-                <a href="#scenarios" onclick = $("#menu-close").click();>Scenarios</a>
+                <a href="#scenarios" onclick = $("#menu-close").click();>Floyd</a>
             </li>
             <li>
-                <a href="#suggestions" onclick = $("#menu-close").click();>Suggestions</a>
+                <a href="#suggestions" onclick = $("#menu-close").click();>Sugerencias</a>
             </li>
             <li>
-            	<a href="#newbusiness" onclick = $("#menu-close").click();> New Business</a>
+            	<a href="#newbusiness" onclick = $("#menu-close").click();> Voronoi</a>
             </li>
           
         </ul>
@@ -89,9 +89,9 @@
     <header id="top" class="header">
         <div class="text-vertical-center">
             <h1>LDAW</h1>
-            <h3>Navegación Primer Avance</h3>
+            <h3>Entrega Proyecto Final</h3>
             <br>
-            <a href="#about" class="btn btn-dark btn-lg">Erick, Susan, Victor</a>
+            <a href="#rutas" class="btn btn-dark btn-lg">Erick, Susana, Victor</a>
         </div>
     </header>
 
@@ -148,6 +148,12 @@
     <script>
       $(document).ready(function(){
           $('#suggestions_table').dataTable();
+      });
+    </script>
+
+    <script>
+      $(document).ready(function(){
+          $('#floyd_table').dataTable();
       });
     </script>
 

@@ -21,10 +21,12 @@ class DeliveriesController extends Controller {
 		**** STATS
 		********/
 		$deliveries = \DB::collection('proyecto')
-		->where('clients.cost', '=', 'null')
+		->where('clients.cost', '>', 0)
 		->orderBy('clients.arrival_time')
+		->take(2)
 		->get();
 
+		$floyd = $this->calculateBestRoute($deliveries);
 		//var_dump($deliveries);
 
 		$average_deliveries = \DB::collection('proyecto')
@@ -53,19 +55,14 @@ class DeliveriesController extends Controller {
 		->where('capacity' , '>', 0)
 		->avg('average_grade'), 2);
 
-		//$x = $this->calculateBestRoute($deliveries);
+		$trucks_service_time = \DB::collection('proyecto')
+		->where('clients.service_time', '>', 0)
+		->get();
+		$trucks_average_service_time = $this->getAvgServiceTime($trucks_service_time);
 
 		/********
 		**** CHARTS
 		********/
-
-
-
-		//var_dump($nombres);
-		//var_dump($unidades);
-		//var_dump($word[0]['text']);
-		//bubble chart
-
 
 		//var_dump($bubble[1]['size']);
 
@@ -97,10 +94,9 @@ class DeliveriesController extends Controller {
 		->with('deliveries_out_of_route', $deliveries_out_of_route)
 		->with('trucks_average_capacity', $trucks_average_capacity)
 		->with('trucks_average_grade', $trucks_average_grade)
-		//->with('nombres', $nombres)
-		//->with('bubble', $bubble)
-		//->with('unidades', $unidades)
-		->with('suggestions', $suggestions);
+		->with('trucks_average_service_time', $trucks_average_service_time)
+		->with('suggestions', $suggestions)
+		->with('floyd', $floyd);
 	}
 
 	public function createSuggestions()
@@ -290,16 +286,15 @@ class DeliveriesController extends Controller {
 					->where('capacity', '>', 0)
 					->groupBy('company_name')
 					->distinct()
-					->get();
-
-			//print_r($compania);				
+					->get();				
 			
 			$company_data = array();		
 
 			for($i = 0; $i < sizeof($compania); $i++){
+
 				$trucks = \DB::collection('proyecto')
 				->select('truck_id')
-				->where('company_name', '=', $compania[$i]['company_name'])
+				->where('company_name', '=', $compania[$i]['_id']['company_name'])
 				->get();
 
 				$trucks_data = array();
@@ -313,18 +308,10 @@ class DeliveriesController extends Controller {
 
 					$clients_data = array();
 
-					//print_r(json_encode($clients));
-
-					//var_dump(sizeof($clients[0]));
-
-					//var_dump($clients[0]);
-
-					for($k = 1; $k < sizeof($clients); $k++){
+					for($k = 0; $k < sizeof($clients); $k++){
 						if(sizeof($clients[$k]) > 1){
 
 							$clients_array = $clients[$k]['clients'];
-
-							//print_r($clients_array);
 
 							for($l = 0; $l < 10; $l++)
 							{
@@ -336,11 +323,12 @@ class DeliveriesController extends Controller {
 
 						} //for clients
 
-						array_push($trucks_data, array(
+					}
+
+					array_push($trucks_data, array(
 							'name' => $trucks[$j]['truck_id'],
 							'children' => $clients_data
 						));
-					}
 
 				}// for trucks
 
@@ -352,13 +340,7 @@ class DeliveriesController extends Controller {
 			}	//for companies	
 
 			$json = "{ \"name\": \"ldaw3\", \"children\": ";
-			/*
-			array_push($json, array(
-					'name' => 'ldaw3',
-					'children' => $company_data
-				));*/
 			$company_data = json_encode($company_data);
-
 			$json .= $company_data . "}";
 
 			//print_r($json);
@@ -724,21 +706,26 @@ class DeliveriesController extends Controller {
 
 	public function dendogram($trucks){
 			
-		$compania = \DB::collection('proyecto')
+		//compania -> Camiones -> Rutas -> Clientes
+		//recorre los camiones
+		//var_dump(sizeof($inception[0]['clients']));
+			$compania = \DB::collection('proyecto')
 					->select('company_name')
 					->where('capacity', '>', 0)
 					->groupBy('company_name')
 					->distinct()
 					->get();
 
-			//print_r($compania);				
-			
-			$company_data = array();		
+			$company_data = array();
 
 			for($i = 0; $i < sizeof($compania); $i++){
+
+				$compania_aux = $compania[$i]['company_name'];
+
 				$trucks = \DB::collection('proyecto')
 				->select('truck_id')
 				->where('company_name', '=', $compania[$i]['company_name'])
+				->distinct()
 				->get();
 
 				$trucks_data = array();
@@ -747,23 +734,15 @@ class DeliveriesController extends Controller {
 
 					$clients = \DB::collection('proyecto')
 					->select('clients.name', 'clients.units_delivered')
-					->where('truck_id', '=', $trucks[$j]['truck_id'])
+					->where('truck_id', '=', $trucks[$j])
 					->get();
 
 					$clients_data = array();
 
-					//print_r(json_encode($clients));
-
-					//var_dump(sizeof($clients[0]));
-
-					//var_dump($clients[0]);
-
-					for($k = 1; $k < sizeof($clients); $k++){
+					for($k = 0; $k < sizeof($clients); $k++){
 						if(sizeof($clients[$k]) > 1){
 
 							$clients_array = $clients[$k]['clients'];
-
-							//print_r($clients_array);
 
 							for($l = 0; $l < 10; $l++)
 							{
@@ -774,12 +753,13 @@ class DeliveriesController extends Controller {
 							} //for clients_array
 
 						} //for clients
+						
+					}
 
 						array_push($trucks_data, array(
-							'name' => $trucks[$j]['truck_id'],
+							'name' => $trucks[$j],
 							'children' => $clients_data
 						));
-					}
 
 				}// for trucks
 
@@ -799,8 +779,10 @@ class DeliveriesController extends Controller {
 			$company_data = json_encode($company_data);
 
 			$json .= $company_data . "}";
-			//ar_dump($json);
-			$myfile = fopen("js/camiones.json", "w") or die("Unable to open file!");
+
+			//print_r($json);
+
+			$myfile = fopen("js/camiones_bk.json", "w") or die("Unable to open file!");
 			fwrite($myfile, $json);
 			fclose($myfile);
 
@@ -842,6 +824,24 @@ class DeliveriesController extends Controller {
 		return $average_delivery_units;
 	}
 
+	public function getAvgServiceTime($trucks_service_time)
+	{
+		$service_time_sum = 0;
+
+		for ($i=0; $i < sizeof($trucks_service_time); $i++) { 
+			$temp_clients = $trucks_service_time[$i]['clients'];
+			//var_dump($temp_clients);
+			for ($j=0; $j < sizeof($temp_clients); $j++) { 
+				$service_time_sum += $temp_clients[$j]['service_time'];
+			}
+		}
+
+
+		$average_service_time = round(($service_time_sum / count($trucks_service_time))/3600, 2);
+
+		return $average_service_time;
+	}
+
 	public function calculateBestRoute($deliveries)
 	{
 
@@ -866,16 +866,31 @@ class DeliveriesController extends Controller {
 		for ($i=1; $i < sizeof($clients_matrix); $i++) { 
 			//check if lat/long coordinates are not 0
 			if($clients_matrix[$i]['latitude'] != 0 || $clients_matrix[$i]['longitude'] != 0){
-				$distance_matrix [] = array(
-					'distance' => $this->vincentyGreatCircleDistance(
-						$clients_matrix[$i-1]['latitude'],
-						$clients_matrix[$i-1]['longitude'],
-						$clients_matrix[$i]['latitude'],
-						$clients_matrix[$i]['longitude']
-					),
-					'clientTo' => $clients_matrix[$i]['client'],
-					'clientFrom' => $clients_matrix[$i-1]['client']	
-				);	
+				for($j = 0; $j < sizeof($clients_matrix); $j++)
+				{
+					if($i == $j)
+					{
+						$distance_matrix[$i][$j] = array(
+							'distance' => 0,
+							'clientFrom' => $clients_matrix[$i]['client'],
+							'clientTo' => $clients_matrix[$j]['client']
+						);	
+					}
+					else
+					{
+						$distance_matrix [$i][$j] = array(
+							'distance' => $this->vincentyGreatCircleDistance(
+								$clients_matrix[$j]['latitude'],
+								$clients_matrix[$j]['longitude'],
+								$clients_matrix[$i]['latitude'],
+								$clients_matrix[$i]['longitude']
+							),
+							'clientFrom' => $clients_matrix[$i]['client'],
+							'clientTo' => $clients_matrix[$j]['client']
+
+						);
+					}
+				}
 			}
 		}
 
@@ -906,26 +921,20 @@ class DeliveriesController extends Controller {
 
 	public function floydWarshall($distance_matrix)
 	{	
-		$floydWarshall_matrix = array();
-		//replicating the distance matrix
-		for ($i=0; $i < sizeof($distance_matrix); $i++) { 
-			$floydWarshall_matrix [] = $distance_matrix[$i]; 
-		}
 
-		var_dump($floydWarshall_matrix);
-
-		for ($k=0; $k < sizeof($floydWarshall_matrix); $k++) { 
-			for ($i=0; $i < sizeof($floydWarshall_matrix); $i++) { 
-				for ($j=0; $j < sizeof($floydWarshall_matrix); $j++) { 
-					$temp = $floydWarshall_matrix[$i]['distance'] + $floydWarshall_matrix[$k]['distance'];
-					if ($temp < $floydWarshall_matrix[$i][$j]) {
-						$floydWarshall_matrix[$i][$j] = $temp;
+		for ($k=1; $k < sizeof($distance_matrix); $k++) { 
+			for ($i=1; $i < sizeof($distance_matrix); $i++) { 
+				for ($j=0; $j < sizeof($distance_matrix); $j++) { 
+					$temp = $distance_matrix[$i][$k]['distance'] + $distance_matrix[$k][$j]['distance'];
+					//print_r($temp . " < " . $distance_matrix[$i][$j]['distance'] . "? \n");
+					if ($temp < $distance_matrix[$i][$j]['distance']) {
+						$distance_matrix[$i][$j]['distance'] = $temp;
 					}
 				}
 			}
 		}
 
-		return $floydWarshall_matrix;
+		return $distance_matrix;
 
 	}
 	/*
